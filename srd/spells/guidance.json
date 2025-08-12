@@ -1,0 +1,22 @@
+{
+  "name": "Guidance",
+  "level": "Cantrip",
+  "school": "Divination",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "minute"
+  },
+  "description": "You touch a willing creature and choose a skill. Until the spell ends, the creature adds 1d4 to any ability check using the chosen skill."
+}

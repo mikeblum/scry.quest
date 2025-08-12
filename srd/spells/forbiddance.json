@@ -1,0 +1,24 @@
+{
+  "name": "Forbiddance",
+  "level": "Level 6",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "10",
+    "unit": "minutes"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a sprinkling of holy water, rare incense, and powdered ruby worth 1,000 GP"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 1,
+    "unit": "day"
+  },
+  "description": "You create a ward against magical travel that protects up to 40,000 square feet of floor space. For the duration, creatures can’t teleport into or out of the area and planar travel is blocked. The spell damages creatures of a type you choose when you cast it."
+}

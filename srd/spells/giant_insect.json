@@ -1,0 +1,23 @@
+{
+  "name": "Giant Insect",
+  "level": "Level 4",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 10,
+    "unit": "minutes"
+  },
+  "description": "You transform up to ten centipedes, three spiders, five wasps, or one scorpion within range into giant versions of their natural forms for the duration."
+}

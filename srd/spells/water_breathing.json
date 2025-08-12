@@ -1,0 +1,10 @@
+{
+  "name": "Water Breathing",
+  "level": "Level 3",
+  "school": "Transmutation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 30, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true, "material": "a short reed or piece of straw"},
+  "duration": {"type": "24", "unit": "hours"},
+  "description": "This spell grants up to ten willing creatures you can see within range the ability to breathe underwater until the spell ends."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Vampiric Touch",
+  "level": "Level 3",
+  "school": "Necromancy",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"type": "self"},
+  "components": {"verbal": true, "somatic": true},
+  "duration": {"type": "concentration", "value": 1, "unit": "minute"},
+  "description": "Your hand becomes enveloped in shadow. Make a melee spell attack against a creature within your reach. On a hit, the target takes 3d6 necrotic damage, and you regain hit points equal to half the amount of necrotic damage dealt."
+}

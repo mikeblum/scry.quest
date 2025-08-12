@@ -1,0 +1,21 @@
+{
+  "name": "Revivify",
+  "level": "Level 3",
+  "school": "Necromancy",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a diamond worth 300+ GP, which the spell consumes"
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You touch a creature that has died within the last minute. That creature revives with 1 Hit Point. This spell can’t revive a creature that has died of old age, nor does it restore any missing body parts."
+}

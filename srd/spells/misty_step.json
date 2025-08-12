@@ -1,0 +1,19 @@
+{
+  "name": "Misty Step",
+  "level": "Level 2",
+  "school": "Conjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Bonus Action"
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied space you can see."
+}

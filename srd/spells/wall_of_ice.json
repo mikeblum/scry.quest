@@ -1,0 +1,10 @@
+{
+  "name": "Wall of Ice",
+  "level": "Level 6",
+  "school": "Evocation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 120, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true, "material": "a small piece of quartz"},
+  "duration": {"type": "concentration", "value": 10, "unit": "minutes"},
+  "description": "You create a wall of ice on a solid surface within range. You can form the wall as a flat surface up to 10 panels, each 10 feet by 10 feet, or as a dome or sphere with a radius of up to 10 feet. Each panel has AC 12 and 30 hit points. Breaking a panel creates a 10-foot-radius burst of cold, dealing 5d6 cold damage to creatures within range."
+}

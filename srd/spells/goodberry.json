@@ -1,0 +1,21 @@
+{
+  "name": "Goodberry",
+  "level": "Level 1",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a sprig of mistletoe"
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "Up to ten berries appear in your hand and are infused with magic for the duration. A creature can use its action to eat one berry to restore 1 hit point. The berry provides enough nourishment to sustain a creature for one day."
+}

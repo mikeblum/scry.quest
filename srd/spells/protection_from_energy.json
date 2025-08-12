@@ -1,0 +1,22 @@
+{
+  "name": "Protection from Energy",
+  "level": "Level 3",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "hour"
+  },
+  "description": "For the duration, the willing creature you touch has Resistance to one damage type of your choice: Acid, Cold, Fire, Lightning, or Thunder."
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Death Ward",
+  "level": "Level 4",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 8,
+    "unit": "hours"
+  },
+  "description": "You touch a creature and grant it a measure of protection from death. The first time the target would drop to 0 Hit Points before the spell ends, the target instead drops to 1 Hit Point, and the spell ends. If the spell is still in effect when the target is subjected to an effect that would kill it instantly without dealing damage, that effect is negated against the target, and the spell ends."
+}

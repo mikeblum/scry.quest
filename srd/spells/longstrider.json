@@ -1,0 +1,24 @@
+{
+  "name": "Longstrider",
+  "level": "Level 1",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a pinch of dirt"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 1,
+    "unit": "hour"
+  },
+  "description": "You touch a creature. The target’s Speed increases by 10 feet until the spell ends.",
+  "at_higher_levels": "You can target one additional creature for each spell slot level above 1."
+}

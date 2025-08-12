@@ -1,0 +1,10 @@
+{
+  "name": "Tiny Hut",
+  "level": "Level 3",
+  "school": "Evocation",
+  "casting_time": {"value": "1", "unit": "minute"},
+  "range": {"type": "self"},
+  "components": {"verbal": true, "somatic": true, "material": "a small crystal bead"},
+  "duration": {"type": "8", "unit": "hours"},
+  "description": "A 10-foot-radius immobile dome of force springs into existence around and above you and remains stationary for the duration. The dome can accommodate nine Medium creatures. Creatures and objects within the dome when you cast the spell can move through it freely. All other creatures and objects are barred from passing through it."
+}

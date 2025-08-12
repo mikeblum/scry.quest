@@ -1,0 +1,21 @@
+{
+  "name": "Find Steed",
+  "level": "Level 2",
+  "school": "Conjuration",
+  "casting_time": {
+    "value": "10",
+    "unit": "minutes"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You summon a spirit that assumes the form of an unusually intelligent, strong, and loyal steed, creating a long-lasting bond with it. Appearing in an unoccupied space within range, the steed takes on a form you choose: a warhorse, a pony, a camel, an elk, or a mastiff. The steed has the statistics of the chosen form, though it is a Celestial, Fey, or Fiend (your choice) instead of its normal type. Your steed serves you as a mount, both in combat and out, and you have an instinctive bond with it that allows you to fight as a seamless unit."
+}

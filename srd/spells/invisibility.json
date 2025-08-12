@@ -1,0 +1,24 @@
+{
+  "name": "Invisibility",
+  "level": "Level 2",
+  "school": "Illusion",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "an eyelash in gum arabic"
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "hour"
+  },
+  "description": "A creature you touch has the Invisible condition until the spell ends. The spell ends early immediately after the target makes an attack roll, deals damage, or casts a spell.",
+  "at_higher_levels": "You can target one additional creature for each spell slot level above 2."
+}

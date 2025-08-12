@@ -1,0 +1,10 @@
+{
+  "name": "True Polymorph",
+  "level": "Level 9",
+  "school": "Transmutation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 30, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true, "material": "a drop of mercury, a dollop of gum arabic, and a wisp of smoke"},
+  "duration": {"type": "concentration", "value": 1, "unit": "hour"},
+  "description": "You transform a creature or object into another form. The transformation lasts for the duration, or permanently if you concentrate for the full hour. The new form can be any creature whose Challenge Rating is equal to or less than the target’s, or any object of similar size and mass."
+}

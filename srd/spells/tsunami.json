@@ -1,0 +1,10 @@
+{
+  "name": "Tsunami",
+  "level": "Level 8",
+  "school": "Conjuration",
+  "casting_time": {"value": "1", "unit": "minute"},
+  "range": {"value": 300, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true},
+  "duration": {"type": "concentration", "value": 6, "unit": "rounds"},
+  "description": "A wall of water 300 feet long, 300 feet high, and 50 feet thick forms and moves in a direction you choose. Each creature in the wall must make a Strength saving throw, taking 6d10 bludgeoning damage on a failed save or half as much on a successful one. The wall moves 50 feet away from you at the end of each turn."
+}

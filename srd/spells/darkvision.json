@@ -1,0 +1,23 @@
+{
+  "name": "Darkvision",
+  "level": "Level 2",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a dried carrot"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 8,
+    "unit": "hours"
+  },
+  "description": "For the duration, a willing creature you touch has Darkvision with a range of 150 feet."
+}

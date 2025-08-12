@@ -1,0 +1,10 @@
+{
+  "name": "Time Stop",
+  "level": "Level 9",
+  "school": "Transmutation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"type": "self"},
+  "components": {"verbal": true},
+  "duration": {"type": "instantaneous"},
+  "description": "You briefly stop the flow of time for everyone but yourself. No time passes for other creatures, while you take 1d4 + 1 turns in a row, during which you can use actions and move as normal. The spell ends if you affect another creature or an object they are wearing or carrying."
+}

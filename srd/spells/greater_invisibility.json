@@ -1,0 +1,22 @@
+{
+  "name": "Greater Invisibility",
+  "level": "Level 4",
+  "school": "Illusion",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "minute"
+  },
+  "description": "You or a creature you touch becomes Invisible until the spell ends. Anything the target is wearing or carrying is Invisible as long as it is on the target’s person."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Wall of Thorns",
+  "level": "Level 6",
+  "school": "Conjuration",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 120, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true},
+  "duration": {"type": "concentration", "value": 10, "unit": "minutes"},
+  "description": "You create a wall of tough, pliable, tangled brush bristling with thorns. The wall can be up to 60 feet long, 10 feet high, and 5 feet thick, or a circle with a 20-foot diameter, 20 feet high, and 5 feet thick. Each creature in the wall’s area must make a Dexterity saving throw, taking 7d8 piercing damage on a failed save, or half as much on a successful one."
+}

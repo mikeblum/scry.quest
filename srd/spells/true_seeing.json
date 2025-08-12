@@ -1,0 +1,10 @@
+{
+  "name": "True Seeing",
+  "level": "Level 6",
+  "school": "Divination",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"touch": true},
+  "components": {"verbal": true, "somatic": true, "material": "an ointment for the eyes that costs 25 gp, made from mushroom powder, saffron, and fat"},
+  "duration": {"type": "1", "unit": "hour"},
+  "description": "This spell gives a willing creature you touch the ability to see things as they actually are. For the duration, the creature has Truesight, notices secret doors hidden by magic, and can see into the Ethereal Plane."
+}

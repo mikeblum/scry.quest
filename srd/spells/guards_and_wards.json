@@ -1,0 +1,23 @@
+{
+  "name": "Guards and Wards",
+  "level": "Level 6",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "10",
+    "unit": "minutes"
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "burning incense, a quart of water, a sacrificial offering, and a silver wire"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 24,
+    "unit": "hours"
+  },
+  "description": "You create a ward that protects up to 2,500 square feet of floor space. The ward includes several magical effects, such as fog, locked doors, and confusion, which you can specify when you cast the spell."
+}

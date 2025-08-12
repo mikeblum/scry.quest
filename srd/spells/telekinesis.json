@@ -1,0 +1,10 @@
+{
+  "name": "Telekinesis",
+  "level": "Level 5",
+  "school": "Transmutation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 60, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true},
+  "duration": {"type": "concentration", "value": 10, "unit": "minutes"},
+  "description": "You gain the ability to move or manipulate creatures or objects by thought. Each round, you can use your action to attempt to move a creature or object within range. Make an ability check with your spellcasting ability contested by the creature’s Strength check. If you win, you move the creature up to 30 feet in any direction. You can also move objects weighing up to 1,000 pounds."
+}

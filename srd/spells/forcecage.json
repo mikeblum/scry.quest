@@ -1,0 +1,23 @@
+{
+  "name": "Forcecage",
+  "level": "Level 7",
+  "school": "Evocation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 100,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 1,
+    "unit": "hour"
+  },
+  "description": "An invisible cube-shaped prison appears in a space you choose within range. The prison can be a cage or a solid box, as you choose. A creature inside the prison can’t leave by nonmagical means. Spells and other magical effects can’t extend through the walls. The prison can be dispelled only by a Dispel Magic spell cast at 9th level."
+}

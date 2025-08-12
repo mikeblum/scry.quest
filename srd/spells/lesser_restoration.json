@@ -1,0 +1,20 @@
+{
+  "name": "Lesser Restoration",
+  "level": "Level 2",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Bonus Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You touch a creature and end one condition on it: Blinded, Deafened, Paralyzed, or Poisoned."
+}

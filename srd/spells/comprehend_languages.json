@@ -1,0 +1,24 @@
+{
+  "name": "Comprehend Languages",
+  "level": "Level 1",
+  "school": "Divination",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action",
+    "ritual": true
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a pinch of soot and salt"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 1,
+    "unit": "hour"
+  },
+  "description": "For the duration, you understand the literal meaning of any language that you hear or see signed. You also understand any written language that you see, but you must be touching the surface on which the words are written. It takes about 1 minute to read one page of text. This spell doesn’t decode symbols or secret messages."
+}

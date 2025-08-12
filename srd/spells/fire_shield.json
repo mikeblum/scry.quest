@@ -1,0 +1,23 @@
+{
+  "name": "Fire Shield",
+  "level": "Level 4",
+  "school": "Evocation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a bit of phosphorus or a firefly"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 10,
+    "unit": "minutes"
+  },
+  "description": "Thin and wispy flames wreathe your body for the duration, shedding bright light in a 10-foot radius and dim light for an additional 10 feet. You can end the spell early as an action. The flames provide you with a warm shield or a chill shield, as you choose. The warm shield grants you resistance to Cold damage, and the chill shield grants you resistance to Fire damage. In addition, whenever a creature within 5 feet of you hits you with a melee attack, the shield erupts in flame. The attacker takes 2d8 Fire damage from a warm shield, or 2d8 Cold damage from a chill shield."
+}

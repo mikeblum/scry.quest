@@ -1,0 +1,10 @@
+{
+  "name": "Tree Stride",
+  "level": "Level 5",
+  "school": "Conjuration",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"type": "self"},
+  "components": {"verbal": true, "somatic": true},
+  "duration": {"type": "concentration", "value": 1, "unit": "minute"},
+  "description": "You gain the ability to enter a tree and move from inside it to inside another tree within 500 feet. Both trees must be living and at least the same size as you. You can use this ability once per round for the duration."
+}

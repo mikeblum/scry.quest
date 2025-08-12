@@ -1,0 +1,23 @@
+{
+  "name": "Beacon of Hope",
+  "level": "Level 3",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "minute"
+  },
+  "description": "Choose any number of creatures within range. For the duration, each target has Advantage on Wisdom saving throws and Death Saving Throws and regains the maximum number of Hit Points possible from any healing."
+}

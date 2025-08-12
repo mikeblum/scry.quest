@@ -1,0 +1,22 @@
+{
+  "name": "Ice Knife",
+  "level": "Level 1",
+  "school": "Conjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 60,
+    "unit": "feet"
+  },
+  "components": {
+    "somatic": true,
+    "material": "a drop of water or a piece of ice"
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You create a shard of ice and fling it at one creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 Piercing damage. Hit or miss, the shard then explodes. The target and each creature within 5 feet of it must succeed on a Dexterity saving throw or take 2d6 Cold damage.",
+  "at_higher_levels": "The Cold damage increases by 1d6 for each spell slot level above 1."
+}

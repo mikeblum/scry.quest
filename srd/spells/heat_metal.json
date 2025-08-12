@@ -1,0 +1,25 @@
+{
+  "name": "Heat Metal",
+  "level": "Level 2",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 60,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a piece of iron and a flame"
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "minute"
+  },
+  "description": "Choose a manufactured metal object, such as a metal weapon or a suit of Heavy or Medium metal armor, that you can see within range. You cause the object to glow red-hot. Any creature in physical contact with the object takes 2d8 Fire damage when you cast the spell. Until the spell ends, you can take a Bonus Action on each of your later turns to deal this damage again if the object is within range. If a creature is holding or wearing the object and takes the damage from it, the creature must succeed on a Constitution saving throw or drop the object if it can. If it doesn’t drop the object, it has Disadvantage on attack rolls and ability checks until the start of its next turn.",
+  "at_higher_levels": "The damage increases by 1d8 for each spell slot level above 2."
+}
