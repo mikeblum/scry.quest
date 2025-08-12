@@ -1,0 +1,58 @@
+{
+  "name": "Cultist Fanatic",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 44,
+    "dice": "8d8 + 8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 11, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 4 },
+    "charisma": { "score": 13, "modifier": 1, "save": 1 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 3 },
+    { "name": "Persuasion", "modifier": 3 },
+    { "name": "Religion", "modifier": 2 }
+  ],
+  "gear": ["Holy Symbol", "Leather Armor"],
+  "senses": {
+    "passive_perception": 12
+  },
+  "languages": ["Common"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Pact Blade",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Slashing damage plus 7 (2d6) Necrotic damage."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The cultist casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 12, +4 to hit with spell attacks):\nAt Will: Light, Thaumaturgy\n2/Day: Command\n1/Day: Hold Person"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Spiritual Weapon",
+      "description": "The cultist casts the Spiritual Weapon spell, using the same spellcasting ability as Spellcasting.",
+      "usage": { "type": "per_day", "times": 2 }
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "Ice Mephit",
+  "size": "Small",
+  "type": "Elemental",
+  "alignment": "Neutral Evil",
+  "armor_class": 11,
+  "hit_points": {
+    "average": 21,
+    "dice": "6d6"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "fly": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 7, "modifier": -2, "save": -2 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 9, "modifier": -1, "save": -1 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 0 },
+    "charisma": { "score": 12, "modifier": 1, "save": 1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 },
+    { "name": "Stealth", "modifier": 3 }
+  ],
+  "vulnerabilities": ["Fire"],
+  "immunities": {
+    "damage": ["Cold", "Poison"],
+    "condition": ["Exhaustion", "Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 12
+  },
+  "languages": ["Primordial (Aquan, Auran)"],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Death Burst",
+      "description": "The mephit explodes when it dies. Constitution Saving Throw: DC 10, each creature in a 5-foot Emanation originating from the mephit. Failure: 5 (2d4) Cold damage. Success: Half damage."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 3 (1d4 + 1) Slashing damage plus 2 (1d4) Cold damage."
+    },
+    {
+      "name": "Fog Cloud",
+      "description": "The mephit casts Fog Cloud, requiring no spell components and using Charisma as the spellcasting ability.",
+      "usage": { "type": "per_day", "times": 1 }
+    },
+    {
+      "name": "Frost Breath",
+      "description": "Constitution Saving Throw: DC 10, each creature in a 15-foot Cone. Failure: 7 (3d4) Cold damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [6, 6] }
+    }
+  ]
+}

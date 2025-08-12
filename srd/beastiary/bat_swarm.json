@@ -1,0 +1,53 @@
+{
+  "name": "Swarm of Bats",
+  "size": "Large",
+  "type": "Swarm of Tiny Beasts",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 11,
+    "dice": "2d10"
+  },
+  "speed": {
+    "walk": { "value": 5, "unit": "ft." },
+    "fly": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 5, "modifier": -3, "save": -3 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 4, "modifier": -3, "save": -3 }
+  },
+  "resistances": ["Bludgeoning", "Piercing", "Slashing"],
+  "immunities": {
+    "condition": ["Charmed", "Frightened", "Grappled", "Paralyzed", "Petrified", "Prone", "Restrained", "Stunned"]
+  },
+  "senses": {
+    "blindsight": { "value": 60, "unit": "ft." },
+    "passive_perception": 11
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Swarm",
+      "description": "The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny bat. The swarm can’t regain Hit Points or gain Temporary Hit Points."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bites",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (2d4) Piercing damage, or 2 (1d4) Piercing damage if the swarm is Bloodied."
+    }
+  ]
+}

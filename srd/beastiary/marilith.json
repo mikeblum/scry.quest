@@ -1,0 +1,88 @@
+{
+  "name": "Marilith",
+  "size": "Large",
+  "type": "Fiend (Demon)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 220,
+    "dice": "21d10 + 105"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "climb": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 10,
+    "score": 20
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 9 },
+    "dexterity": { "score": 20, "modifier": 5, "save": 5 },
+    "constitution": { "score": 20, "modifier": 5, "save": 10 },
+    "intelligence": { "score": 18, "modifier": 4, "save": 4 },
+    "wisdom": { "score": 16, "modifier": 3, "save": 8 },
+    "charisma": { "score": 20, "modifier": 5, "save": 10 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 8 }
+  ],
+  "resistances": ["Cold", "Fire", "Lightning"],
+  "immunities": {
+    "damage": ["Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "truesight": { "value": 120, "unit": "ft." },
+    "passive_perception": 18
+  },
+  "languages": ["Abyssal"],
+  "telepathy": { "value": 120, "unit": "ft." },
+  "challenge_rating": {
+    "rating": "16",
+    "xp": 15000
+  },
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "name": "Demonic Restoration",
+      "description": "If the marilith dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss."
+    },
+    {
+      "name": "Magic Resistance",
+      "description": "The marilith has Advantage on saving throws against spells and other magical effects."
+    },
+    {
+      "name": "Reactive",
+      "description": "The marilith can take one Reaction on every turn of combat."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The marilith makes six Pact Blade attacks and uses Constrict."
+    },
+    {
+      "name": "Pact Blade",
+      "description": "Melee Attack Roll: +10, reach 5 ft. Hit: 10 (1d10 + 5) Slashing damage plus 7 (2d6) Necrotic damage."
+    },
+    {
+      "name": "Constrict",
+      "description": "Strength Saving Throw: DC 17, one Medium or smaller creature the marilith can see within 5 feet. Failure: 15 (2d10 + 4) Bludgeoning damage. The target has the Grappled condition (escape DC 14), and it has the Restrained condition until the grapple ends."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Teleport",
+      "description": "The marilith teleports up to 120 feet to an unoccupied space it can see.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Parry",
+      "trigger": "The marilith is hit by a melee attack roll while holding a weapon.",
+      "response": "The marilith adds 5 to its AC against that attack, possibly causing it to miss."
+    }
+  ]
+}

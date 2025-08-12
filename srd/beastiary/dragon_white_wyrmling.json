@@ -1,0 +1,68 @@
+{
+  "name": "White Dragon Wyrmling",
+  "size": "Medium",
+  "type": "Dragon (Chromatic)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 32,
+    "dice": "5d8 + 10"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "burrow": { "value": 15, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 14, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 2 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 5, "modifier": -3, "save": -3 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 2 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 },
+    { "name": "Stealth", "modifier": 2 }
+  ],
+  "immunities": {
+    "damage": ["Cold"]
+  },
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["Draconic"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Ice Walk",
+      "description": "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, Difficult Terrain composed of ice or snow doesn’t cost it extra movement."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes two Rend attacks."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Slashing damage plus 2 (1d4) Cold damage."
+    },
+    {
+      "name": "Cold Breath",
+      "description": "Constitution Saving Throw: DC 12, each creature in a 15-foot Cone. Failure: 22 (5d8) Cold damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ]
+}

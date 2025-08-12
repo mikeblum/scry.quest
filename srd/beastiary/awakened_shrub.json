@@ -1,0 +1,43 @@
+{
+  "name": "Awakened Shrub",
+  "size": "Small",
+  "type": "Plant",
+  "alignment": "Neutral",
+  "armor_class": 9,
+  "hit_points": {
+    "average": 10,
+    "dice": "3d6"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -1,
+    "score": 9
+  },
+  "ability_scores": {
+    "strength": { "score": 3, "modifier": -4, "save": -4 },
+    "dexterity": { "score": 8, "modifier": -1, "save": -1 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 6, "modifier": -2, "save": -2 }
+  },
+  "vulnerabilities": ["Fire"],
+  "resistances": ["Piercing"],
+  "senses": {
+    "passive_perception": 10
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Rake",
+      "description": "Melee Attack Roll: +1, reach 5 ft. Hit: 1 Slashing damage."
+    }
+  ]
+}

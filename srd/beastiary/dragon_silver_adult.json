@@ -1,0 +1,100 @@
+{
+  "name": "Adult Silver Dragon",
+  "size": "Huge",
+  "type": "Dragon (Metallic)",
+  "alignment": "Lawful Good",
+  "armor_class": 19,
+  "hit_points": {
+    "average": 216,
+    "dice": "16d12 + 112"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 10,
+    "score": 20
+  },
+  "ability_scores": {
+    "strength": { "score": 27, "modifier": 8, "save": 8 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 5 },
+    "constitution": { "score": 25, "modifier": 7, "save": 7 },
+    "intelligence": { "score": 16, "modifier": 3, "save": 3 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 6 },
+    "charisma": { "score": 22, "modifier": 6, "save": 6 }
+  },
+  "skills": [
+    { "name": "History", "modifier": 8 },
+    { "name": "Perception", "modifier": 11 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "immunities": {
+    "damage": ["Cold"]
+  },
+  "senses": {
+    "blindsight": { "value": 60, "unit": "ft." },
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 21
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "16",
+    "xp": 15000,
+    "lair_xp": 18000
+  },
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The dragon can breathe air and water."
+    },
+    {
+      "name": "Legendary Resistance",
+      "description": "If the dragon fails a saving throw, it can choose to succeed instead.",
+      "usage": { "type": "per_day", "times": 3, "lair_times": 4 }
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Paralyzing Breath or (B) Spellcasting to cast Ice Knife."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +13, reach 10 ft. Hit: 17 (2d8 + 8) Slashing damage plus 4 (1d8) Cold damage."
+    },
+    {
+      "name": "Cold Breath",
+      "description": "Constitution Saving Throw: DC 20, each creature in a 60-foot Cone. Failure: 54 (12d8) Cold damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    },
+    {
+      "name": "Paralyzing Breath",
+      "description": "Constitution Saving Throw: DC 20, each creature in a 60-foot Cone. First Failure: The target has the Incapacitated condition until the end of its next turn, when it repeats the save. Second Failure: The target has the Paralyzed condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 19, +11 to hit with spell attacks):\nAt Will: Detect Magic, Hold Monster, Ice Knife, Shapechange (Beast or Humanoid form only, no Temporary Hit Points gained from the spell, and no Concentration or Temporary Hit Points required to maintain the spell)\n1/Day Each: Ice Storm (level 5 version), Zone of Truth"
+    }
+  ],
+  "legendary_actions": {
+    "uses": 3,
+    "lair_uses": 4,
+    "description": "Immediately after another creature’s turn, the dragon can expend a use to take one of the following actions. The dragon regains all expended uses at the start of each of its turns.",
+    "actions": [
+      {
+        "name": "Chill",
+        "description": "The dragon uses Spellcasting to cast Hold Monster. The dragon can’t take this action again until the start of its next turn."
+      },
+      {
+        "name": "Cold Gale",
+        "description": "Dexterity Saving Throw: DC 19, each creature in a 60-foot-long, 10-foot-wide Line. Failure: 14 (4d6) Cold damage, and the target is pushed up to 30 feet straight away from the dragon. Success: Half damage. Failure or Success: The dragon can’t take this action again until the start of its next turn."
+      },
+      {
+        "name": "Pounce",
+        "description": "The dragon moves up to half its Speed, and it makes one Rend attack."
+      }
+    ]
+  }
+}

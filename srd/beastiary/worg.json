@@ -1,0 +1,51 @@
+{
+  "name": "Worg",
+  "size": "Large",
+  "type": "Fey",
+  "alignment": "Neutral Evil",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 26,
+    "dice": "4d10 + 4"
+  },
+  "speed": {
+    "walk": { "value": 50, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 7, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 0 },
+    "charisma": { "score": 8, "modifier": -1, "save": -1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["Goblin", "Worg"],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The worg has Advantage on an attack roll against a creature if at least one of the worg’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage, and the next attack roll made against the target before the start of the worg’s next turn has Advantage."
+    }
+  ]
+}

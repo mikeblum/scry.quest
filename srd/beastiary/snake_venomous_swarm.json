@@ -1,0 +1,53 @@
+{
+  "name": "Swarm of Venomous Snakes",
+  "size": "Medium",
+  "type": "Swarm of Tiny Beasts",
+  "alignment": "Unaligned",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 36,
+    "dice": "8d8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 4,
+    "score": 14
+  },
+  "ability_scores": {
+    "strength": { "score": 8, "modifier": -1, "save": -1 },
+    "dexterity": { "score": 18, "modifier": 4, "save": 4 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 3, "modifier": -4, "save": -4 }
+  },
+  "resistances": ["Bludgeoning", "Piercing", "Slashing"],
+  "immunities": {
+    "condition": ["Charmed", "Frightened", "Grappled", "Paralyzed", "Petrified", "Prone", "Restrained", "Stunned"]
+  },
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Swarm",
+      "description": "The swarm can occupy another creature’s space and vice versa, and the swarm can move through any opening large enough for a Tiny snake. The swarm can’t regain Hit Points or gain Temporary Hit Points."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bites",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 8 (1d8 + 4) Piercing damage—or 6 (1d4 + 4) Piercing damage if the swarm is Bloodied—plus 10 (3d6) Poison damage."
+    }
+  ]
+}

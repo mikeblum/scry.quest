@@ -1,0 +1,71 @@
+{
+  "name": "Vampire Spawn",
+  "size": "Medium or Small",
+  "type": "Undead",
+  "alignment": "Neutral Evil",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 90,
+    "dice": "12d8 + 36"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 6 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 3 },
+    "charisma": { "score": 12, "modifier": 1, "save": 1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 },
+    { "name": "Stealth", "modifier": 6 }
+  ],
+  "resistances": ["Necrotic"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 13
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "5",
+    "xp": 1800
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Spider Climb",
+      "description": "The vampire can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+    },
+    {
+      "name": "Vampire Weakness",
+      "description": "The vampire has these weaknesses:\nForbiddance. The vampire can’t enter a residence without an invitation from an occupant.\nRunning Water. The vampire takes 20 Acid damage if it ends its turn in running water.\nStake to the Heart. The vampire is destroyed if a weapon that deals Piercing damage is driven into the vampire’s heart while the vampire has the Incapacitated condition.\nSunlight. The vampire takes 20 Radiant damage if it starts its turn in sunlight. While in sunlight, it has Disadvantage on attack rolls and ability checks."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The vampire makes two Claw attacks and uses Bite."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 8 (2d4 + 3) Slashing damage."
+    },
+    {
+      "name": "Bite",
+      "description": "Constitution Saving Throw: DC 14, one creature within 5 feet that is willing or that has the Grappled, Incapacitated, or Restrained condition. Failure: 5 (1d4 + 3) Piercing damage plus 10 (3d6) Necrotic damage. The target’s Hit Point maximum decreases by an amount equal to the Necrotic damage taken, and the vampire regains Hit Points equal to that amount. A Humanoid reduced to 0 Hit Points by this damage and then buried rises the following sunset as a Vampire Spawn under the vampire’s control."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Deathless Agility",
+      "description": "The vampire takes the Dash or Disengage action."
+    }
+  ]
+}

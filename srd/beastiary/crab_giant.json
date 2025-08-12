@@ -1,0 +1,52 @@
+{
+  "name": "Giant Crab",
+  "size": "Medium",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 13,
+    "dice": "3d8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 13, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 9, "modifier": -1, "save": -1 },
+    "charisma": { "score": 3, "modifier": -4, "save": -4 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 3 }
+  ],
+  "senses": {
+    "blindsight": { "value": 30, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The crab can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 11) from one of two claws."
+    }
+  ]
+}

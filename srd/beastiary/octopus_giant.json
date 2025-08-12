@@ -1,0 +1,61 @@
+{
+  "name": "Giant Octopus",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 11,
+  "hit_points": {
+    "average": 45,
+    "dice": "7d10 + 7"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "swim": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 5, "modifier": -3, "save": -3 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 4, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Water Breathing",
+      "description": "The octopus can breathe only underwater. It can hold its breath for 1 hour outside water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Tentacles",
+      "description": "Melee Attack Roll: +5, reach 10 ft. Hit: 10 (2d6 + 3) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 13) from all eight tentacles. While Grappled, the target has the Restrained condition."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Ink Cloud",
+      "trigger": "The octopus takes damage while underwater.",
+      "response": "The octopus releases ink that fills a 10-foot Cube centered on itself, and the octopus moves up to its Swim Speed. The Cube is Heavily Obscured for 1 minute or until a strong current or similar effect disperses the ink.",
+      "usage": { "type": "per_day", "times": 1 }
+    }
+  ]
+}

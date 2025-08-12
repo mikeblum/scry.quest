@@ -1,0 +1,70 @@
+{
+  "name": "Invisible Stalker",
+  "size": "Large",
+  "type": "Elemental",
+  "alignment": "Neutral",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 97,
+    "dice": "13d10 + 26"
+  },
+  "speed": {
+    "walk": { "value": 50, "unit": "ft." },
+    "fly": { "value": 50, "unit": "ft.", "hover": true }
+  },
+  "initiative": {
+    "modifier": 7,
+    "score": 22
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 19, "modifier": 4, "save": 4 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 15, "modifier": 2, "save": 2 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 8 },
+    { "name": "Stealth", "modifier": 10 }
+  ],
+  "resistances": ["Bludgeoning", "Piercing", "Slashing"],
+  "immunities": {
+    "damage": ["Poison"],
+    "condition": ["Exhaustion", "Grappled", "Paralyzed", "Petrified", "Poisoned", "Prone", "Restrained", "Unconscious"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 18
+  },
+  "languages": ["Common", "Primordial (Auran)"],
+  "challenge_rating": {
+    "rating": "6",
+    "xp": 2300
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Air Form",
+      "description": "The stalker can enter an enemy’s space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
+    },
+    {
+      "name": "Invisibility",
+      "description": "The stalker has the Invisible condition."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The stalker makes three Wind Swipe attacks. It can replace one attack with a use of Vortex."
+    },
+    {
+      "name": "Wind Swipe",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 11 (2d6 + 4) Force damage."
+    },
+    {
+      "name": "Vortex",
+      "description": "Constitution Saving Throw: DC 14, one Large or smaller creature in the stalker’s space. Failure: 7 (1d8 + 3) Thunder damage, and the target has the Grappled condition (escape DC 13). Until the grapple ends, the target can’t cast spells with a Verbal component and takes 7 (2d6) Thunder damage at the start of the stalker’s turns."
+    }
+  ]
+}

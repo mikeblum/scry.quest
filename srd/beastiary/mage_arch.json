@@ -1,0 +1,79 @@
+{
+  "name": "Archmage",
+  "size": "Medium or Small",
+  "type": "Humanoid (Wizard)",
+  "alignment": "Neutral",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 170,
+    "dice": "31d8 + 31"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 7,
+    "score": 17
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 20, "modifier": 5, "save": 9 },
+    "wisdom": { "score": 15, "modifier": 2, "save": 6 },
+    "charisma": { "score": 16, "modifier": 3, "save": 3 }
+  },
+  "skills": [
+    { "name": "Arcana", "modifier": 13 },
+    { "name": "History", "modifier": 9 },
+    { "name": "Perception", "modifier": 6 }
+  ],
+  "immunities": {
+    "damage": ["Psychic"],
+    "condition": ["Charmed (with Mind Blank)"]
+  },
+  "gear": ["Wand"],
+  "senses": {
+    "passive_perception": 16
+  },
+  "languages": ["Common plus five other languages"],
+  "challenge_rating": {
+    "rating": "12",
+    "xp": 8000
+  },
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "name": "Magic Resistance",
+      "description": "The archmage has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The archmage makes four Arcane Burst attacks."
+    },
+    {
+      "name": "Arcane Burst",
+      "description": "Melee or Ranged Attack Roll: +9, reach 5 ft. or range 150 ft. Hit: 27 (4d10 + 5) Force damage."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The archmage casts one of the following spells, using Intelligence as the spellcasting ability (spell save DC 17):\nAt Will: Detect Magic, Detect Thoughts, Disguise Self, Invisibility, Light, Mage Armor (included in AC), Mage Hand, Prestidigitation\n2/Day Each: Fly, Lightning Bolt (level 7 version)\n1/Day Each: Cone of Cold (level 9 version), Mind Blank (cast before combat), Scrying, Teleport"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Misty Step",
+      "description": "The mage casts Misty Step, using the same spellcasting ability as Spellcasting.",
+      "usage": { "type": "per_day", "times": 3 }
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Protective Magic",
+      "description": "The archmage casts Counterspell or Shield in response to the spell’s trigger, using the same spellcasting ability as Spellcasting.",
+      "usage": { "type": "per_day", "times": 3 }
+    }
+  ]
+}

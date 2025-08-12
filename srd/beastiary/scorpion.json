@@ -1,0 +1,46 @@
+{
+  "name": "Scorpion",
+  "size": "Tiny",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 11,
+  "hit_points": {
+    "average": 1,
+    "dice": "1d4 - 1"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 2, "modifier": -4, "save": -4 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 0 },
+    "constitution": { "score": 8, "modifier": -1, "save": -1 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 8, "modifier": -1, "save": -1 },
+    "charisma": { "score": 2, "modifier": -4, "save": -4 }
+  },
+  "skills": [],
+  "resistances": [],
+  "immunities": {},
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "name": "Sting",
+      "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage plus 3 (1d6) Poison damage."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Tough Boss",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 82,
+    "dice": "11d8 + 33"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 5 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 16, "modifier": 3, "save": 5 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 11, "modifier": 0, "save": 2 }
+  },
+  "gear": ["Chain Mail", "Heavy Crossbow", "Warhammer"],
+  "senses": {
+    "passive_perception": 10
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The tough has Advantage on an attack roll against a creature if at least one of the tough’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The tough makes two attacks, using Warhammer or Heavy Crossbow in any combination."
+    },
+    {
+      "name": "Warhammer",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 12 (2d8 + 3) Bludgeoning damage. If the target is a Large or smaller creature, the tough pushes the target up to 10 feet straight away from itself."
+    },
+    {
+      "name": "Heavy Crossbow",
+      "description": "Ranged Attack Roll: +4, range 100/400 ft. Hit: 13 (2d10 + 2) Piercing damage."
+    }
+  ]
+}

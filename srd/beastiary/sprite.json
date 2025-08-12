@@ -1,0 +1,58 @@
+{
+  "name": "Sprite",
+  "size": "Tiny",
+  "type": "Fey",
+  "alignment": "Neutral Good",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 10,
+    "dice": "4d4"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "fly": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 4,
+    "score": 14
+  },
+  "ability_scores": {
+    "strength": { "score": 3, "modifier": -4, "save": -4 },
+    "dexterity": { "score": 18, "modifier": 4, "save": 4 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 14, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 1 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 },
+    { "name": "Stealth", "modifier": 8 }
+  ],
+  "senses": {
+    "passive_perception": 13
+  },
+  "languages": ["Common", "Elvish", "Sylvan"],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Needle Sword",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 6 (1d4 + 4) Piercing damage."
+    },
+    {
+      "name": "Enchanting Bow",
+      "description": "Ranged Attack Roll: +6, range 40/160 ft. Hit: 1 Piercing damage, and the target has the Charmed condition until the start of the sprite’s next turn."
+    },
+    {
+      "name": "Heart Sight",
+      "description": "Charisma Saving Throw: DC 10, one creature within 5 feet the sprite can see (Celestials, Fiends, and Undead automatically fail the save). Failure: The sprite knows the target’s emotions and alignment."
+    },
+    {
+      "name": "Invisibility",
+      "description": "The sprite casts Invisibility on itself, requiring no spell components and using Charisma as the spellcasting ability."
+    }
+  ]
+}

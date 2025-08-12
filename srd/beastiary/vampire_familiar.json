@@ -1,0 +1,69 @@
+{
+  "name": "Vampire Familiar",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral Evil",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 65,
+    "dice": "10d8 + 20"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "climb": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 5,
+    "score": 15
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 5 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 2 },
+    "charisma": { "score": 14, "modifier": 2, "save": 2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 },
+    { "name": "Persuasion", "modifier": 4 },
+    { "name": "Stealth", "modifier": 7 }
+  ],
+  "resistances": ["Necrotic"],
+  "immunities": {
+    "condition": ["Charmed (except from its vampire master)"]
+  },
+  "gear": ["Daggers (10)"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "3",
+    "xp": 700
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Vampiric Connection",
+      "description": "While the familiar and its vampire master are on the same plane of existence, the vampire can communicate with the familiar telepathically, and the vampire can perceive through the familiar’s senses."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The familiar makes two Umbral Dagger attacks."
+    },
+    {
+      "name": "Umbral Dagger",
+      "description": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 20/60 ft. Hit: 5 (1d4 + 3) Piercing damage plus 7 (3d4) Necrotic damage. If the target is reduced to 0 Hit Points by this attack, the target becomes Stable but has the Poisoned condition for 1 hour. While it has the Poisoned condition, the target has the Paralyzed condition."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Deathless Agility",
+      "description": "The familiar takes the Dash or Disengage action."
+    }
+  ]
+}

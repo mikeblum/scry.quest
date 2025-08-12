@@ -1,0 +1,68 @@
+{
+  "name": "Young White Dragon",
+  "size": "Large",
+  "type": "Dragon (Chromatic)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 123,
+    "dice": "13d10 + 52"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "burrow": { "value": 20, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." },
+    "swim": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 3 },
+    "constitution": { "score": 18, "modifier": 4, "save": 4 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 3 },
+    "charisma": { "score": 12, "modifier": 1, "save": 1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 6 },
+    { "name": "Stealth", "modifier": 3 }
+  ],
+  "immunities": {
+    "damage": ["Cold"]
+  },
+  "senses": {
+    "blindsight": { "value": 30, "unit": "ft." },
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 16
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "6",
+    "xp": 2300
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Ice Walk",
+      "description": "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, Difficult Terrain composed of ice or snow doesn’t cost it extra movement."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes three Rend attacks."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +7, reach 10 ft. Hit: 9 (2d4 + 4) Slashing damage plus 2 (1d4) Cold damage."
+    },
+    {
+      "name": "Cold Breath",
+      "description": "Constitution Saving Throw: DC 15, each creature in a 30-foot Cone. Failure: 40 (9d8) Cold damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ]
+}

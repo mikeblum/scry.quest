@@ -1,0 +1,65 @@
+{
+  "name": "Lamia",
+  "size": "Large",
+  "type": "Fiend",
+  "alignment": "Chaotic Evil",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 97,
+    "dice": "13d10 + 26"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 14, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 15, "modifier": 2, "save": 2 },
+    "charisma": { "score": 16, "modifier": 3, "save": 3 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 7 },
+    { "name": "Insight", "modifier": 4 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 12
+  },
+  "languages": ["Abyssal", "Common"],
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The lamia makes two Claw attacks. It can replace one attack with a use of Corrupting Touch."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage plus 7 (2d6) Psychic damage."
+    },
+    {
+      "name": "Corrupting Touch",
+      "description": "Wisdom Saving Throw: DC 13, one creature the lamia can see within 5 feet. Failure: 13 (3d8) Psychic damage, and the target is cursed for 1 hour. Until the curse ends, the target has the Charmed and Poisoned conditions."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The lamia casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 13):\nAt Will: Disguise Self (can appear as a Large or Medium biped), Minor Illusion\n1/Day Each: Geas, Major Image, Scrying"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Leap",
+      "description": "The lamia jumps up to 30 feet by spending 10 feet of movement."
+    }
+  ]
+}

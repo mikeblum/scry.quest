@@ -1,0 +1,63 @@
+{
+  "name": "Bugbear Warrior",
+  "size": "Medium",
+  "type": "Fey (Goblinoid)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 33,
+    "dice": "6d8 + 6"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 15, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 8, "modifier": -1, "save": -1 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 0 },
+    "charisma": { "score": 9, "modifier": -1, "save": -1 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 6 },
+    { "name": "Survival", "modifier": 2 }
+  ],
+  "gear": ["Hide Armor", "Light Hammers (3)"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": ["Common", "Goblin"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Abduct",
+      "description": "The bugbear needn’t spend extra movement to move a creature it is grappling."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Grab",
+      "description": "Melee Attack Roll: +4, reach 10 ft. Hit: 9 (2d6 + 2) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 12)."
+    },
+    {
+      "name": "Light Hammer",
+      "description": "Melee or Ranged Attack Roll: +4 (with Advantage if the target is Grappled by the bugbear), reach 10 ft. or range 20/60 ft. Hit: 9 (3d4 + 2) Bludgeoning damage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Leap",
+      "description": "The bugbear jumps up to 30 feet by spending 10 feet of movement."
+    }
+  ]
+}

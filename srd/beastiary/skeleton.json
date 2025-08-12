@@ -1,0 +1,52 @@
+{
+  "name": "Skeleton",
+  "size": "Medium",
+  "type": "Undead",
+  "alignment": "Lawful Evil",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 13,
+    "dice": "2d8 + 4"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 3 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 8, "modifier": -1, "save": -1 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "vulnerabilities": ["Bludgeoning"],
+  "immunities": {
+    "damage": ["Poison"],
+    "condition": ["Exhaustion", "Poisoned"]
+  },
+  "gear": ["Shortbow", "Shortsword"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": ["understands Common plus one other language but can’t speak"],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Shortsword",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage."
+    },
+    {
+      "name": "Shortbow",
+      "description": "Ranged Attack Roll: +5, range 80/320 ft. Hit: 6 (1d6 + 3) Piercing damage."
+    }
+  ]
+}

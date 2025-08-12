@@ -1,0 +1,58 @@
+{
+  "name": "Seahorse",
+  "size": "Tiny",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 1,
+    "dice": "1d4 - 1"
+  },
+  "speed": {
+    "walk": { "value": 5, "unit": "ft." },
+    "swim": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 1, "modifier": -5, "save": -5 },
+    "dexterity": { "score": 12, "modifier": 1, "save": 1 },
+    "constitution": { "score": 8, "modifier": -1, "save": -1 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 2, "modifier": -4, "save": -4 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "senses": {
+    "passive_perception": 12
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 0
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Water Breathing",
+      "description": "The seahorse can breathe only underwater."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Ram",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Bludgeoning damage, or 11 (2d8 + 2) Bludgeoning damage if the seahorse moved 20+ feet straight toward the target immediately before the hit."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Bubble Dash",
+      "description": "While underwater, the seahorse moves up to half its Swim Speed without provoking Opportunity Attacks."
+    }
+  ]
+}

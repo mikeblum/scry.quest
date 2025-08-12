@@ -1,0 +1,66 @@
+{
+  "name": "Priest",
+  "size": "Medium or Small",
+  "type": "Humanoid (Cleric)",
+  "alignment": "Neutral",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 38,
+    "dice": "7d8 + 7"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 13, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 16, "modifier": 3, "save": 3 },
+    "charisma": { "score": 13, "modifier": 1, "save": 1 }
+  },
+  "skills": [
+    { "name": "Medicine", "modifier": 7 },
+    { "name": "Perception", "modifier": 5 },
+    { "name": "Religion", "modifier": 5 }
+  ],
+  "gear": ["Chain Shirt", "Holy Symbol", "Mace"],
+  "senses": {
+    "passive_perception": 15
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The priest makes two attacks, using Mace or Radiant Flame in any combination."
+    },
+    {
+      "name": "Mace",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage plus 5 (2d4) Radiant damage."
+    },
+    {
+      "name": "Radiant Flame",
+      "description": "Ranged Attack Roll: +5, range 60 ft. Hit: 11 (2d10) Radiant damage."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The priest casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 13):\nAt Will: Light, Thaumaturgy\n1/Day: Spirit Guardians"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Divine Aid",
+      "description": "The priest casts Bless, Dispel Magic, Healing Word, or Lesser Restoration, using the same spellcasting ability as Spellcasting.",
+      "usage": { "type": "per_day", "times": 3 }
+    }
+  ]
+}

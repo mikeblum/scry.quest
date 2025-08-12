@@ -1,0 +1,67 @@
+{
+  "name": "Pirate Captain",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 84,
+    "dice": "13d8 + 26"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 7,
+    "score": 17
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 3 },
+    "dexterity": { "score": 18, "modifier": 4, "save": 7 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 5 },
+    "charisma": { "score": 17, "modifier": 3, "save": 6 }
+  },
+  "skills": [
+    { "name": "Acrobatics", "modifier": 7 },
+    { "name": "Perception", "modifier": 5 }
+  ],
+  "gear": ["Pistol", "Rapier"],
+  "senses": {
+    "passive_perception": 15
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "6",
+    "xp": 2300
+  },
+  "proficiency_bonus": 3,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The pirate makes three attacks, using Rapier or Pistol in any combination."
+    },
+    {
+      "name": "Rapier",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 13 (2d8 + 4) Piercing damage, and the pirate has Advantage on the next attack roll it makes before the end of this turn."
+    },
+    {
+      "name": "Pistol",
+      "description": "Ranged Attack Roll: +7, range 30/90 ft. Hit: 15 (2d10 + 4) Piercing damage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Captain’s Charm",
+      "description": "Wisdom Saving Throw: DC 14, one creature the pirate can see within 30 feet. Failure: The target has the Charmed condition until the start of the pirate’s next turn."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Riposte",
+      "trigger": "The pirate is hit by a melee attack roll while holding a weapon.",
+      "response": "The pirate adds 3 to its AC against that attack, possibly causing it to miss. On a miss, the pirate makes one Rapier attack against the triggering creature if within range."
+    }
+  ]
+}

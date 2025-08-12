@@ -1,0 +1,67 @@
+{
+  "name": "Young Blue Dragon",
+  "size": "Large",
+  "type": "Dragon (Chromatic)",
+  "alignment": "Lawful Evil",
+  "armor_class": 18,
+  "hit_points": {
+    "average": 152,
+    "dice": "16d10 + 64"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "burrow": { "value": 20, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 4,
+    "score": 14
+  },
+  "ability_scores": {
+    "strength": { "score": 21, "modifier": 5, "save": 5 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 4 },
+    "constitution": { "score": 19, "modifier": 4, "save": 4 },
+    "intelligence": { "score": 14, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 5 },
+    "charisma": { "score": 17, "modifier": 3, "save": 3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 9 },
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "immunities": {
+    "damage": ["Lightning"]
+  },
+  "senses": {
+    "blindsight": { "value": 30, "unit": "ft." },
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 19
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "9",
+    "xp": 5000
+  },
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The dragon can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes three Rend attacks."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +9, reach 10 ft. Hit: 12 (2d6 + 5) Slashing damage plus 5 (1d10) Lightning damage."
+    },
+    {
+      "name": "Lightning Breath",
+      "description": "Dexterity Saving Throw: DC 16, each creature in a 60-foot-long, 5-foot-wide Line. Failure: 55 (10d10) Lightning damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ]
+}

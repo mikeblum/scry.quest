@@ -1,0 +1,76 @@
+{
+  "name": "Vrock",
+  "size": "Large",
+  "type": "Fiend (Demon)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 152,
+    "dice": "16d10 + 64"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 5 },
+    "constitution": { "score": 18, "modifier": 4, "save": 4 },
+    "intelligence": { "score": 8, "modifier": -1, "save": -1 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 4 },
+    "charisma": { "score": 8, "modifier": -1, "save": 2 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "resistances": ["Cold", "Fire", "Lightning"],
+  "immunities": {
+    "damage": ["Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 11
+  },
+  "languages": ["Abyssal"],
+  "telepathy": { "value": 120, "unit": "ft." },
+  "challenge_rating": {
+    "rating": "6",
+    "xp": 2300
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Demonic Restoration",
+      "description": "If the vrock dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss."
+    },
+    {
+      "name": "Magic Resistance",
+      "description": "The vrock has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The vrock makes two Shred attacks."
+    },
+    {
+      "name": "Shred",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 10 (2d6 + 3) Piercing damage plus 10 (3d6) Poison damage."
+    },
+    {
+      "name": "Spores",
+      "description": "Constitution Saving Throw: DC 15, each creature in a 20-foot Emanation originating from the vrock. Failure: The target has the Poisoned condition and repeats the save at the end of its turns, ending the effect on itself on a success. While Poisoned, the target takes 5 (1d10) Poison damage at the start of each of its turns. Emptying a flask of Holy Water on the target ends the effect early.",
+      "usage": { "type": "recharge", "range": [6, 6] }
+    },
+    {
+      "name": "Stunning Screech",
+      "description": "Constitution Saving Throw: DC 15, each creature in a 20-foot Emanation originating from the vrock (demons succeed automatically). Failure: 10 (3d6) Thunder damage, and the target has the Stunned condition until the end of the vrock’s next turn.",
+      "usage": { "type": "per_day", "times": 1 }
+    }
+  ]
+}

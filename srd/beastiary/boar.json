@@ -1,0 +1,50 @@
+{
+  "name": "Boar",
+  "size": "Medium",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 11,
+  "hit_points": {
+    "average": 13,
+    "dice": "2d8 + 4"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 13, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 0 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 9, "modifier": -1, "save": -1 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "skills": [],
+  "resistances": [],
+  "immunities": {},
+  "senses": {
+    "passive_perception": 9
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Bloodied Fury",
+      "description": "While Bloodied, the boar has Advantage on attack rolls."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Gore",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Piercing damage. If the target is a Medium or smaller creature and the boar moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 (1d6) Piercing damage and has the Prone condition."
+    }
+  ]
+}

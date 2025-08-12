@@ -1,0 +1,66 @@
+{
+  "name": "Troll",
+  "size": "Large",
+  "type": "Giant",
+  "alignment": "Chaotic Evil",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 94,
+    "dice": "9d10 + 45"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 20, "modifier": 5, "save": 5 },
+    "intelligence": { "score": 7, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 9, "modifier": -1, "save": -1 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 5 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 15
+  },
+  "languages": ["Giant"],
+  "challenge_rating": {
+    "rating": "5",
+    "xp": 1800
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Loathsome Limbs",
+      "description": "If the troll ends any turn Bloodied and took 15+ Slashing damage during that turn, one of the troll’s limbs is severed, falls into the troll’s space, and becomes a Troll Limb. The limb acts immediately after the troll’s turn. The troll has 1 Exhaustion level for each missing limb, and it grows replacement limbs the next time it regains Hit Points.",
+      "usage": { "type": "per_day", "times": 4 }
+    },
+    {
+      "name": "Regeneration",
+      "description": "The troll regains 15 Hit Points at the start of each of its turns. If the troll takes Acid or Fire damage, this trait doesn’t function on the troll’s next turn. The troll dies only if it starts its turn with 0 Hit Points and doesn’t regenerate."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The troll makes three Rend attacks."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +7, reach 10 ft. Hit: 11 (2d6 + 4) Slashing damage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Charge",
+      "description": "The troll moves up to half its Speed straight toward an enemy it can see."
+    }
+  ]
+}

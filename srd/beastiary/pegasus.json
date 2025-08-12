@@ -1,0 +1,45 @@
+{
+  "name": "Pegasus",
+  "size": "Large",
+  "type": "Celestial",
+  "alignment": "Chaotic Good",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 59,
+    "dice": "7d10 + 21"
+  },
+  "speed": {
+    "walk": { "value": 60, "unit": "ft." },
+    "fly": { "value": 90, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 4 },
+    "constitution": { "score": 16, "modifier": 3, "save": 5 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 15, "modifier": 2, "save": 4 },
+    "charisma": { "score": 13, "modifier": 1, "save": 3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 6 }
+  ],
+  "senses": {
+    "passive_perception": 16
+  },
+  "languages": ["understands Celestial, Common, Elvish, and Sylvan but can’t speak"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Hooves",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 7 (1d6 + 4) Bludgeoning damage plus 5 (2d4) Radiant damage."
+    }
+  ]
+}

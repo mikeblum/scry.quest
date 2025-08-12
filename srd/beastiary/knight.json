@@ -1,0 +1,60 @@
+{
+  "name": "Knight",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 18,
+  "hit_points": {
+    "average": 52,
+    "dice": "8d8 + 16"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 0 },
+    "constitution": { "score": 14, "modifier": 2, "save": 4 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 2 },
+    "charisma": { "score": 15, "modifier": 2, "save": 2 }
+  },
+  "immunities": {
+    "condition": ["Frightened"]
+  },
+  "gear": ["Greatsword", "Heavy Crossbow", "Plate Armor"],
+  "senses": {
+    "passive_perception": 10
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "3",
+    "xp": 700
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The knight makes two attacks, using Greatsword or Heavy Crossbow in any combination."
+    },
+    {
+      "name": "Greatsword",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage plus 4 (1d8) Radiant damage."
+    },
+    {
+      "name": "Heavy Crossbow",
+      "description": "Ranged Attack Roll: +2, range 100/400 ft. Hit: 11 (2d10) Piercing damage plus 4 (1d8) Radiant damage."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Parry",
+      "trigger": "The knight is hit by a melee attack roll while holding a weapon.",
+      "response": "The knight adds 2 to its AC against that attack, possibly causing it to miss."
+    }
+  ]
+}

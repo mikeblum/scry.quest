@@ -1,0 +1,64 @@
+{
+  "name": "Cloud Giant",
+  "size": "Huge",
+  "type": "Giant",
+  "alignment": "Neutral",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 200,
+    "dice": "16d12 + 96"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "fly": { "value": 20, "unit": "ft.", "hover": true }
+  },
+  "initiative": {
+    "modifier": 4,
+    "score": 14
+  },
+  "ability_scores": {
+    "strength": { "score": 27, "modifier": 8, "save": 8 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 22, "modifier": 6, "save": 10 },
+    "intelligence": { "score": 12, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 16, "modifier": 3, "save": 7 },
+    "charisma": { "score": 16, "modifier": 3, "save": 3 }
+  },
+  "skills": [
+    { "name": "Insight", "modifier": 7 },
+    { "name": "Perception", "modifier": 11 }
+  ],
+  "senses": {
+    "passive_perception": 21
+  },
+  "languages": ["Common", "Giant"],
+  "challenge_rating": {
+    "rating": "9",
+    "xp": 5000
+  },
+  "proficiency_bonus": 4,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The giant makes two attacks, using Thunderous Mace or Thundercloud in any combination. It can replace one attack with a use of Spellcasting to cast Fog Cloud."
+    },
+    {
+      "name": "Thunderous Mace",
+      "description": "Melee Attack Roll: +12, reach 10 ft. Hit: 21 (3d8 + 8) Bludgeoning damage plus 7 (2d6) Thunder damage."
+    },
+    {
+      "name": "Thundercloud",
+      "description": "Ranged Attack Roll: +12, range 240 ft. Hit: 18 (3d6 + 8) Thunder damage, and the target has the Incapacitated condition until the end of its next turn."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The giant casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 15):\nAt Will: Detect Magic, Fog Cloud, Light\n1/Day Each: Control Weather, Gaseous Form, Telekinesis"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Misty Step",
+      "description": "The giant casts the Misty Step spell, using the same spellcasting ability as Spellcasting."
+    }
+  ]
+}

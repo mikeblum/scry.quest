@@ -1,0 +1,73 @@
+{
+  "name": "Chain Devil",
+  "size": "Medium",
+  "type": "Fiend (Devil)",
+  "alignment": "Lawful Evil",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 85,
+    "dice": "10d8 + 40"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 5,
+    "score": 15
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 18, "modifier": 4, "save": 7 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 4 },
+    "charisma": { "score": 14, "modifier": 2, "save": 2 }
+  },
+  "resistances": ["Bludgeoning", "Cold", "Piercing", "Slashing"],
+  "immunities": {
+    "damage": ["Fire", "Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft.", "impeded": "magical Darkness" },
+    "passive_perception": 11
+  },
+  "languages": ["Infernal"],
+  "telepathy": { "value": 120, "unit": "ft." },
+  "challenge_rating": {
+    "rating": "8",
+    "xp": 3900
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Diabolical Restoration",
+      "description": "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Nine Hells."
+    },
+    {
+      "name": "Magic Resistance",
+      "description": "The devil has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The devil makes two Chain attacks and uses Conjure Infernal Chain."
+    },
+    {
+      "name": "Chain",
+      "description": "Melee Attack Roll: +7, reach 10 ft. Hit: 11 (2d6 + 4) Slashing damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 14) from one of two chains, and it has the Restrained condition until the grapple ends."
+    },
+    {
+      "name": "Conjure Infernal Chain",
+      "description": "Dexterity Saving Throw: DC 15, one creature the devil can see within 60 feet. Failure: 9 (2d4 + 4) Fire damage, and the target has the Restrained condition until the end of the devil’s next turn, at which point the chain disappears. If the target is Large or smaller, the devil moves the target up to 30 feet straight toward itself. Success: The chain disappears."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Unnerving Gaze",
+      "trigger": "A creature the devil can see starts its turn within 30 feet of the devil and can see the devil.",
+      "response": "Wisdom Saving Throw: DC 15, the triggering creature. Failure: The target has the Frightened condition until the end of its turn. Success: The target is immune to this devil’s Unnerving Gaze for 24 hours."
+    }
+  ]
+}

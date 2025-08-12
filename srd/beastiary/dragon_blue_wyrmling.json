@@ -1,0 +1,67 @@
+{
+  "name": "Blue Dragon Wyrmling",
+  "size": "Medium",
+  "type": "Dragon (Chromatic)",
+  "alignment": "Lawful Evil",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 65,
+    "dice": "10d8 + 20"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "burrow": { "value": 15, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 2 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 12, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 2 },
+    "charisma": { "score": 15, "modifier": 2, "save": 2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 },
+    { "name": "Stealth", "modifier": 2 }
+  ],
+  "immunities": {
+    "damage": ["Lightning"]
+  },
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["Draconic"],
+  "challenge_rating": {
+    "rating": "3",
+    "xp": 700
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The dragon can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes two Rend attacks."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 8 (1d10 + 3) Slashing damage plus 3 (1d6) Lightning damage."
+    },
+    {
+      "name": "Lightning Breath",
+      "description": "Dexterity Saving Throw: DC 12, each creature in a 30-foot-long, 5-foot-wide Line. Failure: 21 (6d6) Lightning damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ]
+}

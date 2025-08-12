@@ -1,0 +1,60 @@
+{
+  "name": "Gray Ooze",
+  "size": "Medium",
+  "type": "Ooze",
+  "alignment": "Unaligned",
+  "armor_class": 9,
+  "hit_points": {
+    "average": 22,
+    "dice": "3d8 + 9"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "climb": { "value": 10, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -2,
+    "score": 8
+  },
+  "ability_scores": {
+    "strength": { "score": 12, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 6, "modifier": -2, "save": -2 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 6, "modifier": -2, "save": -2 },
+    "charisma": { "score": 2, "modifier": -4, "save": -4 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 2 }
+  ],
+  "resistances": ["Acid", "Cold", "Fire"],
+  "immunities": {
+    "condition": ["Blinded", "Charmed", "Deafened", "Exhaustion", "Frightened", "Grappled", "Prone", "Restrained"]
+  },
+  "senses": {
+    "blindsight": { "value": 60, "unit": "ft." },
+    "passive_perception": 8
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amorphous",
+      "description": "The ooze can move through a space as narrow as 1 inch without expending extra movement to do so."
+    },
+    {
+      "name": "Corrosive Form",
+      "description": "Nonmagical ammunition is destroyed immediately after hitting the ooze and dealing any damage. Any nonmagical weapon takes a cumulative −1 penalty to attack rolls immediately after dealing damage to the ooze and coming into contact with it. The weapon is destroyed if the penalty reaches −5. The penalty can be removed by casting the Mending spell on the weapon. The ooze can eat through 2-inch-thick, nonmagical metal or wood in 1 round."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Pseudopod",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 10 (2d8 + 1) Acid damage. Nonmagical armor worn by the target takes a −1 penalty to the AC it offers. The armor is destroyed if the penalty reduces its AC to 10. The penalty can be removed by casting the Mending spell on the armor."
+    }
+  ]
+}

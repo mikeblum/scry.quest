@@ -1,0 +1,68 @@
+{
+  "name": "Chuul",
+  "size": "Large",
+  "type": "Aberration",
+  "alignment": "Chaotic Evil",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 76,
+    "dice": "9d10 + 27"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 5, "modifier": -3, "save": -3 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 0 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 }
+  ],
+  "immunities": {
+    "damage": ["Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["understands Deep Speech but can’t speak"],
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The chuul can breathe air and water."
+    },
+    {
+      "name": "Sense Magic",
+      "description": "The chuul senses magic within 120 feet of itself. This trait otherwise works like the Detect Magic spell but isn’t itself magical."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The chuul makes two Pincer attacks and uses Paralyzing Tentacles."
+    },
+    {
+      "name": "Pincer",
+      "description": "Melee Attack Roll: +6, reach 10 ft. Hit: 9 (1d10 + 4) Bludgeoning damage. If the target is a Large or smaller creature, it has the Grappled condition (escape DC 14) from one of two pincers."
+    },
+    {
+      "name": "Paralyzing Tentacles",
+      "description": "Constitution Saving Throw: DC 13, one creature Grappled by the chuul. Failure: The target has the Poisoned condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically. While Poisoned, the target has the Paralyzed condition."
+    }
+  ]
+}

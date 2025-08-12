@@ -1,0 +1,77 @@
+{
+  "name": "Oni",
+  "size": "Large",
+  "type": "Fiend",
+  "alignment": "Lawful Evil",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 119,
+    "dice": "14d10 + 42"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "fly": { "value": 30, "unit": "ft.", "hover": true }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 3 },
+    "constitution": { "score": 16, "modifier": 3, "save": 6 },
+    "intelligence": { "score": 14, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 4 },
+    "charisma": { "score": 15, "modifier": 2, "save": 5 }
+  },
+  "skills": [
+    { "name": "Arcana", "modifier": 5 },
+    { "name": "Deception", "modifier": 8 },
+    { "name": "Perception", "modifier": 4 }
+  ],
+  "resistances": ["Cold"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["Common", "Giant"],
+  "challenge_rating": {
+    "rating": "7",
+    "xp": 2900
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Regeneration",
+      "description": "The oni regains 10 Hit Points at the start of each of its turns if it has at least 1 Hit Point."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The oni makes two Claw or Nightmare Ray attacks. It can replace one attack with a use of Spellcasting."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +7, reach 10 ft. Hit: 10 (1d12 + 4) Slashing damage plus 9 (2d8) Necrotic damage."
+    },
+    {
+      "name": "Nightmare Ray",
+      "description": "Ranged Attack Roll: +5, range 60 ft. Hit: 9 (2d6 + 2) Psychic damage, and the target has the Frightened condition until the start of the oni’s next turn."
+    },
+    {
+      "name": "Shape-Shift",
+      "description": "The oni shape-shifts into a Small or Medium Humanoid or a Large Giant, or it returns to its true form. Other than its size, its game statistics are the same in each form. Any equipment it is wearing or carrying isn’t transformed."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The oni casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 13):\n1/Day Each: Charm Person (level 2 version), Darkness, Gaseous Form, Sleep"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Invisibility",
+      "description": "The oni casts Invisibility on itself, requiring no spell components and using the same spellcasting ability as Spellcasting."
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Lemure",
+  "size": "Medium",
+  "type": "Fiend (Devil)",
+  "alignment": "Lawful Evil",
+  "armor_class": 9,
+  "hit_points": {
+    "average": 9,
+    "dice": "2d8"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -3,
+    "score": 7
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 5, "modifier": -3, "save": -3 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 0 },
+    "charisma": { "score": 3, "modifier": -4, "save": -4 }
+  },
+  "resistances": ["Cold"],
+  "immunities": {
+    "damage": ["Fire", "Poison"],
+    "condition": ["Charmed", "Frightened", "Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft.", "impeded": "magical Darkness" },
+    "passive_perception": 10
+  },
+  "languages": ["understands Infernal but can’t speak"],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Hellish Restoration",
+      "description": "If the lemure dies in the Nine Hells, it revives with all its Hit Points in 1d10 days unless it is killed by a creature under the effects of a Bless spell or its remains are sprinkled with Holy Water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Vile Slime",
+      "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Poison damage."
+    }
+  ]
+}

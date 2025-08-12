@@ -1,0 +1,76 @@
+{
+  "name": "Succubus",
+  "size": "Medium",
+  "type": "Fiend",
+  "alignment": "Neutral Evil",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 71,
+    "dice": "13d8 + 13"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 8, "modifier": -1, "save": -1 },
+    "dexterity": { "score": 17, "modifier": 3, "save": 3 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 15, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 20, "modifier": 5, "save": 5 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 9 },
+    { "name": "Insight", "modifier": 5 },
+    { "name": "Perception", "modifier": 5 },
+    { "name": "Persuasion", "modifier": 9 },
+    { "name": "Stealth", "modifier": 7 }
+  ],
+  "resistances": ["Cold", "Fire", "Poison", "Psychic"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 15
+  },
+  "languages": ["Abyssal", "Common", "Infernal"],
+  "telepathy": { "value": 60, "unit": "ft." },
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Incubus Form",
+      "description": "When the succubus finishes a Long Rest, it can shape-shift into an Incubus, using that stat block instead of this one. Any equipment it is wearing or carrying isn’t transformed."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The succubus makes one Fiendish Touch attack and uses Charm or Draining Kiss."
+    },
+    {
+      "name": "Fiendish Touch",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 16 (2d10 + 5) Psychic damage."
+    },
+    {
+      "name": "Charm",
+      "description": "The succubus casts Dominate Person (level 8 version), requiring no spell components and using Charisma as the spellcasting ability (spell save DC 15)."
+    },
+    {
+      "name": "Draining Kiss",
+      "description": "Constitution Saving Throw: DC 15, one creature Charmed by the succubus within 5 feet. Failure: 13 (3d8) Psychic damage. Success: Half damage. Failure or Success: The target’s Hit Point maximum decreases by an amount equal to the damage taken."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Shape-Shift",
+      "description": "The succubus shape-shifts into a Medium or Small Humanoid, or it returns to its true form. Its game statistics are the same in each form, except its Fly Speed is available only in its true form. Any equipment it is wearing or carrying isn’t transformed."
+    }
+  ]
+}
