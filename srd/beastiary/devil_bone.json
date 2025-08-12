@@ -1,0 +1,71 @@
+{
+  "name": "Bone Devil",
+  "size": "Large",
+  "type": "Fiend (Devil)",
+  "alignment": "Lawful Evil",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 161,
+    "dice": "17d10 + 68"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "fly": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 7,
+    "score": 17
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 8 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 3 },
+    "constitution": { "score": 18, "modifier": 4, "save": 4 },
+    "intelligence": { "score": 13, "modifier": 1, "save": 5 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 6 },
+    "charisma": { "score": 16, "modifier": 3, "save": 7 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 7 },
+    { "name": "Insight", "modifier": 6 }
+  ],
+  "resistances": ["Cold"],
+  "immunities": {
+    "damage": ["Fire", "Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft.", "impeded": "magical Darkness" },
+    "passive_perception": 12
+  },
+  "languages": ["Infernal"],
+  "telepathy": { "value": 120, "unit": "ft." },
+  "challenge_rating": {
+    "rating": "9",
+    "xp": 5000
+  },
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "name": "Diabolical Restoration",
+      "description": "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Nine Hells."
+    },
+    {
+      "name": "Magic Resistance",
+      "description": "The devil has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The devil makes two Claw attacks and one Infernal Sting attack."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +8, reach 10 ft. Hit: 13 (2d8 + 4) Slashing damage."
+    },
+    {
+      "name": "Infernal Sting",
+      "description": "Melee Attack Roll: +8, reach 10 ft. Hit: 15 (2d10 + 4) Piercing damage plus 18 (4d8) Poison damage, and the target has the Poisoned condition until the start of the devil’s next turn. While Poisoned, the target can’t regain Hit Points."
+    }
+  ]
+}

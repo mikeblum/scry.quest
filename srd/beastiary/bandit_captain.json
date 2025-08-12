@@ -1,0 +1,61 @@
+{
+  "name": "Bandit Captain",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 52,
+    "dice": "8d8 + 16"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 15, "modifier": 2, "save": 4 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 5 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 14, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 2 },
+    "charisma": { "score": 14, "modifier": 2, "save": 2 }
+  },
+  "skills": [
+    { "name": "Athletics", "modifier": 4 },
+    { "name": "Deception", "modifier": 4 }
+  ],
+  "gear": ["Pistol", "Scimitar", "Studded Leather Armor"],
+  "senses": {
+    "passive_perception": 10
+  },
+  "languages": ["Common", "Thieves’ Cant"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The bandit makes two attacks, using Scimitar and Pistol in any combination."
+    },
+    {
+      "name": "Scimitar",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Slashing damage."
+    },
+    {
+      "name": "Pistol",
+      "description": "Ranged Attack Roll: +5, range 30/90 ft. Hit: 8 (1d10 + 3) Piercing damage."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Parry",
+      "trigger": "The bandit is hit by a melee attack roll while holding a weapon.",
+      "response": "The bandit adds 2 to its AC against that attack, possibly causing it to miss."
+    }
+  ]
+}

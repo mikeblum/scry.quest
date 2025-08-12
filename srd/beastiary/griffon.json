@@ -1,0 +1,50 @@
+{
+  "name": "Griffon",
+  "size": "Large",
+  "type": "Monstrosity",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 59,
+    "dice": "7d10 + 21"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 1 },
+    "charisma": { "score": 8, "modifier": -1, "save": -1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 5 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 15
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The griffon makes two Rend attacks."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 8 (1d8 + 4) Piercing damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 14) from both of the griffon’s front claws."
+    }
+  ]
+}

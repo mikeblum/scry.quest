@@ -1,0 +1,67 @@
+{
+  "name": "Imp",
+  "size": "Tiny",
+  "type": "Fiend (Devil)",
+  "alignment": "Lawful Evil",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 21,
+    "dice": "6d4 + 6"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." },
+    "fly": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 6, "modifier": -2, "save": -2 },
+    "dexterity": { "score": 17, "modifier": 3, "save": 3 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 14, "modifier": 2, "save": 2 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 4 },
+    { "name": "Insight", "modifier": 3 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "resistances": ["Cold"],
+  "immunities": {
+    "damage": ["Fire", "Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft.", "impeded": "magical Darkness" },
+    "passive_perception": 11
+  },
+  "languages": ["Common", "Infernal"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Magic Resistance",
+      "description": "The imp has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Sting",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage plus 7 (2d6) Poison damage."
+    },
+    {
+      "name": "Invisibility",
+      "description": "The imp casts Invisibility on itself, requiring no spell components and using Charisma as the spellcasting ability."
+    },
+    {
+      "name": "Shape-Shift",
+      "description": "The imp shape-shifts to resemble a rat (Speed 20 ft.), a raven (20 ft., Fly 60 ft.), or a spider (20 ft., Climb 20 ft.), or it returns to its true form. Its game statistics are the same in each form, except for its Speed. Any equipment it is wearing or carrying isn’t transformed."
+    }
+  ]
+}

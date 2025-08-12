@@ -1,0 +1,53 @@
+{
+  "name": "Cat",
+  "size": "Tiny",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 2,
+    "dice": "1d4"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "climb": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 3, "modifier": -4, "save": -4 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 4 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 3, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 },
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Jumper",
+      "description": "The cat’s jump distance is determined using its Dexterity rather than its Strength."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Scratch",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Slashing damage."
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Hobgoblin Warrior",
+  "size": "Medium",
+  "type": "Fey (Goblinoid)",
+  "alignment": "Lawful Evil",
+  "armor_class": 18,
+  "hit_points": {
+    "average": 11,
+    "dice": "2d8 + 2"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 13, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 12, "modifier": 1, "save": 1 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 9, "modifier": -1, "save": -1 }
+  },
+  "gear": ["Half Plate Armor", "Longbow", "Longsword", "Shield"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": ["Common", "Goblin"],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The hobgoblin has Advantage on an attack roll against a creature if at least one of the hobgoblin’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Longsword",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 12 (2d10 + 1) Slashing damage."
+    },
+    {
+      "name": "Longbow",
+      "description": "Ranged Attack Roll: +3, range 150/600 ft. Hit: 5 (1d8 + 1) Piercing damage plus 7 (3d4) Poison damage."
+    }
+  ]
+}

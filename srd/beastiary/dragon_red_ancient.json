@@ -1,0 +1,96 @@
+{
+  "name": "Ancient Red Dragon",
+  "size": "Gargantuan",
+  "type": "Dragon (Chromatic)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 22,
+  "hit_points": {
+    "average": 507,
+    "dice": "26d20 + 234"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "climb": { "value": 40, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 14,
+    "score": 24
+  },
+  "ability_scores": {
+    "strength": { "score": 30, "modifier": 10, "save": 10 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 7 },
+    "constitution": { "score": 29, "modifier": 9, "save": 9 },
+    "intelligence": { "score": 18, "modifier": 4, "save": 4 },
+    "wisdom": { "score": 15, "modifier": 2, "save": 9 },
+    "charisma": { "score": 27, "modifier": 8, "save": 8 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 16 },
+    { "name": "Stealth", "modifier": 7 }
+  ],
+  "immunities": {
+    "damage": ["Fire"]
+  },
+  "senses": {
+    "blindsight": { "value": 60, "unit": "ft." },
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 26
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "24",
+    "xp": 62000,
+    "lair_xp": 75000
+  },
+  "proficiency_bonus": 7,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The dragon can breathe air and water."
+    },
+    {
+      "name": "Legendary Resistance",
+      "description": "If the dragon fails a saving throw, it can choose to succeed instead.",
+      "usage": { "type": "per_day", "times": 4, "lair_times": 5 }
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast Scorching Ray (level 3 version)."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +17, reach 15 ft. Hit: 19 (2d8 + 10) Slashing damage plus 10 (3d6) Fire damage."
+    },
+    {
+      "name": "Fire Breath",
+      "description": "Dexterity Saving Throw: DC 24, each creature in a 90-foot Cone. Failure: 91 (26d6) Fire damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 23, +15 to hit with spell attacks):\nAt Will: Command (level 2 version), Detect Magic, Scorching Ray (level 3 version)\n1/Day Each: Fireball (level 6 version), Scrying"
+    }
+  ],
+  "legendary_actions": {
+    "uses": 3,
+    "lair_uses": 4,
+    "description": "Immediately after another creature’s turn, the dragon can expend a use to take one of the following actions. The dragon regains all expended uses at the start of each of its turns.",
+    "actions": [
+      {
+        "name": "Commanding Presence",
+        "description": "The dragon uses Spellcasting to cast Command (level 2 version). The dragon can’t take this action again until the start of its next turn."
+      },
+      {
+        "name": "Fiery Rays",
+        "description": "The dragon uses Spellcasting to cast Scorching Ray (level 3 version). The dragon can’t take this action again until the start of its next turn."
+      },
+      {
+        "name": "Pounce",
+        "description": "The dragon moves up to half its Speed, and it makes one Rend attack."
+      }
+    ]
+  }
+}

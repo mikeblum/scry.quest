@@ -1,0 +1,57 @@
+{
+  "name": "Ghast",
+  "size": "Medium",
+  "type": "Undead",
+  "alignment": "Chaotic Evil",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 36,
+    "dice": "8d8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 17, "modifier": 3, "save": 3 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 2 },
+    "charisma": { "score": 8, "modifier": -1, "save": -1 }
+  },
+  "resistances": ["Necrotic"],
+  "immunities": {
+    "damage": ["Poison"],
+    "condition": ["Charmed", "Exhaustion", "Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": ["Common"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Stench",
+      "description": "Constitution Saving Throw: DC 10, any creature that starts its turn in a 5-foot Emanation originating from the ghast. Failure: The target has the Poisoned condition until the start of its next turn. Success: The target is immune to this ghast’s Stench for 24 hours."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Piercing damage plus 9 (2d8) Necrotic damage."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage. If the target is a non-Undead creature, it is subjected to the following effect. Constitution Saving Throw: DC 10. Failure: The target has the Paralyzed condition until the end of its next turn."
+    }
+  ]
+}

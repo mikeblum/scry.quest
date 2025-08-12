@@ -1,0 +1,52 @@
+{
+  "name": "Lizard",
+  "size": "Tiny",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 10,
+  "hit_points": {
+    "average": 2,
+    "dice": "1d4"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." },
+    "climb": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 2, "modifier": -4, "save": -4 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 0 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 8, "modifier": -1, "save": -1 },
+    "charisma": { "score": 3, "modifier": -4, "save": -4 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 }
+  ],
+  "senses": {
+    "darkvision": { "value": 30, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Spider Climb",
+      "description": "The lizard can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 1 Piercing damage."
+    }
+  ]
+}

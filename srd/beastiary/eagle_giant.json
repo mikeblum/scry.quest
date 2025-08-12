@@ -1,0 +1,50 @@
+{
+  "name": "Giant Eagle",
+  "size": "Large",
+  "type": "Celestial",
+  "alignment": "Neutral Good",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 26,
+    "dice": "4d10 + 4"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 17, "modifier": 3, "save": 3 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 8, "modifier": -1, "save": -1 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 10, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 6 }
+  ],
+  "resistances": ["Necrotic", "Radiant"],
+  "senses": {
+    "passive_perception": 16
+  },
+  "languages": ["Celestial", "understands Common and Primordial (Auran) but can’t speak them"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The eagle makes two Rend attacks."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Slashing damage plus 3 (1d6) Radiant damage."
+    }
+  ]
+}

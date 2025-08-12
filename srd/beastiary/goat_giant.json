@@ -1,0 +1,46 @@
+{
+  "name": "Giant Goat",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 11,
+  "hit_points": {
+    "average": 19,
+    "dice": "3d10 + 3"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "climb": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 5 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 3, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 6, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Ram",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature and the goat moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 (2d4) Bludgeoning damage and has the Prone condition."
+    }
+  ]
+}

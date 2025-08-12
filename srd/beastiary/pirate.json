@@ -1,0 +1,50 @@
+{
+  "name": "Pirate",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 33,
+    "dice": "6d8 + 6"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 5,
+    "score": 15
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 5 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 8, "modifier": -1, "save": -1 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 14, "modifier": 2, "save": 4 }
+  },
+  "gear": ["Daggers (6)", "Leather Armor"],
+  "senses": {
+    "passive_perception": 11
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The pirate makes two Dagger attacks. It can replace one attack with a use of Enthralling Panache."
+    },
+    {
+      "name": "Dagger",
+      "description": "Melee or Ranged Attack Roll: +5, reach 5 ft. or range 20/60 ft. Hit: 5 (1d4 + 3) Piercing damage."
+    },
+    {
+      "name": "Enthralling Panache",
+      "description": "Wisdom Saving Throw: DC 12, one creature the pirate can see within 30 feet. Failure: The target has the Charmed condition until the start of the pirate’s next turn."
+    }
+  ]
+}

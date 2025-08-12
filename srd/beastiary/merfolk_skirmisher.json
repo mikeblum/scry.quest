@@ -1,0 +1,52 @@
+{
+  "name": "Merfolk Skirmisher",
+  "size": "Medium",
+  "type": "Elemental",
+  "alignment": "Neutral",
+  "armor_class": 11,
+  "hit_points": {
+    "average": 11,
+    "dice": "2d8 + 2"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "swim": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 12, "modifier": 1, "save": 1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "senses": {
+    "passive_perception": 12
+  },
+  "languages": ["Common", "Primordial (Aquan)"],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The merfolk can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Ocean Spear",
+      "description": "Melee or Ranged Attack Roll: +2, reach 5 ft. or range 20/60 ft. Hit: 3 (1d6) Piercing damage plus 2 (1d4) Cold damage. If the target is a creature, its Speed decreases by 10 feet until the end of its next turn. Hit or Miss: The spear magically returns to the merfolk’s hand immediately after a ranged attack."
+    }
+  ]
+}

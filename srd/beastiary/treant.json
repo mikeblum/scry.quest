@@ -1,0 +1,62 @@
+{
+  "name": "Treant",
+  "size": "Huge",
+  "type": "Plant",
+  "alignment": "Chaotic Good",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 138,
+    "dice": "12d12 + 60"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 23, "modifier": 6, "save": 6 },
+    "dexterity": { "score": 8, "modifier": -1, "save": -1 },
+    "constitution": { "score": 21, "modifier": 5, "save": 5 },
+    "intelligence": { "score": 12, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 16, "modifier": 3, "save": 3 },
+    "charisma": { "score": 12, "modifier": 1, "save": 1 }
+  },
+  "vulnerabilities": ["Fire"],
+  "resistances": ["Bludgeoning", "Piercing"],
+  "senses": {
+    "passive_perception": 13
+  },
+  "languages": ["Common", "Druidic", "Elvish", "Sylvan"],
+  "challenge_rating": {
+    "rating": "9",
+    "xp": 5000
+  },
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "name": "Siege Monster",
+      "description": "The treant deals double damage to objects and structures."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The treant makes two Slam attacks."
+    },
+    {
+      "name": "Slam",
+      "description": "Melee Attack Roll: +10, reach 5 ft. Hit: 16 (3d6 + 6) Bludgeoning damage."
+    },
+    {
+      "name": "Hail of Bark",
+      "description": "Ranged Attack Roll: +10, range 180 ft. Hit: 28 (4d10 + 6) Piercing damage."
+    },
+    {
+      "name": "Animate Trees",
+      "description": "The treant magically animates up to two trees it can see within 60 feet of itself. Each tree uses the Treant stat block, except it has Intelligence and Charisma scores of 1, it can’t speak, and it lacks this action. The tree takes its turn immediately after the treant on the same Initiative count, and it obeys the treant. A tree remains animate for 1 day or until it dies, the treant dies, or it is more than 120 feet from the treant. The tree then takes root if possible.",
+      "usage": { "type": "per_day", "times": 1 }
+    }
+  ]
+}

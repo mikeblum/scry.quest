@@ -1,0 +1,48 @@
+{
+  "name": "Allosaurus",
+  "size": "Large",
+  "type": "Beast (Dinosaur)",
+  "alignment": "Unaligned",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 51,
+    "dice": "6d10 + 18"
+  },
+  "speed": {
+    "walk": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 13, "modifier": 1, "save": 1 },
+    "constitution": { "score": 17, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 5 }
+  ],
+  "senses": {
+    "passive_perception": 15
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 15 (2d10 + 4) Piercing damage."
+    },
+    {
+      "name": "Claws",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 8 (1d8 + 4) Slashing damage. If the target is a Large or smaller creature and the allosaurus moved 30+ feet straight toward it immediately before the hit, the target has the Prone condition, and the allosaurus can make one Bite attack against it."
+    }
+  ]
+}

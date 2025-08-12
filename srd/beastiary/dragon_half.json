@@ -1,0 +1,70 @@
+{
+  "name": "Half-Dragon",
+  "size": "Medium",
+  "type": "Dragon",
+  "alignment": "Neutral",
+  "armor_class": 18,
+  "hit_points": {
+    "average": 105,
+    "dice": "14d8 + 42"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 5,
+    "score": 15
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 5 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 15, "modifier": 2, "save": 5 },
+    "charisma": { "score": 14, "modifier": 2, "save": 2 }
+  },
+  "skills": [
+    { "name": "Athletics", "modifier": 7 },
+    { "name": "Perception", "modifier": 5 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "resistances": ["Damage type chosen for the Draconic Origin trait below"],
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 15
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "5",
+    "xp": 1800
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Draconic Origin",
+      "description": "The half-dragon is related to a type of dragon associated with one of the following damage types (GM’s choice): Acid, Cold, Fire, Lightning, or Poison. This choice affects other aspects of the stat block."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The half-dragon makes two Claw attacks."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +7, reach 10 ft. Hit: 6 (1d4 + 4) Slashing damage plus 7 (2d6) damage of the type chosen for the Draconic Origin trait."
+    },
+    {
+      "name": "Dragon’s Breath",
+      "description": "Dexterity Saving Throw: DC 14, each creature in a 30-foot Cone. Failure: 28 (8d6) damage of the type chosen for the Draconic Origin trait. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Leap",
+      "description": "The half-dragon jumps up to 30 feet by spending 10 feet of movement."
+    }
+  ]
+}

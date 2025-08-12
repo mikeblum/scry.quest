@@ -1,0 +1,47 @@
+{
+  "name": "Giant Badger",
+  "size": "Medium",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 15,
+    "dice": "2d8 + 6"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "burrow": { "value": 10, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 13, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 17, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 }
+  ],
+  "resistances": ["Poison"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 6 (2d4 + 1) Piercing damage."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Scout",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 16,
+    "dice": "3d8 + 3"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 11, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 1 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Nature", "modifier": 4 },
+    { "name": "Perception", "modifier": 5 },
+    { "name": "Stealth", "modifier": 6 },
+    { "name": "Survival", "modifier": 5 }
+  ],
+  "gear": ["Leather Armor", "Longbow", "Shortsword"],
+  "senses": {
+    "passive_perception": 15
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The scout makes two attacks, using Shortsword and Longbow in any combination."
+    },
+    {
+      "name": "Shortsword",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage."
+    },
+    {
+      "name": "Longbow",
+      "description": "Ranged Attack Roll: +4, range 150/600 ft. Hit: 6 (1d8 + 2) Piercing damage."
+    }
+  ]
+}

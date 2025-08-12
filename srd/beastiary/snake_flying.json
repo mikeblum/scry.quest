@@ -1,0 +1,50 @@
+{
+  "name": "Flying Snake",
+  "size": "Tiny",
+  "type": "Monstrosity",
+  "alignment": "Unaligned",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 5,
+    "dice": "2d4"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 4, "modifier": -3, "save": -3 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "passive_perception": 11
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Flyby",
+      "description": "The snake doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage plus 5 (2d4) Poison damage."
+    }
+  ]
+}

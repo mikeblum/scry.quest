@@ -1,0 +1,67 @@
+{
+  "name": "Shadow",
+  "size": "Medium",
+  "type": "Undead",
+  "alignment": "Chaotic Evil",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 27,
+    "dice": "5d8 + 5"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 6, "modifier": -2, "save": -2 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 8, "modifier": -1, "save": -1 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 6 }
+  ],
+  "vulnerabilities": ["Radiant"],
+  "resistances": ["Acid", "Bludgeoning", "Cold", "Fire", "Lightning", "Piercing", "Slashing", "Thunder"],
+  "immunities": {
+    "damage": ["Necrotic", "Poison"],
+    "condition": ["Charmed", "Exhaustion", "Frightened", "Grappled", "Paralyzed", "Petrified", "Poisoned", "Prone", "Restrained", "Unconscious"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amorphous",
+      "description": "The shadow can move through a space as narrow as 1 inch without expending extra movement to do so."
+    },
+    {
+      "name": "Sunlight Weakness",
+      "description": "While in sunlight, the shadow has Disadvantage on D20 Tests."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Draining Swipe",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Necrotic damage, and the target’s Strength score decreases by 1d4. The target dies if this reduces that score to 0. If a Humanoid is slain by this attack, a Shadow rises from the corpse 1d4 hours later."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Shadow Stealth",
+      "description": "While in Dim Light or Darkness, the shadow takes the Hide action."
+    }
+  ]
+}

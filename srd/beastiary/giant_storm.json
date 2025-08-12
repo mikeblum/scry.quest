@@ -1,0 +1,78 @@
+{
+  "name": "Storm Giant",
+  "size": "Huge",
+  "type": "Giant",
+  "alignment": "Chaotic Good",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 230,
+    "dice": "20d12 + 100"
+  },
+  "speed": {
+    "walk": { "value": 50, "unit": "ft." },
+    "fly": { "value": 25, "unit": "ft.", "hover": true },
+    "swim": { "value": 50, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 7,
+    "score": 17
+  },
+  "ability_scores": {
+    "strength": { "score": 29, "modifier": 9, "save": 14 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 20, "modifier": 5, "save": 10 },
+    "intelligence": { "score": 16, "modifier": 3, "save": 3 },
+    "wisdom": { "score": 20, "modifier": 5, "save": 10 },
+    "charisma": { "score": 18, "modifier": 4, "save": 9 }
+  },
+  "skills": [
+    { "name": "Arcana", "modifier": 8 },
+    { "name": "Athletics", "modifier": 14 },
+    { "name": "History", "modifier": 8 },
+    { "name": "Perception", "modifier": 10 }
+  ],
+  "resistances": ["Cold"],
+  "immunities": {
+    "damage": ["Lightning", "Thunder"]
+  },
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft." },
+    "truesight": { "value": 30, "unit": "ft." },
+    "passive_perception": 20
+  },
+  "languages": ["Common", "Giant"],
+  "challenge_rating": {
+    "rating": "13",
+    "xp": 10000
+  },
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The giant can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The giant makes two attacks, using Storm Sword or Thunderbolt in any combination."
+    },
+    {
+      "name": "Storm Sword",
+      "description": "Melee Attack Roll: +14, reach 10 ft. Hit: 23 (4d6 + 9) Slashing damage plus 13 (3d8) Lightning damage."
+    },
+    {
+      "name": "Thunderbolt",
+      "description": "Ranged Attack Roll: +14, range 500 ft. Hit: 22 (2d12 + 9) Lightning damage, and the target has the Blinded and Deafened conditions until the start of the giant’s next turn."
+    },
+    {
+      "name": "Lightning Storm",
+      "description": "Dexterity Saving Throw: DC 18, each creature in a 10-foot-radius, 40-foot-high Cylinder originating from a point the giant can see within 500 feet. Failure: 55 (10d10) Lightning damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The giant casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save DC 18):\nAt Will: Detect Magic, Light\n1/Day: Control Weather"
+    }
+  ]
+}

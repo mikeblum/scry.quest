@@ -1,0 +1,46 @@
+{
+  "name": "Stirge",
+  "size": "Tiny",
+  "type": "Monstrosity",
+  "alignment": "Unaligned",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 5,
+    "dice": "2d4"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "fly": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 4, "modifier": -3, "save": -3 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 3 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 8, "modifier": -1, "save": -1 },
+    "charisma": { "score": 6, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Proboscis",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Piercing damage, and the stirge attaches to the target. While attached, the stirge can’t make Proboscis attacks, and the target takes 5 (2d4) Necrotic damage at the start of each of the stirge’s turns. The stirge can detach itself by spending 5 feet of its movement. The target or a creature within 5 feet of it can detach the stirge as an action."
+    }
+  ]
+}

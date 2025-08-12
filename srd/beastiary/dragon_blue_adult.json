@@ -1,0 +1,96 @@
+{
+  "name": "Adult Blue Dragon",
+  "size": "Huge",
+  "type": "Dragon (Chromatic)",
+  "alignment": "Lawful Evil",
+  "armor_class": 19,
+  "hit_points": {
+    "average": 212,
+    "dice": "17d12 + 102"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "burrow": { "value": 30, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 10,
+    "score": 20
+  },
+  "ability_scores": {
+    "strength": { "score": 25, "modifier": 7, "save": 7 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 5 },
+    "constitution": { "score": 23, "modifier": 6, "save": 6 },
+    "intelligence": { "score": 16, "modifier": 3, "save": 3 },
+    "wisdom": { "score": 15, "modifier": 2, "save": 7 },
+    "charisma": { "score": 20, "modifier": 5, "save": 5 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 12 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "immunities": {
+    "damage": ["Lightning"]
+  },
+  "senses": {
+    "blindsight": { "value": 60, "unit": "ft." },
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 22
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "16",
+    "xp": 15000,
+    "lair_xp": 18000
+  },
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The dragon can breathe air and water."
+    },
+    {
+      "name": "Legendary Resistance",
+      "description": "If the dragon fails a saving throw, it can choose to succeed instead.",
+      "usage": { "type": "per_day", "times": 3, "lair_times": 4 }
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast Shatter."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +12, reach 10 ft. Hit: 16 (2d8 + 7) Slashing damage plus 5 (1d10) Lightning damage."
+    },
+    {
+      "name": "Lightning Breath",
+      "description": "Dexterity Saving Throw: DC 19, each creature in a 90-foot-long, 5-foot-wide Line. Failure: 60 (11d10) Lightning damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save DC 18):\nAt Will: Detect Magic, Invisibility, Mage Hand, Shatter (level 3 version)\n1/Day Each: Scrying, Sending"
+    }
+  ],
+  "legendary_actions": {
+    "uses": 3,
+    "lair_uses": 4,
+    "description": "Immediately after another creature’s turn, the dragon can expend a use to take one of the following actions. The dragon regains all expended uses at the start of each of its turns.",
+    "actions": [
+      {
+        "name": "Cloaked Flight",
+        "description": "The dragon uses Spellcasting to cast Invisibility on itself, and it can fly up to half its Fly Speed. The dragon can’t take this action again until the start of its next turn."
+      },
+      {
+        "name": "Sonic Boom",
+        "description": "The dragon uses Spellcasting to cast Shatter (level 3 version). The dragon can’t take this action again until the start of its next turn."
+      },
+      {
+        "name": "Tail Swipe",
+        "description": "The dragon makes one Rend attack."
+      }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Ettin",
+  "size": "Large",
+  "type": "Giant",
+  "alignment": "Chaotic Evil",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 85,
+    "dice": "10d10 + 30"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -1,
+    "score": 9
+  },
+  "ability_scores": {
+    "strength": { "score": 21, "modifier": 5, "save": 5 },
+    "dexterity": { "score": 8, "modifier": -1, "save": -1 },
+    "constitution": { "score": 17, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 8, "modifier": -1, "save": -1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 }
+  ],
+  "immunities": {
+    "condition": ["Blinded", "Charmed", "Deafened", "Frightened", "Stunned", "Unconscious"]
+  },
+  "gear": ["Battleaxe", "Morningstar"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["Giant"],
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The ettin makes one Battleaxe attack and one Morningstar attack."
+    },
+    {
+      "name": "Battleaxe",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 14 (2d8 + 5) Slashing damage. If the target is a Large or smaller creature, it has the Prone condition."
+    },
+    {
+      "name": "Morningstar",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 14 (2d8 + 5) Piercing damage, and the target has Disadvantage on the next attack roll it makes before the end of its next turn."
+    }
+  ]
+}

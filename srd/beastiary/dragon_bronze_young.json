@@ -1,0 +1,72 @@
+{
+  "name": "Young Bronze Dragon",
+  "size": "Large",
+  "type": "Dragon (Metallic)",
+  "alignment": "Lawful Good",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 142,
+    "dice": "15d10 + 60"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "fly": { "value": 80, "unit": "ft." },
+    "swim": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 21, "modifier": 5, "save": 5 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 3 },
+    "constitution": { "score": 19, "modifier": 4, "save": 4 },
+    "intelligence": { "score": 14, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 4 },
+    "charisma": { "score": 17, "modifier": 3, "save": 3 }
+  },
+  "skills": [
+    { "name": "Insight", "modifier": 4 },
+    { "name": "Perception", "modifier": 7 },
+    { "name": "Stealth", "modifier": 3 }
+  ],
+  "immunities": {
+    "damage": ["Lightning"]
+  },
+  "senses": {
+    "blindsight": { "value": 30, "unit": "ft." },
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 17
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "8",
+    "xp": 3900
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The dragon can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The dragon makes three Rend attacks. It can replace one attack with a use of Repulsion Breath."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +8, reach 10 ft. Hit: 16 (2d10 + 5) Slashing damage."
+    },
+    {
+      "name": "Lightning Breath",
+      "description": "Dexterity Saving Throw: DC 15, each creature in a 60-foot-long, 5-foot-wide Line. Failure: 49 (9d10) Lightning damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    },
+    {
+      "name": "Repulsion Breath",
+      "description": "Strength Saving Throw: DC 15, each creature in a 30-foot Cone. Failure: The target is pushed up to 40 feet straight away from the dragon and has the Prone condition."
+    }
+  ]
+}

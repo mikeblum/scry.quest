@@ -1,0 +1,45 @@
+{
+  "name": "Guard",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 16,
+  "hit_points": {
+    "average": 11,
+    "dice": "2d8 + 2"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 13, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 12, "modifier": 1, "save": 1 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 2 },
+    "charisma": { "score": 10, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 }
+  ],
+  "gear": ["Chain Shirt", "Shield", "Spear"],
+  "senses": {
+    "passive_perception": 12
+  },
+  "languages": ["Common"],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Spear",
+      "description": "Melee or Ranged Attack Roll: +3, reach 5 ft. or range 20/60 ft. Hit: 4 (1d6 + 1) Piercing damage."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Shrieker Fungus",
+  "size": "Medium",
+  "type": "Plant",
+  "alignment": "Unaligned",
+  "armor_class": 5,
+  "hit_points": {
+    "average": 13,
+    "dice": "3d8"
+  },
+  "speed": {
+    "walk": { "value": 5, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -5,
+    "score": 5
+  },
+  "ability_scores": {
+    "strength": { "score": 1, "modifier": -5, "save": -5 },
+    "dexterity": { "score": 1, "modifier": -5, "save": -5 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 3, "modifier": -4, "save": -4 },
+    "charisma": { "score": 1, "modifier": -5, "save": -5 }
+  },
+  "immunities": {
+    "condition": ["Blinded", "Charmed", "Deafened", "Frightened"]
+  },
+  "senses": {
+    "blindsight": { "value": 30, "unit": "ft." },
+    "passive_perception": 6
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 0
+  },
+  "proficiency_bonus": 2,
+  "reactions": [
+    {
+      "name": "Shriek",
+      "trigger": "A creature or a source of Bright Light moves within 30 feet of the shrieker.",
+      "response": "The shrieker emits a shriek audible within 300 feet of itself for 1 minute or until the shrieker dies."
+    }
+  ]
+}

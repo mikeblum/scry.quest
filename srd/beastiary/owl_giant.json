@@ -1,0 +1,58 @@
+{
+  "name": "Giant Owl",
+  "size": "Large",
+  "type": "Celestial",
+  "alignment": "Neutral",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 19,
+    "dice": "3d10 + 3"
+  },
+  "speed": {
+    "walk": { "value": 5, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 13, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 4 },
+    "charisma": { "score": 10, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 6 },
+    { "name": "Stealth", "modifier": 6 }
+  ],
+  "resistances": ["Necrotic", "Radiant"],
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 16
+  },
+  "languages": ["Celestial", "understands Common, Elvish, and Sylvan but can’t speak them"],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Flyby",
+      "description": "The owl doesn’t provoke an Opportunity Attack when it flies out of an enemy’s reach."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Talons",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 7 (1d10 + 2) Slashing damage."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The owl casts one of the following spells, requiring no spell components and using Wisdom as the spellcasting ability:\nAt Will: Detect Evil and Good, Detect Magic\n1/Day: Clairvoyance"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Dire Wolf",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 22,
+    "dice": "3d10 + 6"
+  },
+  "speed": {
+    "walk": { "value": 50, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 3, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 5 },
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 15
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The wolf has Advantage on an attack roll against a creature if at least one of the wolf’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 8 (1d10 + 3) Piercing damage. If the target is a Large or smaller creature, it has the Prone condition."
+    }
+  ]
+}

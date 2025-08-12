@@ -1,0 +1,46 @@
+{
+  "name": "Giant Elk",
+  "size": "Huge",
+  "type": "Celestial",
+  "alignment": "Neutral Good",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 42,
+    "dice": "5d12 + 10"
+  },
+  "speed": {
+    "walk": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 6,
+    "score": 16
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 6 },
+    "dexterity": { "score": 18, "modifier": 4, "save": 6 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 7, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 10, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 4 }
+  ],
+  "resistances": ["Necrotic", "Radiant"],
+  "senses": {
+    "darkvision": { "value": 90, "unit": "ft." },
+    "passive_perception": 14
+  },
+  "languages": ["Celestial", "understands Common, Elvish, and Sylvan but can’t speak them"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Ram",
+      "description": "Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 + 4) Bludgeoning damage plus 5 (2d4) Radiant damage. If the target is a Huge or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 (2d4) Bludgeoning damage and has the Prone condition."
+    }
+  ]
+}

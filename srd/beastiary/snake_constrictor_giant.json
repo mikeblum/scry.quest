@@ -1,0 +1,54 @@
+{
+  "name": "Giant Constrictor Snake",
+  "size": "Huge",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 60,
+    "dice": "8d12 + 8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 3, "modifier": -4, "save": -4 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 }
+  ],
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "passive_perception": 12
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The snake makes one Bite attack and uses Constrict."
+    },
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 + 4) Piercing damage."
+    },
+    {
+      "name": "Constrict",
+      "description": "Strength Saving Throw: DC 14, one Large or smaller creature the snake can see within 10 feet. Failure: 13 (2d8 + 4) Bludgeoning damage, and the target has the Grappled condition (escape DC 14)."
+    }
+  ]
+}

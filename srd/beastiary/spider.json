@@ -1,0 +1,56 @@
+{
+  "name": "Spider",
+  "size": "Tiny",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 1,
+    "dice": "1d4 - 1"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." },
+    "climb": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 2, "modifier": -4, "save": -4 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 8, "modifier": -1, "save": -1 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 2, "modifier": -4, "save": -4 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "senses": {
+    "darkvision": { "value": 30, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Spider Climb",
+      "description": "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+    },
+    {
+      "name": "Web Walker",
+      "description": "The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 1 Piercing damage plus 2 (1d4) Poison damage."
+    }
+  ]
+}

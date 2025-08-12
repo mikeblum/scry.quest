@@ -1,0 +1,73 @@
+{
+  "name": "Iron Golem",
+  "size": "Large",
+  "type": "Construct",
+  "alignment": "Unaligned",
+  "armor_class": 20,
+  "hit_points": {
+    "average": 252,
+    "dice": "24d10 + 120"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 9,
+    "score": 19
+  },
+  "ability_scores": {
+    "strength": { "score": 24, "modifier": 7, "save": 7 },
+    "dexterity": { "score": 9, "modifier": -1, "save": -1 },
+    "constitution": { "score": 20, "modifier": 5, "save": 5 },
+    "intelligence": { "score": 3, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 0 },
+    "charisma": { "score": 1, "modifier": -5, "save": -5 }
+  },
+  "immunities": {
+    "damage": ["Fire", "Poison", "Psychic"],
+    "condition": ["Charmed", "Exhaustion", "Frightened", "Paralyzed", "Petrified", "Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 120, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": ["understands Common plus two other languages but can’t speak"],
+  "challenge_rating": {
+    "rating": "16",
+    "xp": 15000
+  },
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "name": "Fire Absorption",
+      "description": "Whenever the golem is subjected to Fire damage, it regains a number of Hit Points equal to the Fire damage dealt."
+    },
+    {
+      "name": "Immutable Form",
+      "description": "The golem can’t shape-shift."
+    },
+    {
+      "name": "Magic Resistance",
+      "description": "The golem has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The golem makes two attacks, using Bladed Arm or Fiery Bolt in any combination."
+    },
+    {
+      "name": "Bladed Arm",
+      "description": "Melee Attack Roll: +12, reach 10 ft. Hit: 20 (3d8 + 7) Slashing damage plus 10 (3d6) Fire damage."
+    },
+    {
+      "name": "Fiery Bolt",
+      "description": "Ranged Attack Roll: +10, range 120 ft. Hit: 36 (8d8) Fire damage."
+    },
+    {
+      "name": "Poison Breath",
+      "description": "Constitution Saving Throw: DC 18, each creature in a 60-foot Cone. Failure: 55 (10d10) Poison damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [6, 6] }
+    }
+  ]
+}

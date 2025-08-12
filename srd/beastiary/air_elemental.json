@@ -1,0 +1,63 @@
+{
+  "name": "Air Elemental",
+  "size": "Large",
+  "type": "Elemental",
+  "alignment": "Neutral",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 90,
+    "dice": "12d10 + 24"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "fly": { "value": 90, "unit": "ft.", "hover": true }
+  },
+  "initiative": {
+    "modifier": 5,
+    "score": 15
+  },
+  "ability_scores": {
+    "strength": { "score": 14, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 20, "modifier": 5, "save": 5 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 6, "modifier": -2, "save": -2 }
+  },
+  "resistances": ["Bludgeoning", "Lightning", "Piercing", "Slashing"],
+  "immunities": {
+    "damage": ["Poison", "Thunder"],
+    "condition": ["Exhaustion", "Grappled", "Paralyzed", "Petrified", "Poisoned", "Prone", "Restrained", "Unconscious"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": ["Primordial (Auran)"],
+  "challenge_rating": {
+    "rating": "5",
+    "xp": 1800
+  },
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "name": "Air Form",
+      "description": "The elemental can enter a creature’s space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The elemental makes two Thunderous Slam attacks."
+    },
+    {
+      "name": "Thunderous Slam",
+      "description": "Melee Attack Roll: +8, reach 10 ft. Hit: 14 (2d8 + 5) Thunder damage."
+    },
+    {
+      "name": "Whirlwind",
+      "description": "Strength Saving Throw: DC 13, one Medium or smaller creature in the elemental’s space. Failure: 24 (4d10 + 2) Thunder damage, and the target is pushed up to 20 feet straight away from the elemental and has the Prone condition. Success: Half damage only.",
+      "usage": { "type": "recharge", "range": [4, 6] }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Goblin Boss",
+  "size": "Small",
+  "type": "Fey (Goblinoid)",
+  "alignment": "Chaotic Neutral",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 21,
+    "dice": "6d6"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 8, "modifier": -1, "save": -1 },
+    "charisma": { "score": 10, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 6 }
+  ],
+  "gear": ["Chain Shirt", "Scimitar", "Shield", "Shortbow"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": ["Common", "Goblin"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The goblin makes two attacks, using Scimitar or Shortbow in any combination."
+    },
+    {
+      "name": "Scimitar",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Slashing damage, plus 2 (1d4) Slashing damage if the attack roll had Advantage."
+    },
+    {
+      "name": "Shortbow",
+      "description": "Ranged Attack Roll: +4, range 80/320 ft. Hit: 5 (1d6 + 2) Piercing damage, plus 2 (1d4) Piercing damage if the attack roll had Advantage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Nimble Escape",
+      "description": "The goblin takes the Disengage or Hide action."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Redirect Attack",
+      "trigger": "A creature the goblin can see makes an attack roll against it.",
+      "response": "The goblin chooses a Small or Medium ally within 5 feet of itself. The goblin and that ally swap places, and the ally becomes the target of the attack instead."
+    }
+  ]
+}

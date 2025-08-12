@@ -1,0 +1,52 @@
+{
+  "name": "Constrictor Snake",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 13,
+    "dice": "2d10 + 2"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 15, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 3, "modifier": -4, "save": -4 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 },
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "senses": {
+    "blindsight": { "value": 10, "unit": "ft." },
+    "passive_perception": 12
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage."
+    },
+    {
+      "name": "Constrict",
+      "description": "Strength Saving Throw: DC 12, one Medium or smaller creature the snake can see within 5 feet. Failure: 7 (3d4) Bludgeoning damage, and the target has the Grappled condition (escape DC 12)."
+    }
+  ]
+}

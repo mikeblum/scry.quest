@@ -1,0 +1,67 @@
+{
+  "name": "Bugbear Stalker",
+  "size": "Medium",
+  "type": "Fey (Goblinoid)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 65,
+    "dice": "10d8 + 20"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 14, "modifier": 2, "save": 4 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 3 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 6 },
+    { "name": "Survival", "modifier": 3 }
+  ],
+  "gear": ["Chain Shirt", "Javelins (6)", "Morningstar"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 11
+  },
+  "languages": ["Common", "Goblin"],
+  "challenge_rating": {
+    "rating": "3",
+    "xp": 700
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Abduct",
+      "description": "The bugbear needn’t spend extra movement to move a creature it is grappling."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The bugbear makes two Javelin or Morningstar attacks."
+    },
+    {
+      "name": "Javelin",
+      "description": "Melee or Ranged Attack Roll: +5, reach 10 ft. or range 30/120 ft. Hit: 13 (3d6 + 3) Piercing damage."
+    },
+    {
+      "name": "Morningstar",
+      "description": "Melee Attack Roll: +5 (with Advantage if the target is Grappled by the bugbear), reach 10 ft. Hit: 12 (2d8 + 3) Piercing damage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Quick Grapple",
+      "description": "Dexterity Saving Throw: DC 13, one Medium or smaller creature the bugbear can see within 10 feet. Failure: The target has the Grappled condition (escape DC 13)."
+    }
+  ]
+}

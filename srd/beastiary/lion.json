@@ -1,0 +1,64 @@
+{
+  "name": "Lion",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 22,
+    "dice": "4d10"
+  },
+  "speed": {
+    "walk": { "value": 50, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 3, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 8, "modifier": -1, "save": -1 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 },
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The lion has Advantage on an attack roll against a creature if at least one of the lion’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    },
+    {
+      "name": "Running Leap",
+      "description": "With a 10-foot running start, the lion can Long Jump up to 25 feet."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The lion makes two Rend attacks. It can replace one attack with a use of Roar."
+    },
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Slashing damage."
+    },
+    {
+      "name": "Roar",
+      "description": "Wisdom Saving Throw: DC 11, one creature within 15 feet. Failure: The target has the Frightened condition until the start of the lion’s next turn."
+    }
+  ]
+}

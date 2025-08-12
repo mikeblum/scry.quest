@@ -1,0 +1,63 @@
+{
+  "name": "Sphinx of Wonder",
+  "size": "Tiny",
+  "type": "Celestial",
+  "alignment": "Lawful Good",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 24,
+    "dice": "7d4 + 7"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." },
+    "fly": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 6, "modifier": -2, "save": -2 },
+    "dexterity": { "score": 17, "modifier": 3, "save": 3 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 15, "modifier": 2, "save": 2 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Arcana", "modifier": 4 },
+    { "name": "Religion", "modifier": 4 },
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "resistances": ["Necrotic", "Psychic", "Radiant"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 11
+  },
+  "languages": ["Celestial", "Common"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Magic Resistance",
+      "description": "The sphinx has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Slashing damage plus 7 (2d6) Radiant damage."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Burst of Ingenuity",
+      "trigger": "The sphinx or another creature within 30 feet makes an ability check or a saving throw.",
+      "response": "The sphinx adds 2 to the roll.",
+      "usage": { "type": "per_day", "times": 2 }
+    }
+  ]
+}

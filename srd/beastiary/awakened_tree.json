@@ -1,0 +1,43 @@
+{
+  "name": "Awakened Tree",
+  "size": "Huge",
+  "type": "Plant",
+  "alignment": "Neutral",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 59,
+    "dice": "7d12 + 14"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -2,
+    "score": 8
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 6, "modifier": -2, "save": -2 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "vulnerabilities": ["Fire"],
+  "resistances": ["Bludgeoning", "Piercing"],
+  "senses": {
+    "passive_perception": 10
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Slam",
+      "description": "Melee Attack Roll: +6, reach 10 ft. Hit: 14 (3d6 + 4) Bludgeoning damage."
+    }
+  ]
+}

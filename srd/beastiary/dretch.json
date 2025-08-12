@@ -1,0 +1,52 @@
+{
+  "name": "Dretch",
+  "size": "Small",
+  "type": "Fiend (Demon)",
+  "alignment": "Chaotic Evil",
+  "armor_class": 11,
+  "hit_points": {
+    "average": 18,
+    "dice": "4d6 + 4"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 12, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 0 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 5, "modifier": -3, "save": -3 },
+    "wisdom": { "score": 8, "modifier": -1, "save": -1 },
+    "charisma": { "score": 3, "modifier": -4, "save": -4 }
+  },
+  "resistances": ["Cold", "Fire", "Lightning"],
+  "immunities": {
+    "damage": ["Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": ["Abyssal", "telepathy 60 ft. (works only with creatures that understand Abyssal)"],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Rend",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 4 (1d6 + 1) Slashing damage."
+    },
+    {
+      "name": "Fetid Cloud",
+      "description": "Constitution Saving Throw: DC 11, each creature in a 10-foot Emanation originating from the dretch. Failure: The target has the Poisoned condition until the end of its next turn. While Poisoned, the creature can take either an action or a Bonus Action on its turn, not both, and it can’t take Reactions.",
+      "usage": { "type": "per_day", "times": 1 }
+    }
+  ]
+}

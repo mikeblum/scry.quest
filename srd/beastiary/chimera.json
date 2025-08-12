@@ -1,0 +1,63 @@
+{
+  "name": "Chimera",
+  "size": "Large",
+  "type": "Monstrosity",
+  "alignment": "Chaotic Evil",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 114,
+    "dice": "12d10 + 48"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 19, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 0 },
+    "constitution": { "score": 19, "modifier": 4, "save": 4 },
+    "intelligence": { "score": 3, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 10, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 8 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 18
+  },
+  "languages": ["understands Draconic but can’t speak"],
+  "challenge_rating": {
+    "rating": "6",
+    "xp": 2300
+  },
+  "proficiency_bonus": 3,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The chimera makes one Ram attack, one Bite attack, and one Claw attack. It can replace the Claw attack with a use of Fire Breath if available."
+    },
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 11 (2d6 + 4) Piercing damage, or 18 (4d6 + 4) Piercing damage if the chimera had Advantage on the attack roll."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 7 (1d6 + 4) Slashing damage."
+    },
+    {
+      "name": "Ram",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 10 (1d12 + 4) Bludgeoning damage. If the target is a Medium or smaller creature, it has the Prone condition."
+    },
+    {
+      "name": "Fire Breath",
+      "description": "Dexterity Saving Throw: DC 15, each creature in a 15-foot Cone. Failure: 31 (7d8) Fire damage. Success: Half damage.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ]
+}

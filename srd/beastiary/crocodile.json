@@ -1,0 +1,51 @@
+{
+  "name": "Crocodile",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 13,
+    "dice": "2d10 + 2"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 15, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 13, "modifier": 1, "save": 3 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 2 }
+  ],
+  "senses": {
+    "passive_perception": 10
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Hold Breath",
+      "description": "The crocodile can hold its breath for 1 hour."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Piercing damage. If the target is a Medium or smaller creature, it has the Grappled condition (escape DC 12). While Grappled, the target has the Restrained condition."
+    }
+  ]
+}

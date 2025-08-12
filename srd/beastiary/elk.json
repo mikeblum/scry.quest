@@ -1,0 +1,45 @@
+{
+  "name": "Elk",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 10,
+  "hit_points": {
+    "average": 11,
+    "dice": "2d10"
+  },
+  "speed": {
+    "walk": { "value": 50, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 6, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 2 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 12
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Ram",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 6 (1d6 + 3) Bludgeoning damage. If the target is a Large or smaller creature and the elk moved 20+ feet straight toward it immediately before the hit, the target takes an extra 3 (1d6) Bludgeoning damage and has the Prone condition."
+    }
+  ]
+}

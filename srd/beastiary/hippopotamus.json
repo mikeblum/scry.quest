@@ -1,0 +1,55 @@
+{
+  "name": "Hippopotamus",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 82,
+    "dice": "11d10 + 22"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "swim": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -2,
+    "score": 8
+  },
+  "ability_scores": {
+    "strength": { "score": 21, "modifier": 5, "save": 7 },
+    "dexterity": { "score": 7, "modifier": -2, "save": -2 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 4, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 }
+  ],
+  "senses": {
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Hold Breath",
+      "description": "The hippopotamus can hold its breath for 10 minutes."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The hippopotamus makes two Bite attacks."
+    },
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +7, reach 5 ft. Hit: 16 (2d10 + 5) Piercing damage."
+    }
+  ]
+}

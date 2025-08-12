@@ -1,0 +1,89 @@
+{
+  "name": "Planetar",
+  "size": "Large",
+  "type": "Celestial (Angel)",
+  "alignment": "Lawful Good",
+  "armor_class": 19,
+  "hit_points": {
+    "average": 262,
+    "dice": "21d10 + 147"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." },
+    "fly": { "value": 120, "unit": "ft.", "hover": true }
+  },
+  "initiative": {
+    "modifier": 10,
+    "score": 20
+  },
+  "ability_scores": {
+    "strength": { "score": 24, "modifier": 7, "save": 12 },
+    "dexterity": { "score": 20, "modifier": 5, "save": 5 },
+    "constitution": { "score": 24, "modifier": 7, "save": 12 },
+    "intelligence": { "score": 19, "modifier": 4, "save": 4 },
+    "wisdom": { "score": 22, "modifier": 6, "save": 11 },
+    "charisma": { "score": 25, "modifier": 7, "save": 12 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 11 }
+  ],
+  "resistances": ["Radiant"],
+  "immunities": {
+    "condition": ["Charmed", "Exhaustion", "Frightened"]
+  },
+  "senses": {
+    "truesight": { "value": 120, "unit": "ft." },
+    "passive_perception": 21
+  },
+  "languages": ["All"],
+  "telepathy": { "value": 120, "unit": "ft." },
+  "challenge_rating": {
+    "rating": "16",
+    "xp": 15000
+  },
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "name": "Divine Awareness",
+      "description": "The planetar knows if it hears a lie."
+    },
+    {
+      "name": "Exalted Restoration",
+      "description": "If the planetar dies outside Mount Celestia, its body disappears, and it gains a new body instantly, reviving with all its Hit Points somewhere in Mount Celestia."
+    },
+    {
+      "name": "Legendary Resistance",
+      "description": "If the planetar fails a saving throw, it can choose to succeed instead.",
+      "usage": { "type": "per_day", "times": 4 }
+    },
+    {
+      "name": "Magic Resistance",
+      "description": "The planetar has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The planetar makes three Radiant Sword attacks or uses Holy Burst twice."
+    },
+    {
+      "name": "Radiant Sword",
+      "description": "Melee Attack Roll: +12, reach 10 ft. Hit: 14 (2d6 + 7) Slashing damage plus 18 (4d8) Radiant damage."
+    },
+    {
+      "name": "Holy Burst",
+      "description": "Dexterity Saving Throw: DC 20, each enemy in a 20-foot-radius Sphere centered on a point the planetar can see within 120 feet. Failure: 24 (7d6) Radiant damage. Success: Half damage."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The planetar casts one of the following spells, requiring no Material components and using Charisma as spellcasting ability (spell save DC 20):\nAt Will: Detect Evil and Good\n1/Day Each: Commune, Control Weather, Dispel Evil and Good, Raise Dead"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Divine Aid",
+      "description": "The planetar casts Cure Wounds, Invisibility, Lesser Restoration, or Remove Curse, using the same spellcasting ability as Spellcasting.",
+      "usage": { "type": "per_day", "times": 2 }
+    }
+  ]
+}

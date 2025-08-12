@@ -1,0 +1,53 @@
+{
+  "name": "Kobold Warrior",
+  "size": "Small",
+  "type": "Dragon",
+  "alignment": "Neutral",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 7,
+    "dice": "3d6 - 3"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 7, "modifier": -2, "save": -2 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 9, "modifier": -1, "save": -1 },
+    "intelligence": { "score": 8, "modifier": -1, "save": -1 },
+    "wisdom": { "score": 7, "modifier": -2, "save": -2 },
+    "charisma": { "score": 8, "modifier": -1, "save": -1 }
+  },
+  "gear": ["Daggers (3)"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 8
+  },
+  "languages": ["Common", "Draconic"],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The kobold has Advantage on an attack roll against a creature if at least one of the kobold’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    },
+    {
+      "name": "Sunlight Sensitivity",
+      "description": "While in sunlight, the kobold has Disadvantage on ability checks and attack rolls."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Dagger",
+      "description": "Melee or Ranged Attack Roll: +4, reach 5 ft. or range 20/60 ft. Hit: 4 (1d4 + 2) Piercing damage."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Vulture",
+  "size": "Medium",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 10,
+  "hit_points": {
+    "average": 5,
+    "dice": "1d8 + 1"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "fly": { "value": 50, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 7, "modifier": -2, "save": -2 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 4, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 }
+  ],
+  "senses": {
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The vulture has Advantage on an attack roll against a creature if at least one of the vulture’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Beak",
+      "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Piercing damage."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Merrow",
+  "size": "Large",
+  "type": "Monstrosity",
+  "alignment": "Chaotic Evil",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 45,
+    "dice": "6d10 + 12"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "swim": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 8, "modifier": -1, "save": -1 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 9, "modifier": -1, "save": -1 }
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": ["Abyssal", "Primordial (Aquan)"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The merrow can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The merrow makes two attacks, using Bite, Claw, or Harpoon in any combination."
+    },
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 6 (1d4 + 4) Piercing damage, and the target has the Poisoned condition until the end of the merrow’s next turn."
+    },
+    {
+      "name": "Claw",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 9 (2d4 + 4) Slashing damage."
+    },
+    {
+      "name": "Harpoon",
+      "description": "Melee or Ranged Attack Roll: +6, reach 5 ft. or range 20/60 ft. Hit: 11 (2d6 + 4) Piercing damage. If the target is a Large or smaller creature, the merrow pulls the target up to 15 feet straight toward itself."
+    }
+  ]
+}

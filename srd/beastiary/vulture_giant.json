@@ -1,0 +1,53 @@
+{
+  "name": "Giant Vulture",
+  "size": "Large",
+  "type": "Monstrosity",
+  "alignment": "Neutral Evil",
+  "armor_class": 10,
+  "hit_points": {
+    "average": 25,
+    "dice": "3d10 + 9"
+  },
+  "speed": {
+    "walk": { "value": 10, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 15, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 }
+  ],
+  "resistances": ["Necrotic"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 13
+  },
+  "languages": ["understands Common but can’t speak"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Pack Tactics",
+      "description": "The vulture has Advantage on an attack roll against a creature if at least one of the vulture’s allies is within 5 feet of the creature and the ally doesn’t have the Incapacitated condition."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Gouge",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 9 (2d6 + 2) Piercing damage, and the target has the Poisoned condition until the end of its next turn."
+    }
+  ]
+}

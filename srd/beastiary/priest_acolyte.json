@@ -1,0 +1,61 @@
+{
+  "name": "Priest Acolyte",
+  "size": "Medium or Small",
+  "type": "Humanoid (Cleric)",
+  "alignment": "Neutral",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 11,
+    "dice": "2d8 + 2"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 14, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Medicine", "modifier": 4 },
+    { "name": "Religion", "modifier": 2 }
+  ],
+  "gear": ["Chain Shirt", "Holy Symbol", "Mace"],
+  "senses": {
+    "passive_perception": 12
+  },
+  "languages": ["Common"],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Mace",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Bludgeoning damage plus 2 (1d4) Radiant damage."
+    },
+    {
+      "name": "Radiant Flame",
+      "description": "Ranged Attack Roll: +4, range 60 ft. Hit: 7 (2d6) Radiant damage."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The priest casts one of the following spells, using Wisdom as the spellcasting ability:\nAt Will: Light, Thaumaturgy"
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Divine Aid",
+      "description": "The priest casts Bless, Healing Word, or Sanctuary, using the same spellcasting ability as Spellcasting.",
+      "usage": { "type": "per_day", "times": 1 }
+    }
+  ]
+}

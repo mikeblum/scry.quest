@@ -1,0 +1,70 @@
+{
+  "name": "Weretiger",
+  "size": "Medium or Small",
+  "type": "Monstrosity (Lycanthrope)",
+  "alignment": "Neutral",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 120,
+    "dice": "16d8 + 48"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "tiger_form_walk": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 17, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 13, "modifier": 1, "save": 1 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 5 },
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "gear": ["Longbow"],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 15
+  },
+  "languages": ["Common (can’t speak in tiger form)"],
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The weretiger makes two attacks, using Scratch or Longbow in any combination. It can replace one attack with a Bite attack."
+    },
+    {
+      "name": "Bite (Tiger or Hybrid Form Only)",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 12 (2d8 + 3) Piercing damage. If the target is a Humanoid, it is subjected to the following effect. Constitution Saving Throw: DC 13. Failure: The target is cursed. If the cursed target drops to 0 Hit Points, it instead becomes a Weretiger under the GM’s control and has 10 Hit Points. Success: The target is immune to this weretiger’s curse for 24 hours."
+    },
+    {
+      "name": "Scratch",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Slashing damage."
+    },
+    {
+      "name": "Longbow (Humanoid or Hybrid Form Only)",
+      "description": "Ranged Attack Roll: +4, range 150/600 ft. Hit: 11 (2d8 + 2) Piercing damage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Prowl (Tiger or Hybrid Form Only)",
+      "description": "The weretiger moves up to its Speed without provoking Opportunity Attacks. At the end of this movement, the weretiger can take the Hide action."
+    },
+    {
+      "name": "Shape-Shift",
+      "description": "The weretiger shape-shifts into a Large tiger-humanoid hybrid or a Large tiger, or it returns to its true humanoid form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn’t transformed."
+    }
+  ]
+}

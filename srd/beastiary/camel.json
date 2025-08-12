@@ -1,0 +1,42 @@
+{
+  "name": "Camel",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 10,
+  "hit_points": {
+    "average": 17,
+    "dice": "2d10 + 6"
+  },
+  "speed": {
+    "walk": { "value": 50, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -1,
+    "score": 9
+  },
+  "ability_scores": {
+    "strength": { "score": 15, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 8, "modifier": -1, "save": -1 },
+    "constitution": { "score": 17, "modifier": 3, "save": 5 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 11, "modifier": 0, "save": 0 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 4 (1d4 + 2) Bludgeoning damage."
+    }
+  ]
+}

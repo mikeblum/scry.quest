@@ -1,0 +1,55 @@
+{
+  "name": "Archelon",
+  "size": "Huge",
+  "type": "Beast (Dinosaur)",
+  "alignment": "Unaligned",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 90,
+    "dice": "12d12 + 12"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." },
+    "swim": { "value": 80, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 3 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 4, "modifier": -3, "save": -3 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 6, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 5 }
+  ],
+  "senses": {
+    "passive_perception": 12
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "4",
+    "xp": 1100
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Amphibious",
+      "description": "The archelon can breathe air and water."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The archelon makes two Bite attacks."
+    },
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +6, reach 5 ft. Hit: 14 (3d6 + 4) Piercing damage."
+    }
+  ]
+}

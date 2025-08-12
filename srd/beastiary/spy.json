@@ -1,0 +1,61 @@
+{
+  "name": "Spy",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 27,
+    "dice": "6d8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "climb": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 4,
+    "score": 14
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 12, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 16, "modifier": 3, "save": 3 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 5 },
+    { "name": "Insight", "modifier": 4 },
+    { "name": "Investigation", "modifier": 5 },
+    { "name": "Perception", "modifier": 6 },
+    { "name": "Sleight of Hand", "modifier": 4 },
+    { "name": "Stealth", "modifier": 6 }
+  ],
+  "gear": ["Hand Crossbow", "Shortsword", "Thieves’ Tools"],
+  "senses": {
+    "passive_perception": 16
+  },
+  "languages": ["Common plus one other language"],
+  "challenge_rating": {
+    "rating": "1",
+    "xp": 200
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Shortsword",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 5 (1d6 + 2) Piercing damage plus 7 (2d6) Poison damage."
+    },
+    {
+      "name": "Hand Crossbow",
+      "description": "Ranged Attack Roll: +4, range 30/120 ft. Hit: 5 (1d6 + 2) Piercing damage plus 7 (2d6) Poison damage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Cunning Action",
+      "description": "The spy takes the Dash, Disengage, or Hide action."
+    }
+  ]
+}

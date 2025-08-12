@@ -1,0 +1,68 @@
+{
+  "name": "Doppelganger",
+  "size": "Medium",
+  "type": "Monstrosity",
+  "alignment": "Neutral",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 52,
+    "dice": "8d8 + 16"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 4,
+    "score": 14
+  },
+  "ability_scores": {
+    "strength": { "score": 11, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 18, "modifier": 4, "save": 4 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 11, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 14, "modifier": 2, "save": 2 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 6 },
+    { "name": "Insight", "modifier": 3 }
+  ],
+  "immunities": {
+    "condition": ["Charmed"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 11
+  },
+  "languages": ["Common plus three other languages"],
+  "challenge_rating": {
+    "rating": "3",
+    "xp": 700
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The doppelganger makes two Slam attacks and uses Unsettling Visage if available."
+    },
+    {
+      "name": "Slam",
+      "description": "Melee Attack Roll: +6 (with Advantage during the first round of each combat), reach 5 ft. Hit: 11 (2d6 + 4) Bludgeoning damage."
+    },
+    {
+      "name": "Read Thoughts",
+      "description": "The doppelganger casts Detect Thoughts, requiring no spell components and using Charisma as the spellcasting ability (spell save DC 12)."
+    },
+    {
+      "name": "Unsettling Visage",
+      "description": "Wisdom Saving Throw: DC 12, each creature in a 15-foot Emanation originating from the doppelganger that can see the doppelganger. Failure: The target has the Frightened condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically.",
+      "usage": { "type": "recharge", "range": [6, 6] }
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Shape-Shift",
+      "description": "The doppelganger shape-shifts into a Medium or Small Humanoid, or it returns to its true form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn’t transformed."
+    }
+  ]
+}

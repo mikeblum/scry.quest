@@ -1,0 +1,54 @@
+{
+  "name": "Noble",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 9,
+    "dice": "2d8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 11, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 12, "modifier": 1, "save": 1 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 12, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 14, "modifier": 2, "save": 2 },
+    "charisma": { "score": 16, "modifier": 3, "save": 3 }
+  },
+  "skills": [
+    { "name": "Deception", "modifier": 5 },
+    { "name": "Insight", "modifier": 4 },
+    { "name": "Persuasion", "modifier": 5 }
+  ],
+  "gear": ["Breastplate", "Rapier"],
+  "senses": {
+    "passive_perception": 12
+  },
+  "languages": ["Common plus two other languages"],
+  "challenge_rating": {
+    "rating": "1/8",
+    "xp": 25
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Rapier",
+      "description": "Melee Attack Roll: +3, reach 5 ft. Hit: 5 (1d8 + 1) Piercing damage."
+    }
+  ],
+  "reactions": [
+    {
+      "name": "Parry",
+      "trigger": "The noble is hit by a melee attack roll while holding a weapon.",
+      "response": "The noble adds 2 to its AC against that attack, possibly causing it to miss."
+    }
+  ]
+}

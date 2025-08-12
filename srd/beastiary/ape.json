@@ -1,0 +1,55 @@
+{
+  "name": "Ape",
+  "size": "Medium",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 12,
+  "hit_points": {
+    "average": 19,
+    "dice": "3d8 + 6"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "climb": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 14, "modifier": 2, "save": 2 },
+    "constitution": { "score": 14, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Athletics", "modifier": 5 },
+    { "name": "Perception", "modifier": 3 }
+  ],
+  "senses": {
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/2",
+    "xp": 100
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The ape makes two Fist attacks."
+    },
+    {
+      "name": "Fist",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 5 (1d4 + 3) Bludgeoning damage."
+    },
+    {
+      "name": "Rock",
+      "description": "Ranged Attack Roll: +5, range 25/50 ft. Hit: 10 (2d6 + 3) Bludgeoning damage.",
+      "usage": { "type": "recharge", "range": [6, 6] }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Plesiosaurus",
+  "size": "Large",
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 68,
+    "dice": "8d10 + 24"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." },
+    "swim": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 2,
+    "score": 12
+  },
+  "ability_scores": {
+    "strength": { "score": 18, "modifier": 4, "save": 4 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 2 },
+    "constitution": { "score": 16, "modifier": 3, "save": 3 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 5, "modifier": -3, "save": -3 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 3 },
+    { "name": "Stealth", "modifier": 4 }
+  ],
+  "senses": {
+    "passive_perception": 13
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Hold Breath",
+      "description": "The plesiosaurus can hold its breath for 1 hour."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +6, reach 10 ft. Hit: 11 (2d6 + 4) Piercing damage."
+    }
+  ]
+}

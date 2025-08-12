@@ -1,0 +1,47 @@
+{
+  "name": "Animated Flying Sword",
+  "size": "Small",
+  "type": "Construct",
+  "alignment": "Unaligned",
+  "armor_class": 17,
+  "hit_points": {
+    "average": 14,
+    "dice": "4d6"
+  },
+  "speed": {
+    "walk": { "value": 5, "unit": "ft." },
+    "fly": { "value": 50, "unit": "ft.", "hover": true }
+  },
+  "initiative": {
+    "modifier": 4,
+    "score": 14
+  },
+  "ability_scores": {
+    "strength": { "score": 12, "modifier": 1, "save": 1 },
+    "dexterity": { "score": 15, "modifier": 2, "save": 4 },
+    "constitution": { "score": 11, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 1, "modifier": -5, "save": -5 },
+    "wisdom": { "score": 5, "modifier": -3, "save": -3 },
+    "charisma": { "score": 1, "modifier": -5, "save": -5 }
+  },
+  "immunities": {
+    "damage": ["Poison", "Psychic"],
+    "condition": ["Charmed", "Deafened", "Exhaustion", "Frightened", "Paralyzed", "Petrified", "Poisoned"]
+  },
+  "senses": {
+    "blindsight": { "value": 60, "unit": "ft." },
+    "passive_perception": 7
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "1/4",
+    "xp": 50
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Slash",
+      "description": "Melee Attack Roll: +4, reach 5 ft. Hit: 6 (1d8 + 2) Slashing damage."
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "name": "Druid",
+  "size": "Medium or Small",
+  "type": "Humanoid (Druid)",
+  "alignment": "Neutral",
+  "armor_class": 13,
+  "hit_points": {
+    "average": 44,
+    "dice": "8d8 + 8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 1,
+    "score": 11
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 12, "modifier": 1, "save": 1 },
+    "constitution": { "score": 13, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 12, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 16, "modifier": 3, "save": 3 },
+    "charisma": { "score": 11, "modifier": 0, "save": 0 }
+  },
+  "skills": [
+    { "name": "Medicine", "modifier": 5 },
+    { "name": "Nature", "modifier": 3 },
+    { "name": "Perception", "modifier": 5 }
+  ],
+  "gear": ["Studded Leather Armor"],
+  "senses": {
+    "passive_perception": 15
+  },
+  "languages": ["Common", "Druidic", "Sylvan"],
+  "challenge_rating": {
+    "rating": "2",
+    "xp": 450
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The druid makes two attacks, using Vine Staff or Verdant Wisp in any combination."
+    },
+    {
+      "name": "Vine Staff",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 7 (1d8 + 3) Bludgeoning damage plus 2 (1d4) Poison damage."
+    },
+    {
+      "name": "Verdant Wisp",
+      "description": "Ranged Attack Roll: +5, range 90 ft. Hit: 10 (3d6) Radiant damage."
+    },
+    {
+      "name": "Spellcasting",
+      "description": "The druid casts one of the following spells, using Wisdom as the spellcasting ability (spell save DC 13):\nAt Will: Druidcraft, Speak with Animals\n2/Day Each: Entangle, Thunderwave\n1/Day Each: Animal Messenger, Longstrider, Moonbeam"
+    }
+  ]
+}

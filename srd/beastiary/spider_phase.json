@@ -1,0 +1,70 @@
+{
+  "name": "Phase Spider",
+  "size": "Large",
+  "type": "Monstrosity",
+  "alignment": "Unaligned",
+  "armor_class": 14,
+  "hit_points": {
+    "average": 45,
+    "dice": "7d10 + 7"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "climb": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 3,
+    "score": 13
+  },
+  "ability_scores": {
+    "strength": { "score": 15, "modifier": 2, "save": 2 },
+    "dexterity": { "score": 16, "modifier": 3, "save": 3 },
+    "constitution": { "score": 12, "modifier": 1, "save": 1 },
+    "intelligence": { "score": 6, "modifier": -2, "save": -2 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 6, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Stealth", "modifier": 7 }
+  ],
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 10
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "3",
+    "xp": 700
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Ethereal Sight",
+      "description": "The spider can see 60 feet into the Ethereal Plane while on the Material Plane and vice versa."
+    },
+    {
+      "name": "Spider Climb",
+      "description": "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+    },
+    {
+      "name": "Web Walker",
+      "description": "The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The spider makes two Bite attacks."
+    },
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 8 (1d10 + 3) Piercing damage plus 9 (2d8) Poison damage. If this damage reduces the target to 0 Hit Points, the target becomes Stable, and it has the Poisoned condition for 1 hour. While Poisoned, the target also has the Paralyzed condition."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Ethereal Jaunt",
+      "description": "The spider teleports from the Material Plane to the Ethereal Plane or vice versa."
+    }
+  ]
+}

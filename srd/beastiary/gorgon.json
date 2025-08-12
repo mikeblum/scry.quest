@@ -1,0 +1,59 @@
+{
+  "name": "Gorgon",
+  "size": "Large",
+  "type": "Construct",
+  "alignment": "Unaligned",
+  "armor_class": 19,
+  "hit_points": {
+    "average": 114,
+    "dice": "12d10 + 48"
+  },
+  "speed": {
+    "walk": { "value": 40, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 20, "modifier": 5, "save": 5 },
+    "dexterity": { "score": 11, "modifier": 0, "save": 0 },
+    "constitution": { "score": 18, "modifier": 4, "save": 4 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 12, "modifier": 1, "save": 1 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "skills": [
+    { "name": "Perception", "modifier": 7 }
+  ],
+  "immunities": {
+    "condition": ["Exhaustion", "Petrified"]
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 17
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "5",
+    "xp": 1800
+  },
+  "proficiency_bonus": 3,
+  "actions": [
+    {
+      "name": "Gore",
+      "description": "Melee Attack Roll: +8, reach 5 ft. Hit: 18 (2d12 + 5) Piercing damage. If the target is a Large or smaller creature and the gorgon moved 20+ feet straight toward it immediately before the hit, the target has the Prone condition."
+    },
+    {
+      "name": "Petrifying Breath",
+      "description": "Constitution Saving Throw: DC 15, each creature in a 30-foot Cone. First Failure: The target has the Restrained condition and repeats the save at the end of its next turn if it is still Restrained, ending the effect on itself on a success. Second Failure: The target has the Petrified condition instead of the Restrained condition.",
+      "usage": { "type": "recharge", "range": [5, 6] }
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Trample",
+      "description": "Dexterity Saving Throw: DC 16, one creature within 5 feet that has the Prone condition. Failure: 16 (2d10 + 5) Bludgeoning damage. Success: Half damage."
+    }
+  ]
+}

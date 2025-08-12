@@ -1,0 +1,48 @@
+{
+  "name": "Commoner",
+  "size": "Medium or Small",
+  "type": "Humanoid",
+  "alignment": "Neutral",
+  "armor_class": 10,
+  "hit_points": {
+    "average": 4,
+    "dice": "1d8"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 0,
+    "score": 10
+  },
+  "ability_scores": {
+    "strength": { "score": 10, "modifier": 0, "save": 0 },
+    "dexterity": { "score": 10, "modifier": 0, "save": 0 },
+    "constitution": { "score": 10, "modifier": 0, "save": 0 },
+    "intelligence": { "score": 10, "modifier": 0, "save": 0 },
+    "wisdom": { "score": 10, "modifier": 0, "save": 0 },
+    "charisma": { "score": 10, "modifier": 0, "save": 0 }
+  },
+  "gear": ["Club"],
+  "senses": {
+    "passive_perception": 10
+  },
+  "languages": ["Common"],
+  "challenge_rating": {
+    "rating": "0",
+    "xp": 10
+  },
+  "proficiency_bonus": 2,
+  "traits": [
+    {
+      "name": "Training",
+      "description": "The commoner has proficiency in one skill of the GM’s choice and has Advantage whenever it makes an ability check using that skill."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Club",
+      "description": "Melee Attack Roll: +2, reach 5 ft. Hit: 2 (1d4) Bludgeoning damage."
+    }
+  ]
+}

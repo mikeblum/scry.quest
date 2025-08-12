@@ -1,0 +1,49 @@
+{
+  "name": "Basilisk",
+  "size": "Medium",
+  "type": "Monstrosity",
+  "alignment": "Unaligned",
+  "armor_class": 15,
+  "hit_points": {
+    "average": 52,
+    "dice": "8d8 + 16"
+  },
+  "speed": {
+    "walk": { "value": 20, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": -1,
+    "score": 9
+  },
+  "ability_scores": {
+    "strength": { "score": 16, "modifier": 3, "save": 3 },
+    "dexterity": { "score": 8, "modifier": -1, "save": -1 },
+    "constitution": { "score": 15, "modifier": 2, "save": 2 },
+    "intelligence": { "score": 2, "modifier": -4, "save": -4 },
+    "wisdom": { "score": 8, "modifier": -1, "save": -1 },
+    "charisma": { "score": 7, "modifier": -2, "save": -2 }
+  },
+  "senses": {
+    "darkvision": { "value": 60, "unit": "ft." },
+    "passive_perception": 9
+  },
+  "languages": [],
+  "challenge_rating": {
+    "rating": "3",
+    "xp": 700
+  },
+  "proficiency_bonus": 2,
+  "actions": [
+    {
+      "name": "Bite",
+      "description": "Melee Attack Roll: +5, reach 5 ft. Hit: 10 (2d6 + 3) Piercing damage plus 7 (2d6) Poison damage."
+    }
+  ],
+  "bonus_actions": [
+    {
+      "name": "Petrifying Gaze",
+      "description": "Constitution Saving Throw: DC 12, each creature in a 30-foot Cone. If the basilisk sees its reflection in the Cone, the basilisk must make this save. First Failure: The target has the Restrained condition and repeats the save at the end of its next turn if it is still Restrained, ending the effect on itself on a success. Second Failure: The target has the Petrified condition instead of the Restrained condition.",
+      "usage": { "type": "recharge", "range": [4, 6] }
+    }
+  ]
+}

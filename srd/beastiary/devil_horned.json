@@ -1,0 +1,71 @@
+{
+  "name": "Horned Devil",
+  "size": "Large",
+  "type": "Fiend (Devil)",
+  "alignment": "Lawful Evil",
+  "armor_class": 18,
+  "hit_points": {
+    "average": 199,
+    "dice": "19d10 + 95"
+  },
+  "speed": {
+    "walk": { "value": 30, "unit": "ft." },
+    "fly": { "value": 60, "unit": "ft." }
+  },
+  "initiative": {
+    "modifier": 7,
+    "score": 17
+  },
+  "ability_scores": {
+    "strength": { "score": 22, "modifier": 6, "save": 10 },
+    "dexterity": { "score": 17, "modifier": 3, "save": 7 },
+    "constitution": { "score": 21, "modifier": 5, "save": 5 },
+    "intelligence": { "score": 12, "modifier": 1, "save": 1 },
+    "wisdom": { "score": 16, "modifier": 3, "save": 7 },
+    "charisma": { "score": 18, "modifier": 4, "save": 8 }
+  },
+  "resistances": ["Cold"],
+  "immunities": {
+    "damage": ["Fire", "Poison"],
+    "condition": ["Poisoned"]
+  },
+  "senses": {
+    "darkvision": { "value": 150, "unit": "ft.", "impeded": "magical Darkness" },
+    "passive_perception": 13
+  },
+  "languages": ["Infernal"],
+  "telepathy": { "value": 120, "unit": "ft." },
+  "challenge_rating": {
+    "rating": "11",
+    "xp": 7200
+  },
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "name": "Diabolical Restoration",
+      "description": "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Nine Hells."
+    },
+    {
+      "name": "Magic Resistance",
+      "description": "The devil has Advantage on saving throws against spells and other magical effects."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Multiattack",
+      "description": "The devil makes three attacks, using Searing Fork or Hurl Flame in any combination. It can replace one attack with a use of Infernal Tail."
+    },
+    {
+      "name": "Searing Fork",
+      "description": "Melee Attack Roll: +10, reach 10 ft. Hit: 15 (2d8 + 6) Piercing damage plus 9 (2d8) Fire damage."
+    },
+    {
+      "name": "Hurl Flame",
+      "description": "Ranged Attack Roll: +8, range 150 ft. Hit: 26 (5d8 + 4) Fire damage. If the target is a flammable object that isn’t being worn or carried, it starts burning."
+    },
+    {
+      "name": "Infernal Tail",
+      "description": "Dexterity Saving Throw: DC 17, one creature the devil can see within 10 feet. Failure: 10 (1d8 + 6) Necrotic damage, and the target receives an infernal wound if it doesn’t have one. While wounded, the target loses 10 (3d6) Hit Points at the start of each of its turns. The wound closes after 1 minute, after a spell restores Hit Points to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a DC 17 Wisdom (Medicine) check."
+    }
+  ]
+}
