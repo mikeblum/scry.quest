@@ -1,0 +1,18 @@
+{
+  "name": "Wish",
+  "level": "Level 9",
+  "school": "Conjuration",
+  "casting_time": {
+    "unit": "Action"
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "Wish is the mightiest spell a mortal creature can cast. By simply speaking aloud, you can alter the very foundations of reality in accord with your desires. The basic use of this spell is to duplicate any other spell of 8th level or lower. You don’t need to meet the requirements of that spell, including costly components. Alternatively, you can create nearly any effect, but the greater the wish, the greater the likelihood that something goes wrong. The GM determines the nature of any unforeseen consequences."
+}

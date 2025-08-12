@@ -1,0 +1,10 @@
+{
+  "name": "Wall of Stone",
+  "level": "Level 5",
+  "school": "Evocation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 120, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true, "material": "a small block of granite"},
+  "duration": {"type": "concentration", "value": 10, "unit": "minutes"},
+  "description": "You create a wall of stone on a solid surface within range. You can form the wall as up to 10 panels, each 10 feet by 10 feet, or as a dome or sphere with a radius of up to 10 feet. If the wall cuts through a creature’s space, the creature is pushed to one side of the wall."
+}

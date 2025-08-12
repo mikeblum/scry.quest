@@ -1,0 +1,22 @@
+{
+  "name": "False Life",
+  "level": "Level 1",
+  "school": "Necromancy",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a drop of alcohol"
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You gain 2d4 + 4 Temporary Hit Points.",
+  "at_higher_levels": "You gain 5 additional Temporary Hit Points for each spell slot level above 1."
+}

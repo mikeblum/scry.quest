@@ -1,0 +1,21 @@
+{
+  "name": "Mass Healing Word",
+  "level": "Level 3",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Bonus Action"
+  },
+  "range": {
+    "value": 60,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "Up to six creatures of your choice that you can see within range regain Hit Points equal to 2d4 plus your spellcasting ability modifier.",
+  "at_higher_levels": "The healing increases by 1d4 for each spell slot level above 3."
+}

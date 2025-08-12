@@ -1,0 +1,22 @@
+{
+  "name": "Locate Animals or Plants",
+  "level": "Level 2",
+  "school": "Divination",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action",
+    "ritual": true
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "fur from a bloodhound"
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "Describe or name a specific kind of Beast, Plant creature, or nonmagical plant. You learn the direction and distance to the closest creature or plant of that kind within 5 miles, if any are present."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Unseen Servant",
+  "level": "Level 1",
+  "school": "Conjuration",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 60, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true, "material": "a piece of string and a bit of wood"},
+  "duration": {"type": "1", "unit": "hour"},
+  "description": "This spell creates an invisible, mindless, shapeless force that performs simple tasks at your command until the spell ends. The servant can perform tasks a human servant could do, such as cleaning, mending, folding clothes, lighting fires, serving food, and pouring wine."
+}

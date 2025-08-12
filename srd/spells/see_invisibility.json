@@ -1,0 +1,23 @@
+{
+  "name": "See Invisibility",
+  "level": "Level 2",
+  "school": "Divination",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": "Self",
+    "unit": ""
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a pinch of talc"
+  },
+  "duration": {
+    "type": "timed",
+    "duration": "1 hour"
+  },
+  "description": "For the duration, you see creatures and objects that have the Invisible condition as if they were visible, and you can see into the Ethereal Plane. Creatures and objects there appear ghostly."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Thaumaturgy",
+  "level": "Cantrip",
+  "school": "Transmutation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 30, "unit": "feet"},
+  "components": {"verbal": true},
+  "duration": {"type": "1", "unit": "minute"},
+  "description": "You manifest a minor wonder, a sign of supernatural power, within range. You create one of several magical effects, such as causing flames to flicker, doors to fly open, or your voice to boom."
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Wind Wall",
+  "level": "Level 3",
+  "school": "Evocation",
+  "casting_time": {
+    "unit": "Action"
+  },
+  "range": {
+    "unit": "feet"
+  },
+  "components": {
+    "material": "a tiny fan and a feather"
+  },
+  "duration": {
+    "unit": "minute"
+  },
+  "description": "A wall of strong wind rises from the ground at a point you choose within range. You can make the wall up to 50 feet long, 15 feet high, and 1 foot thick. The wall lasts for the duration. When the wall appears, each creature in its area makes a Strength saving throw, taking 3d8 Bludgeoning damage on a failed save or half as much damage on a successful one. The wall keeps out gases, fog, smoke, and small or smaller flying creatures. Arrows, bolts, and other ordinary projectiles launched at targets behind the wall are deflected upward and automatically miss."
+}

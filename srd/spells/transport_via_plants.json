@@ -1,0 +1,10 @@
+{
+  "name": "Transport via Plants",
+  "level": "Level 6",
+  "school": "Conjuration",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"type": "self"},
+  "components": {"verbal": true},
+  "duration": {"type": "instantaneous"},
+  "description": "This spell creates a magical link between a Large or larger plant within range and another plant, at any distance, on the same plane of existence. You and any creature you choose can step into the first plant and emerge from the second plant instantly."
+}

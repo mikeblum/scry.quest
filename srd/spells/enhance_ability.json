@@ -1,0 +1,24 @@
+{
+  "name": "Enhance Ability",
+  "level": "Level 2",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "fur or a feather"
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "hour"
+  },
+  "description": "You touch a creature and choose Strength, Dexterity, Intelligence, Wisdom, or Charisma. For the duration, the target has Advantage on ability checks using the chosen ability.",
+  "at_higher_levels": "You can target one additional creature for each spell slot level above 2. You can choose a different ability for each target."
+}

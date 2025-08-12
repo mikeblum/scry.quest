@@ -1,0 +1,25 @@
+{
+  "name": "Banishment",
+  "level": "Level 4",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a pentacle"
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "minute"
+  },
+  "description": "One creature that you can see within range must succeed on a Charisma saving throw or be transported to a harmless demiplane for the duration. While there, the target has the Incapacitated condition. When the spell ends, the target reappears in the space it left or in the nearest unoccupied space if that space is occupied. If the target is an Aberration, a Celestial, an Elemental, a Fey, or a Fiend, the target doesn’t return if the spell lasts for 1 minute. The target is instead transported to a random location on a plane (GM’s choice) associated with its creature type.",
+  "at_higher_levels": "You can target one additional creature for each spell slot level above 4."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Tongues",
+  "level": "Level 3",
+  "school": "Divination",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 60, "unit": "feet"},
+  "components": {"verbal": true, "material": "a small clay model of a ziggurat"},
+  "duration": {"type": "1", "unit": "hour"},
+  "description": "This spell grants the creature you touch the ability to understand any spoken language it hears. Moreover, when the target speaks, any creature that knows at least one language can understand what it says."
+}

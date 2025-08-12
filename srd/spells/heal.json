@@ -1,0 +1,22 @@
+{
+  "name": "Heal",
+  "level": "Level 6",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 60,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "Choose a creature that you can see within range. Positive energy washes through the target, restoring 70 Hit Points. This spell also ends the Blinded, Deafened, and Poisoned conditions on the target.",
+  "at_higher_levels": "The healing increases by 10 for each spell slot level above 6."
+}

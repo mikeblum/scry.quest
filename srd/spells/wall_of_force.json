@@ -1,0 +1,10 @@
+{
+  "name": "Wall of Force",
+  "level": "Level 5",
+  "school": "Evocation",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 120, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true},
+  "duration": {"type": "concentration", "value": 10, "unit": "minutes"},
+  "description": "An invisible wall of force springs into existence at a point you choose within range. The wall can be up to 10 panels, each 10 feet by 10 feet, or a sphere with a radius of up to 10 feet. Nothing can physically pass through the wall. It is immune to all damage and cannot be dispelled by Dispel Magic."
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Wind Walk",
+  "level": "Level 6",
+  "school": "Transmutation",
+  "casting_time": {
+    "unit": "Action"
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "material": "fire and holy water"
+  },
+  "duration": {
+    "unit": "hours"
+  },
+  "description": "You and up to ten willing creatures you can see within range assume a gaseous form for the duration, appearing as wisps of cloud. While in this form, a creature has a flying speed of 300 feet and can pass through small holes, narrow openings, and cracks, though it treats liquids as though they were solid surfaces. The spell ends early for a creature if it drops to 0 Hit Points."
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Hold Person",
+  "level": "Level 2",
+  "school": "Enchantment",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 60,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a straight piece of iron"
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "minute"
+  },
+  "description": "Choose a Humanoid that you can see within range. The target must succeed on a Wisdom saving throw or have the Paralyzed condition for the duration. At the end of each of its turns, the target repeats the save, ending the spell on itself on a success.",
+  "at_higher_levels": "You can target one additional Humanoid for each spell slot level above 2."
+}

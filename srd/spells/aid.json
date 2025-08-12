@@ -1,0 +1,25 @@
+{
+  "name": "Aid",
+  "level": "Level 2",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a strip of white cloth"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 8,
+    "unit": "hours"
+  },
+  "description": "Choose up to three creatures within range. Each target’s Hit Point maximum and current Hit Points increase by 5 for the duration.",
+  "at_higher_levels": "Each target’s Hit Points increase by 5 for each spell slot level above 2."
+}

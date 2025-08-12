@@ -1,0 +1,10 @@
+{
+  "name": "Telepathic Bond",
+  "level": "Level 5",
+  "school": "Divination",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 30, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true, "material": "pieces of eggshell from two different creatures"},
+  "duration": {"type": "1", "unit": "hour"},
+  "description": "You forge a telepathic link among up to eight willing creatures of your choice within range, allowing them to communicate telepathically for the duration. The spell works regardless of language."
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Word of Recall",
+  "level": "Level 6",
+  "school": "Conjuration",
+  "casting_time": {
+    "unit": "Action"
+  },
+  "range": {
+    "type": "self"
+  },
+  "components": {
+    "verbal": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You and up to five willing creatures within 5 feet of you instantly teleport to a previously designated sanctuary. You must have cast this spell at least once before to designate the sanctuary. When you cast the spell, you and your companions appear in the sanctuary, and the spell ends."
+}

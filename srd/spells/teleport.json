@@ -1,0 +1,10 @@
+{
+  "name": "Teleport",
+  "level": "Level 7",
+  "school": "Conjuration",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"type": "self"},
+  "components": {"verbal": true},
+  "duration": {"type": "instantaneous"},
+  "description": "This spell instantly transports you and up to eight willing creatures of your choice to a destination you specify. The destination must be known to you, and the accuracy of the teleport depends on how well you know the location."
+}

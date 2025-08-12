@@ -1,0 +1,24 @@
+{
+  "name": "Shield of Faith",
+  "level": "Level 1",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Bonus Action"
+  },
+  "range": {
+    "value": 60,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a prayer scroll"
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 10,
+    "unit": "minutes"
+  },
+  "description": "A shimmering field surrounds a creature of your choice within range, granting it a +2 bonus to AC for the duration."
+}

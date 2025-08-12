@@ -1,0 +1,21 @@
+{
+  "name": "Fear",
+  "level": "Level 3",
+  "school": "Illusion",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You project a phantasmal image of the most fearsome creature imaginable to each creature of your choice within range. Each target must succeed on a Wisdom saving throw or drop whatever it is holding and become Frightened for the duration. While Frightened by this spell, a creature must take the Dash action and move away from you by the safest available route on each of its turns, unless there is nowhere to move."
+}

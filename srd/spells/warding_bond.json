@@ -1,0 +1,10 @@
+{
+  "name": "Warding Bond",
+  "level": "Level 2",
+  "school": "Abjuration",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 60, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true, "material": "a pair of platinum rings worth at least 50 gp each, worn by you and the target"},
+  "duration": {"type": "1", "unit": "hour"},
+  "description": "This spell wards a willing creature you touch and creates a mystic connection between you and the target until the spell ends. While the target is within 60 feet of you, it gains +1 bonus to AC and saving throws, and it has resistance to all damage. Each time the target takes damage, you take the same amount of damage."
+}

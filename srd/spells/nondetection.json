@@ -1,0 +1,23 @@
+{
+  "name": "Nondetection",
+  "level": "Level 3",
+  "school": "Abjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a pinch of diamond dust worth 25+ GP, which the spell consumes"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 8,
+    "unit": "hours"
+  },
+  "description": "For the duration, you hide a target that you touch from Divination spells. The target can be a willing creature, or it can be a place or an object no larger than 10 feet in any dimension. The target can’t be targeted by any Divination spell or perceived through magical scrying sensors."
+}

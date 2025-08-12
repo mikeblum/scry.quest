@@ -1,0 +1,23 @@
+{
+  "name": "Grasping Vine",
+  "level": "Level 4",
+  "school": "Conjuration",
+  "casting_time": {
+    "value": "1",
+    "unit": "Bonus Action"
+  },
+  "range": {
+    "value": 30,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 1,
+    "unit": "minute"
+  },
+  "description": "You conjure a vine that sprouts from the ground in an unoccupied space of your choice that you can see within range. When you cast the spell, you can direct the vine to lash out at a creature within 30 feet of it that you can see. That creature must succeed on a Dexterity saving throw or be pulled 20 feet directly toward the vine."
+}

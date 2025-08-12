@@ -1,0 +1,10 @@
+{
+  "name": "True Strike",
+  "level": "Cantrip",
+  "school": "Divination",
+  "casting_time": {"value": "1", "unit": "Action"},
+  "range": {"value": 30, "unit": "feet"},
+  "components": {"verbal": true, "somatic": true},
+  "duration": {"type": "1", "unit": "round"},
+  "description": "You point a finger at a target in range. Your magic grants you brief insight into the target’s defenses. On your next turn, you gain Advantage on your first attack roll against the target."
+}

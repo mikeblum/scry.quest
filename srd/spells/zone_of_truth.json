@@ -1,0 +1,18 @@
+{
+  "name": "Zone of Truth",
+  "level": "Level 2",
+  "school": "Enchantment",
+  "casting_time": {
+    "unit": "Action"
+  },
+  "range": {
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true
+  },
+  "duration": {
+    "unit": "minutes"
+  },
+  "description": "You create a magical zone that guards against deception in a 15-foot-radius Sphere centered on a point of your choice within range. Until the spell ends, a creature that enters the spell’s area for the first time on a turn or starts its turn there must make a Charisma saving throw. On a failed save, a creature can’t speak a deliberate lie while in the radius. You know whether each creature succeeds or fails on its saving throw."
+}

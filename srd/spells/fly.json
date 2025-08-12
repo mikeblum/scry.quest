@@ -1,0 +1,23 @@
+{
+  "name": "Fly",
+  "level": "Level 3",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a wing feather from any bird"
+  },
+  "duration": {
+    "type": "concentration",
+    "value": 10,
+    "unit": "minutes"
+  },
+  "description": "You touch a willing creature. The target gains a flying speed of 60 feet for the duration. When the spell ends, the target falls if it is still aloft, unless it can stop the fall."
+}

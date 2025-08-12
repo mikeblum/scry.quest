@@ -1,0 +1,22 @@
+{
+  "name": "Purify Food and Drink",
+  "level": "Level 1",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "Action",
+    "ritual": true
+  },
+  "range": {
+    "value": 10,
+    "unit": "feet"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true
+  },
+  "duration": {
+    "type": "instantaneous"
+  },
+  "description": "You remove poison and rot from nonmagical food and drink in a 5-foot-radius Sphere centered on a point within range."
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Regenerate",
+  "level": "Level 7",
+  "school": "Transmutation",
+  "casting_time": {
+    "value": "1",
+    "unit": "minute"
+  },
+  "range": {
+    "type": "touch"
+  },
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": "a prayer wheel"
+  },
+  "duration": {
+    "type": "time_span",
+    "value": 1,
+    "unit": "hour"
+  },
+  "description": "A creature you touch regains 4d8 + 15 Hit Points. For the duration, the target regains 1 Hit Point at the start of each of its turns, and any severed body parts regrow after 2 minutes."
+}
