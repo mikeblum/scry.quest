@@ -21,10 +21,20 @@ vendor/
 go.work
 go.work.sum
 
-# env file
-.env*
+# Environment files 
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+!.env.template
+!.env.example
 
 # Editor/IDE
 .idea/
 .vscode/
 
+# Claude Code
+CLAUDE.local.md
+.claude/
