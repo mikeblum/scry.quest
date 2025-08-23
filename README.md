@@ -53,23 +53,11 @@ All environment variables are prefixed with `SCRY_`. The application comes with 
 - `SCRY_PORT` - HTTP server port [default: 8080] 
 - `SCRY_HOST` - Host to bind server [default: localhost]
 
-#### Data Configuration 🗄️
-- `SCRY_DB_PATH` - Path to data directory [default: ./data]
-- `SCRY_SRD_PATH` - Path to SRD files [default: ./srd]
-
-#### API Configuration 🔌
-- `SCRY_API_VERSION` - API version prefix [default: v1]
-- `SCRY_API_TIMEOUT` - Request timeout [default: 30s]
-
-#### Development Configuration 🔧
-- `SCRY_DEBUG` - Enable debug mode [default: false]
-- `SCRY_PROFILE` - Enable profiling endpoints [default: false]
-
 ### Environment File Setup 📄
 
 1. Copy the provided `.env` file to `.env.local`:
    ```bash
-   cp .env .env.local
+   cp .env.template .env.local
    ```
 
 2. Customize `.env.local` with your specific settings
