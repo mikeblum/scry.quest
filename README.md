@@ -1,8 +1,8 @@
-# 🔮 scry.quest 🐉
+# 🔮 scry.quest 🔮
 
-*"In the depths of arcane knowledge lies wisdom beyond mortal comprehension..."*
+Welcome, brave adventurer, to **scry.quest** - an AI-powered dungeon master that scrys the depths of Dungeons and Dungeons & Dragons ™️ lore!
 
-Welcome, brave adventurer, to **scry.quest** - an AI-powered dungeon master that scrys the depths of RPG lore! ⚔️ Like a wise sage poring over ancient tomes, this digital oracle aids adventurers in their most perilous sessions, wielding the complete System Reference Document as its spellbook. 📚✨
+📖 This grimoire aids adventurers in their most perilous sessions, wielding the complete System Reference Document [SRD CC v5.2.1](https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf) as its spellbook. 📚✨
 
 ## ⚡ What Magic Awaits ⚡
 
@@ -14,53 +14,7 @@ Welcome, brave adventurer, to **scry.quest** - an AI-powered dungeon master that
 
 *Like a cleric's prepared spells at dawn, everything you need is ready when adventure calls!*
 
-## 🚀 Getting Started 🚀
-
-### Prerequisites 📋
-- **Go** 1.21+ (the language of choice for this arcane construct)
-- **Git** (for cloning this repository from the ethereal plane)
-
-### Installation Ritual 🔧
-
-1. **Clone the Repository** 
-   ```bash
-   git clone https://github.com/yourusername/scry.quest
-   cd scry.quest
-   ```
-
-2. **Initialize Dependencies**
-   ```bash
-   go mod tidy
-   ```
-
-3. **Test Your Connection to the Weave**
-   ```bash
-   make test
-   ```
-
-4. **Build the Artifact**
-   ```bash
-   make build
-   ```
-
-5. **Format the Ancient Scripts**
-   ```bash
-   make format
-   ```
-
-6. **Invoke the Linter's Gaze**
-   ```bash
-   make lint
-   ```
-
-### Development Commands 🛠️
-
-| Command | Effect | Description |
-|---------|--------|-------------|
-| `make test` | 🧪 | Run all tests (like checking your spell components) |
-| `make build` | ⚒️ | Build the application (forge your magical item) |
-| `make lint` | 👁️ | Run linter checks (peer review from the archmages) |
-| `make format` | ✨ | Format code (organize your spellbook) |
+## Contributing
 
 ## 📖 The Tome of Contents 📖
 
@@ -74,7 +28,7 @@ Welcome, brave adventurer, to **scry.quest** - an AI-powered dungeon master that
 ### Project Structure 🗂️
 ```
 scry.quest/
-├── srd/                    # The great library of D&D knowledge
+├── srd/                   # The great library of D&D knowledge
 │   ├── spells/            # Arcane formulae and divine miracles
 │   ├── beastiary/         # Creatures both wondrous and terrifying  
 │   ├── classes/           # Paths of power and specialization
@@ -82,8 +36,44 @@ scry.quest/
 │   └── items/             # Tools, treasures, and magical artifacts
 ├── log/                   # Chronicles of system events
 ├── env/                   # Environmental configurations
-└── Makefile              # Build incantations and development spells
+└── Makefile               # Build incantations and development spells
 ```
+
+## ⚙️ Configuration ⚙️
+
+### Environment Variables 🌍
+
+All environment variables are prefixed with `SCRY_`. The application comes with sensible defaults, but you can customize behavior by setting these variables:
+
+#### Logging Configuration 📋
+- `SCRY_LOG_LEVEL` - Log level (debug, info, warn, error) [default: info]
+- `SCRY_LOG_FORMAT` - Log format (json, text) [default: json]
+
+#### Server Configuration 🌐
+- `SCRY_PORT` - HTTP server port [default: 8080] 
+- `SCRY_HOST` - Host to bind server [default: localhost]
+
+#### Data Configuration 🗄️
+- `SCRY_DB_PATH` - Path to data directory [default: ./data]
+- `SCRY_SRD_PATH` - Path to SRD files [default: ./srd]
+
+#### API Configuration 🔌
+- `SCRY_API_VERSION` - API version prefix [default: v1]
+- `SCRY_API_TIMEOUT` - Request timeout [default: 30s]
+
+#### Development Configuration 🔧
+- `SCRY_DEBUG` - Enable debug mode [default: false]
+- `SCRY_PROFILE` - Enable profiling endpoints [default: false]
+
+### Environment File Setup 📄
+
+1. Copy the provided `.env` file to `.env.local`:
+   ```bash
+   cp .env .env.local
+   ```
+
+2. Customize `.env.local` with your specific settings
+3. The application will automatically load these variables with the `SCRY_` prefix
 
 ## 🎮 For Players & DMs 🎮
 

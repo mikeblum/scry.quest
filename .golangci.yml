@@ -1,0 +1,137 @@
+version: "2"
+
+run:
+  timeout: 5m
+  modules-download-mode: readonly
+  issues-exit-code: 1
+  tests: true
+  skip-dirs:
+    - vendor
+    - third_party
+    - testdata
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+  uniq-by-line: true
+  sort-results: true
+
+linters:
+  enable:
+    - bodyclose
+    - cyclop
+    - dupl
+    - errcheck
+    - forbidigo
+    - gochecknoglobals
+    - gocognit
+    - goconst
+    - gocritic
+    - gosec
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - prealloc
+    - revive
+    - sloglint
+    - spancheck
+    - sqlclosecheck
+    - staticcheck
+    - testifylint
+    - unconvert
+    - unused
+    - whitespace
+
+linters-settings:
+  cyclop:
+    max-complexity: 15
+    package-average: 0.0
+    skip-tests: false
+
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+  forbidigo:
+    forbid:
+      - p: ^fmt\.Print.*$
+        msg: "use slog instead of fmt.Print statements"
+
+  goconst:
+    min-len: 2
+    min-occurrences: 3
+    ignore-tests: false
+
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+
+  gofmt:
+    simplify: true
+
+  goimports:
+    local-prefixes: github.com/mikeblum/scry.quest
+
+  gosec:
+    severity: medium
+    confidence: medium
+
+  gosimple:
+    checks: ["all"]
+
+  govet:
+    check-shadowing: true
+
+  lll:
+    line-length: 120
+
+  misspell:
+    locale: US
+
+  nakedret:
+    max-func-lines: 30
+
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: false
+
+  revive:
+    severity: warning
+    rules:
+      - name: exported
+      - name: unexported-return
+      - name: unused-parameter
+
+  staticcheck:
+    checks: ["all"]
+
+  testifylint:
+    enable-all: true
+
+  unused:
+    check-exported: false
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  new-from-rev: ""
+  exclude-use-default: true
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - prealloc
+
+severity:
+  default-severity: error
