@@ -64,7 +64,6 @@ func TestGetEnv(t *testing.T) {
 	}
 }
 
-
 func TestEnvPrefix(t *testing.T) {
 	t.Run("prefix constant is correct", func(t *testing.T) {
 		const expectedPrefix = "SCRY_"
@@ -78,10 +77,10 @@ func TestGetEnvKeyTransformation(t *testing.T) {
 	t.Run("keys are properly converted to uppercase", func(t *testing.T) {
 		testKey := "log_format"
 		expectedEnvKey := "SCRY_LOG_FORMAT"
-		
+
 		_ = os.Setenv(expectedEnvKey, "test_value")
 		defer func() { _ = os.Unsetenv(expectedEnvKey) }()
-		
+
 		got := GetEnv(testKey, "default")
 		if got != "test_value" {
 			t.Errorf("GetEnv(%q, %q) = %q, want %q", testKey, "default", got, "test_value")

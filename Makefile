@@ -43,5 +43,17 @@ vuln: ## 🛡️ Scan for vulnerabilities
 	go install golang.org/x/vuln/cmd/govulncheck@latest
 	govulncheck ./...
 
+.PHONY: sqlc-generate
+sqlc-generate: ## 🐘 Generate Go code from SQL
+	sqlc generate
+
+.PHONY: sqlc-vet
+sqlc-vet: ## 🐘 Vet SQL queries
+	sqlc vet
+
+.PHONY: docker-up
+docker-up: ## 🐳 Start docker compose services
+	docker compose up -d
+
 .PHONY: pre-commit
-pre-commit: fmt tidy lint test ## ✅ Run all checks
+pre-commit: fmt tidy lint test sqlc-vet ## ✅ Run all checks
