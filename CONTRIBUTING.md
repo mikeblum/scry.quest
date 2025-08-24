@@ -16,7 +16,7 @@
 
 2. **Configure Environment Variables**
    ```bash
-   cp .env .env.local  # Copy and customize your environment settings
+   cp .env.template .env.local  # Copy and customize your environment settings
    ```
 
 ### Development Commands 🛠️
