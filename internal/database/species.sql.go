@@ -13,9 +13,9 @@ import (
 )
 
 const createSpecies = `-- name: CreateSpecies :one
-INSERT INTO scry_quest.species (name, description, size, speed, ability_score_increase, traits, embedding, raw_data)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-RETURNING id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at
+INSERT INTO scry_quest.species (name, description, size, speed, ability_score_increase, traits, embedding, embedding_model, raw_data)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+RETURNING id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at, embedding_model
 `
 
 type CreateSpeciesParams struct {
@@ -26,6 +26,7 @@ type CreateSpeciesParams struct {
 	AbilityScoreIncrease []byte          `json:"ability_score_increase"`
 	Traits               []string        `json:"traits"`
 	Embedding            pgvector.Vector `json:"embedding"`
+	EmbeddingModel       pgtype.Text     `json:"embedding_model"`
 	RawData              []byte          `json:"raw_data"`
 }
 
@@ -38,6 +39,7 @@ func (q *Queries) CreateSpecies(ctx context.Context, arg CreateSpeciesParams) (S
 		arg.AbilityScoreIncrease,
 		arg.Traits,
 		arg.Embedding,
+		arg.EmbeddingModel,
 		arg.RawData,
 	)
 	var i ScryQuestSpecy
@@ -53,6 +55,7 @@ func (q *Queries) CreateSpecies(ctx context.Context, arg CreateSpeciesParams) (S
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
@@ -67,7 +70,7 @@ func (q *Queries) DeleteSpecies(ctx context.Context, id pgtype.UUID) error {
 }
 
 const getSpeciesByID = `-- name: GetSpeciesByID :one
-SELECT id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at FROM scry_quest.species WHERE id = $1
+SELECT id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.species WHERE id = $1
 `
 
 func (q *Queries) GetSpeciesByID(ctx context.Context, id pgtype.UUID) (ScryQuestSpecy, error) {
@@ -85,12 +88,13 @@ func (q *Queries) GetSpeciesByID(ctx context.Context, id pgtype.UUID) (ScryQuest
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const getSpeciesByName = `-- name: GetSpeciesByName :one
-SELECT id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at FROM scry_quest.species WHERE name = $1
+SELECT id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.species WHERE name = $1
 `
 
 func (q *Queries) GetSpeciesByName(ctx context.Context, name string) (ScryQuestSpecy, error) {
@@ -108,12 +112,13 @@ func (q *Queries) GetSpeciesByName(ctx context.Context, name string) (ScryQuestS
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const listSpecies = `-- name: ListSpecies :many
-SELECT id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at FROM scry_quest.species
+SELECT id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.species
 ORDER BY name
 LIMIT $1 OFFSET $2
 `
@@ -144,6 +149,7 @@ func (q *Queries) ListSpecies(ctx context.Context, arg ListSpeciesParams) ([]Scr
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -156,34 +162,37 @@ func (q *Queries) ListSpecies(ctx context.Context, arg ListSpeciesParams) ([]Scr
 }
 
 const searchSpeciesByEmbedding = `-- name: SearchSpeciesByEmbedding :many
-SELECT id, name, description, size, speed, ability_score_increase, traits, embedding, raw_data, created_at, updated_at, (embedding <=> $1::vector) as distance
+SELECT 
+    id,
+    name,
+    description,
+    size,
+    speed,
+    embedding_model,
+    (1 - (embedding <=> $1)) as similarity
 FROM scry_quest.species
-ORDER BY embedding <=> $1::vector
+WHERE embedding IS NOT NULL
+ORDER BY embedding <=> $1
 LIMIT $2
 `
 
 type SearchSpeciesByEmbeddingParams struct {
-	Column1 pgvector.Vector `json:"column_1"`
-	Limit   int32           `json:"limit"`
+	Embedding pgvector.Vector `json:"embedding"`
+	Limit     int32           `json:"limit"`
 }
 
 type SearchSpeciesByEmbeddingRow struct {
-	ID                   pgtype.UUID        `json:"id"`
-	Name                 string             `json:"name"`
-	Description          pgtype.Text        `json:"description"`
-	Size                 pgtype.Text        `json:"size"`
-	Speed                pgtype.Int4        `json:"speed"`
-	AbilityScoreIncrease []byte             `json:"ability_score_increase"`
-	Traits               []string           `json:"traits"`
-	Embedding            pgvector.Vector    `json:"embedding"`
-	RawData              []byte             `json:"raw_data"`
-	CreatedAt            pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt            pgtype.Timestamptz `json:"updated_at"`
-	Distance             interface{}        `json:"distance"`
+	ID             pgtype.UUID `json:"id"`
+	Name           string      `json:"name"`
+	Description    pgtype.Text `json:"description"`
+	Size           pgtype.Text `json:"size"`
+	Speed          pgtype.Int4 `json:"speed"`
+	EmbeddingModel pgtype.Text `json:"embedding_model"`
+	Similarity     int32       `json:"similarity"`
 }
 
 func (q *Queries) SearchSpeciesByEmbedding(ctx context.Context, arg SearchSpeciesByEmbeddingParams) ([]SearchSpeciesByEmbeddingRow, error) {
-	rows, err := q.db.Query(ctx, searchSpeciesByEmbedding, arg.Column1, arg.Limit)
+	rows, err := q.db.Query(ctx, searchSpeciesByEmbedding, arg.Embedding, arg.Limit)
 	if err != nil {
 		return nil, err
 	}
@@ -197,13 +206,8 @@ func (q *Queries) SearchSpeciesByEmbedding(ctx context.Context, arg SearchSpecie
 			&i.Description,
 			&i.Size,
 			&i.Speed,
-			&i.AbilityScoreIncrease,
-			&i.Traits,
-			&i.Embedding,
-			&i.RawData,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-			&i.Distance,
+			&i.EmbeddingModel,
+			&i.Similarity,
 		); err != nil {
 			return nil, err
 		}
@@ -217,16 +221,17 @@ func (q *Queries) SearchSpeciesByEmbedding(ctx context.Context, arg SearchSpecie
 
 const updateSpeciesEmbedding = `-- name: UpdateSpeciesEmbedding :exec
 UPDATE scry_quest.species 
-SET embedding = $2, updated_at = NOW()
+SET embedding = $2, embedding_model = $3, updated_at = NOW()
 WHERE id = $1
 `
 
 type UpdateSpeciesEmbeddingParams struct {
-	ID        pgtype.UUID     `json:"id"`
-	Embedding pgvector.Vector `json:"embedding"`
+	ID             pgtype.UUID     `json:"id"`
+	Embedding      pgvector.Vector `json:"embedding"`
+	EmbeddingModel pgtype.Text     `json:"embedding_model"`
 }
 
 func (q *Queries) UpdateSpeciesEmbedding(ctx context.Context, arg UpdateSpeciesEmbeddingParams) error {
-	_, err := q.db.Exec(ctx, updateSpeciesEmbedding, arg.ID, arg.Embedding)
+	_, err := q.db.Exec(ctx, updateSpeciesEmbedding, arg.ID, arg.Embedding, arg.EmbeddingModel)
 	return err
 }

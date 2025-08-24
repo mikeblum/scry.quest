@@ -13,9 +13,9 @@ import (
 )
 
 const createClass = `-- name: CreateClass :one
-INSERT INTO scry_quest.classes (name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-RETURNING id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at
+INSERT INTO scry_quest.classes (name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, embedding_model, raw_data)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+RETURNING id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at, embedding_model
 `
 
 type CreateClassParams struct {
@@ -26,6 +26,7 @@ type CreateClassParams struct {
 	SavingThrowProficiencies pgtype.Text     `json:"saving_throw_proficiencies"`
 	SkillProficiencies       []string        `json:"skill_proficiencies"`
 	Embedding                pgvector.Vector `json:"embedding"`
+	EmbeddingModel           pgtype.Text     `json:"embedding_model"`
 	RawData                  []byte          `json:"raw_data"`
 }
 
@@ -38,6 +39,7 @@ func (q *Queries) CreateClass(ctx context.Context, arg CreateClassParams) (ScryQ
 		arg.SavingThrowProficiencies,
 		arg.SkillProficiencies,
 		arg.Embedding,
+		arg.EmbeddingModel,
 		arg.RawData,
 	)
 	var i ScryQuestClass
@@ -53,6 +55,7 @@ func (q *Queries) CreateClass(ctx context.Context, arg CreateClassParams) (ScryQ
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
@@ -67,7 +70,7 @@ func (q *Queries) DeleteClass(ctx context.Context, id pgtype.UUID) error {
 }
 
 const getClassByID = `-- name: GetClassByID :one
-SELECT id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at FROM scry_quest.classes WHERE id = $1
+SELECT id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.classes WHERE id = $1
 `
 
 func (q *Queries) GetClassByID(ctx context.Context, id pgtype.UUID) (ScryQuestClass, error) {
@@ -85,12 +88,13 @@ func (q *Queries) GetClassByID(ctx context.Context, id pgtype.UUID) (ScryQuestCl
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const getClassByName = `-- name: GetClassByName :one
-SELECT id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at FROM scry_quest.classes WHERE name = $1
+SELECT id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.classes WHERE name = $1
 `
 
 func (q *Queries) GetClassByName(ctx context.Context, name string) (ScryQuestClass, error) {
@@ -108,12 +112,13 @@ func (q *Queries) GetClassByName(ctx context.Context, name string) (ScryQuestCla
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const listClasses = `-- name: ListClasses :many
-SELECT id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at FROM scry_quest.classes
+SELECT id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.classes
 ORDER BY name
 LIMIT $1 OFFSET $2
 `
@@ -144,6 +149,7 @@ func (q *Queries) ListClasses(ctx context.Context, arg ListClassesParams) ([]Scr
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -156,34 +162,35 @@ func (q *Queries) ListClasses(ctx context.Context, arg ListClassesParams) ([]Scr
 }
 
 const searchClassesByEmbedding = `-- name: SearchClassesByEmbedding :many
-SELECT id, name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, raw_data, created_at, updated_at, (embedding <=> $1::vector) as distance
+SELECT 
+    id,
+    name,
+    description,
+    primary_ability,
+    embedding_model,
+    (1 - (embedding <=> $1)) as similarity
 FROM scry_quest.classes
-ORDER BY embedding <=> $1::vector
+WHERE embedding IS NOT NULL
+ORDER BY embedding <=> $1
 LIMIT $2
 `
 
 type SearchClassesByEmbeddingParams struct {
-	Column1 pgvector.Vector `json:"column_1"`
-	Limit   int32           `json:"limit"`
+	Embedding pgvector.Vector `json:"embedding"`
+	Limit     int32           `json:"limit"`
 }
 
 type SearchClassesByEmbeddingRow struct {
-	ID                       pgtype.UUID        `json:"id"`
-	Name                     string             `json:"name"`
-	Description              pgtype.Text        `json:"description"`
-	HitDie                   pgtype.Int4        `json:"hit_die"`
-	PrimaryAbility           pgtype.Text        `json:"primary_ability"`
-	SavingThrowProficiencies pgtype.Text        `json:"saving_throw_proficiencies"`
-	SkillProficiencies       []string           `json:"skill_proficiencies"`
-	Embedding                pgvector.Vector    `json:"embedding"`
-	RawData                  []byte             `json:"raw_data"`
-	CreatedAt                pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt                pgtype.Timestamptz `json:"updated_at"`
-	Distance                 interface{}        `json:"distance"`
+	ID             pgtype.UUID `json:"id"`
+	Name           string      `json:"name"`
+	Description    pgtype.Text `json:"description"`
+	PrimaryAbility pgtype.Text `json:"primary_ability"`
+	EmbeddingModel pgtype.Text `json:"embedding_model"`
+	Similarity     int32       `json:"similarity"`
 }
 
 func (q *Queries) SearchClassesByEmbedding(ctx context.Context, arg SearchClassesByEmbeddingParams) ([]SearchClassesByEmbeddingRow, error) {
-	rows, err := q.db.Query(ctx, searchClassesByEmbedding, arg.Column1, arg.Limit)
+	rows, err := q.db.Query(ctx, searchClassesByEmbedding, arg.Embedding, arg.Limit)
 	if err != nil {
 		return nil, err
 	}
@@ -195,15 +202,9 @@ func (q *Queries) SearchClassesByEmbedding(ctx context.Context, arg SearchClasse
 			&i.ID,
 			&i.Name,
 			&i.Description,
-			&i.HitDie,
 			&i.PrimaryAbility,
-			&i.SavingThrowProficiencies,
-			&i.SkillProficiencies,
-			&i.Embedding,
-			&i.RawData,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-			&i.Distance,
+			&i.EmbeddingModel,
+			&i.Similarity,
 		); err != nil {
 			return nil, err
 		}
@@ -217,16 +218,17 @@ func (q *Queries) SearchClassesByEmbedding(ctx context.Context, arg SearchClasse
 
 const updateClassEmbedding = `-- name: UpdateClassEmbedding :exec
 UPDATE scry_quest.classes 
-SET embedding = $2, updated_at = NOW()
+SET embedding = $2, embedding_model = $3, updated_at = NOW()
 WHERE id = $1
 `
 
 type UpdateClassEmbeddingParams struct {
-	ID        pgtype.UUID     `json:"id"`
-	Embedding pgvector.Vector `json:"embedding"`
+	ID             pgtype.UUID     `json:"id"`
+	Embedding      pgvector.Vector `json:"embedding"`
+	EmbeddingModel pgtype.Text     `json:"embedding_model"`
 }
 
 func (q *Queries) UpdateClassEmbedding(ctx context.Context, arg UpdateClassEmbeddingParams) error {
-	_, err := q.db.Exec(ctx, updateClassEmbedding, arg.ID, arg.Embedding)
+	_, err := q.db.Exec(ctx, updateClassEmbedding, arg.ID, arg.Embedding, arg.EmbeddingModel)
 	return err
 }

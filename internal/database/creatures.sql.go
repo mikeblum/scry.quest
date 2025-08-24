@@ -12,13 +12,13 @@ import (
 	"github.com/pgvector/pgvector-go"
 )
 
-const createBeast = `-- name: CreateBeast :one
-INSERT INTO scry_quest.bestiary (name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-RETURNING id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at
+const createCreature = `-- name: CreateCreature :one
+INSERT INTO scry_quest.bestiary (name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, embedding_model, raw_data)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+RETURNING id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at, embedding_model
 `
 
-type CreateBeastParams struct {
+type CreateCreatureParams struct {
 	Name            string          `json:"name"`
 	Size            pgtype.Text     `json:"size"`
 	Type            pgtype.Text     `json:"type"`
@@ -34,11 +34,12 @@ type CreateBeastParams struct {
 	Languages       pgtype.Text     `json:"languages"`
 	ChallengeRating pgtype.Text     `json:"challenge_rating"`
 	Embedding       pgvector.Vector `json:"embedding"`
+	EmbeddingModel  pgtype.Text     `json:"embedding_model"`
 	RawData         []byte          `json:"raw_data"`
 }
 
-func (q *Queries) CreateBeast(ctx context.Context, arg CreateBeastParams) (ScryQuestBestiary, error) {
-	row := q.db.QueryRow(ctx, createBeast,
+func (q *Queries) CreateCreature(ctx context.Context, arg CreateCreatureParams) (ScryQuestBestiary, error) {
+	row := q.db.QueryRow(ctx, createCreature,
 		arg.Name,
 		arg.Size,
 		arg.Type,
@@ -54,6 +55,7 @@ func (q *Queries) CreateBeast(ctx context.Context, arg CreateBeastParams) (ScryQ
 		arg.Languages,
 		arg.ChallengeRating,
 		arg.Embedding,
+		arg.EmbeddingModel,
 		arg.RawData,
 	)
 	var i ScryQuestBestiary
@@ -77,6 +79,7 @@ func (q *Queries) CreateBeast(ctx context.Context, arg CreateBeastParams) (ScryQ
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
@@ -91,7 +94,7 @@ func (q *Queries) DeleteBeast(ctx context.Context, id pgtype.UUID) error {
 }
 
 const getBeastByID = `-- name: GetBeastByID :one
-SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at FROM scry_quest.bestiary WHERE id = $1
+SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.bestiary WHERE id = $1
 `
 
 func (q *Queries) GetBeastByID(ctx context.Context, id pgtype.UUID) (ScryQuestBestiary, error) {
@@ -117,12 +120,13 @@ func (q *Queries) GetBeastByID(ctx context.Context, id pgtype.UUID) (ScryQuestBe
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const getBeastByName = `-- name: GetBeastByName :one
-SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at FROM scry_quest.bestiary WHERE name = $1
+SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.bestiary WHERE name = $1
 `
 
 func (q *Queries) GetBeastByName(ctx context.Context, name string) (ScryQuestBestiary, error) {
@@ -148,12 +152,13 @@ func (q *Queries) GetBeastByName(ctx context.Context, name string) (ScryQuestBes
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const listBeasts = `-- name: ListBeasts :many
-SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at FROM scry_quest.bestiary
+SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.bestiary
 ORDER BY name
 LIMIT $1 OFFSET $2
 `
@@ -192,6 +197,7 @@ func (q *Queries) ListBeasts(ctx context.Context, arg ListBeastsParams) ([]ScryQ
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -204,7 +210,7 @@ func (q *Queries) ListBeasts(ctx context.Context, arg ListBeastsParams) ([]ScryQ
 }
 
 const listBeastsByChallengeRating = `-- name: ListBeastsByChallengeRating :many
-SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at FROM scry_quest.bestiary
+SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.bestiary
 WHERE challenge_rating = $1
 ORDER BY name
 `
@@ -238,6 +244,7 @@ func (q *Queries) ListBeastsByChallengeRating(ctx context.Context, challengeRati
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -250,7 +257,7 @@ func (q *Queries) ListBeastsByChallengeRating(ctx context.Context, challengeRati
 }
 
 const listBeastsByType = `-- name: ListBeastsByType :many
-SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at FROM scry_quest.bestiary
+SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.bestiary
 WHERE type = $1
 ORDER BY name
 `
@@ -284,6 +291,7 @@ func (q *Queries) ListBeastsByType(ctx context.Context, type_ pgtype.Text) ([]Sc
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -295,71 +303,56 @@ func (q *Queries) ListBeastsByType(ctx context.Context, type_ pgtype.Text) ([]Sc
 	return items, nil
 }
 
-const searchBeastsByEmbedding = `-- name: SearchBeastsByEmbedding :many
-SELECT id, name, size, type, subtype, alignment, armor_class, hit_points, hit_dice, speed, abilities, skills, senses, languages, challenge_rating, embedding, raw_data, created_at, updated_at, (embedding <=> $1::vector) as distance
+const searchCreaturesByEmbedding = `-- name: SearchCreaturesByEmbedding :many
+SELECT 
+    id,
+    name,
+    size,
+    type,
+    alignment,
+    challenge_rating,
+    embedding_model,
+    (1 - (embedding <=> $1)) as similarity
 FROM scry_quest.bestiary
-ORDER BY embedding <=> $1::vector
+WHERE embedding IS NOT NULL
+ORDER BY embedding <=> $1
 LIMIT $2
 `
 
-type SearchBeastsByEmbeddingParams struct {
-	Column1 pgvector.Vector `json:"column_1"`
-	Limit   int32           `json:"limit"`
+type SearchCreaturesByEmbeddingParams struct {
+	Embedding pgvector.Vector `json:"embedding"`
+	Limit     int32           `json:"limit"`
 }
 
-type SearchBeastsByEmbeddingRow struct {
-	ID              pgtype.UUID        `json:"id"`
-	Name            string             `json:"name"`
-	Size            pgtype.Text        `json:"size"`
-	Type            pgtype.Text        `json:"type"`
-	Subtype         pgtype.Text        `json:"subtype"`
-	Alignment       pgtype.Text        `json:"alignment"`
-	ArmorClass      pgtype.Int4        `json:"armor_class"`
-	HitPoints       pgtype.Int4        `json:"hit_points"`
-	HitDice         pgtype.Text        `json:"hit_dice"`
-	Speed           []byte             `json:"speed"`
-	Abilities       []byte             `json:"abilities"`
-	Skills          []byte             `json:"skills"`
-	Senses          pgtype.Text        `json:"senses"`
-	Languages       pgtype.Text        `json:"languages"`
-	ChallengeRating pgtype.Text        `json:"challenge_rating"`
-	Embedding       pgvector.Vector    `json:"embedding"`
-	RawData         []byte             `json:"raw_data"`
-	CreatedAt       pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt       pgtype.Timestamptz `json:"updated_at"`
-	Distance        interface{}        `json:"distance"`
+type SearchCreaturesByEmbeddingRow struct {
+	ID              pgtype.UUID `json:"id"`
+	Name            string      `json:"name"`
+	Size            pgtype.Text `json:"size"`
+	Type            pgtype.Text `json:"type"`
+	Alignment       pgtype.Text `json:"alignment"`
+	ChallengeRating pgtype.Text `json:"challenge_rating"`
+	EmbeddingModel  pgtype.Text `json:"embedding_model"`
+	Similarity      int32       `json:"similarity"`
 }
 
-func (q *Queries) SearchBeastsByEmbedding(ctx context.Context, arg SearchBeastsByEmbeddingParams) ([]SearchBeastsByEmbeddingRow, error) {
-	rows, err := q.db.Query(ctx, searchBeastsByEmbedding, arg.Column1, arg.Limit)
+func (q *Queries) SearchCreaturesByEmbedding(ctx context.Context, arg SearchCreaturesByEmbeddingParams) ([]SearchCreaturesByEmbeddingRow, error) {
+	rows, err := q.db.Query(ctx, searchCreaturesByEmbedding, arg.Embedding, arg.Limit)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []SearchBeastsByEmbeddingRow{}
+	items := []SearchCreaturesByEmbeddingRow{}
 	for rows.Next() {
-		var i SearchBeastsByEmbeddingRow
+		var i SearchCreaturesByEmbeddingRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.Name,
 			&i.Size,
 			&i.Type,
-			&i.Subtype,
 			&i.Alignment,
-			&i.ArmorClass,
-			&i.HitPoints,
-			&i.HitDice,
-			&i.Speed,
-			&i.Abilities,
-			&i.Skills,
-			&i.Senses,
-			&i.Languages,
 			&i.ChallengeRating,
-			&i.Embedding,
-			&i.RawData,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-			&i.Distance,
+			&i.EmbeddingModel,
+			&i.Similarity,
 		); err != nil {
 			return nil, err
 		}
@@ -371,18 +364,19 @@ func (q *Queries) SearchBeastsByEmbedding(ctx context.Context, arg SearchBeastsB
 	return items, nil
 }
 
-const updateBeastEmbedding = `-- name: UpdateBeastEmbedding :exec
+const updateCreatureEmbedding = `-- name: UpdateCreatureEmbedding :exec
 UPDATE scry_quest.bestiary 
-SET embedding = $2, updated_at = NOW()
+SET embedding = $2, embedding_model = $3, updated_at = NOW()
 WHERE id = $1
 `
 
-type UpdateBeastEmbeddingParams struct {
-	ID        pgtype.UUID     `json:"id"`
-	Embedding pgvector.Vector `json:"embedding"`
+type UpdateCreatureEmbeddingParams struct {
+	ID             pgtype.UUID     `json:"id"`
+	Embedding      pgvector.Vector `json:"embedding"`
+	EmbeddingModel pgtype.Text     `json:"embedding_model"`
 }
 
-func (q *Queries) UpdateBeastEmbedding(ctx context.Context, arg UpdateBeastEmbeddingParams) error {
-	_, err := q.db.Exec(ctx, updateBeastEmbedding, arg.ID, arg.Embedding)
+func (q *Queries) UpdateCreatureEmbedding(ctx context.Context, arg UpdateCreatureEmbeddingParams) error {
+	_, err := q.db.Exec(ctx, updateCreatureEmbedding, arg.ID, arg.Embedding, arg.EmbeddingModel)
 	return err
 }

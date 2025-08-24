@@ -55,5 +55,41 @@ sqlc-vet: ## 🐘 Vet SQL queries
 docker-up: ## 🐳 Start docker compose services
 	docker compose up -d
 
+.PHONY: embeddings-generate
+embeddings-generate: ## 🤖 Generate embeddings for all SRD content
+	go run ./cmd/embeddings -command=generate -config=env/.env.local
+
+.PHONY: embeddings-generate-spells
+embeddings-generate-spells: ## 🔮 Generate embeddings for spells
+	go run ./cmd/embeddings -command=generate -type=spell -config=env/.env.local
+
+.PHONY: embeddings-generate-bestiary
+embeddings-generate-bestiary: ## 🐉 Generate embeddings for bestiary
+	go run ./cmd/embeddings -command=generate -type=bestiary -config=env/.env.local
+
+.PHONY: embeddings-generate-classes
+embeddings-generate-classes: ## ⚔️ Generate embeddings for classes
+	go run ./cmd/embeddings -command=generate -type=class -config=env/.env.local
+
+.PHONY: embeddings-generate-species
+embeddings-generate-species: ## 🧝 Generate embeddings for species
+	go run ./cmd/embeddings -command=generate -type=species -config=env/.env.local
+
+.PHONY: embeddings-search
+embeddings-search: ## 🔍 Search content using embeddings (requires QUERY)
+	go run ./cmd/embeddings -command=search -query="$(QUERY)" -config=env/.env.local
+
+.PHONY: embeddings-stats
+embeddings-stats: ## 📊 Show embedding statistics
+	go run ./cmd/embeddings -command=stats -config=env/.env.local
+
+.PHONY: embeddings-clear
+embeddings-clear: ## 🗑️ Clear embeddings for a model (requires MODEL)
+	go run ./cmd/embeddings -command=clear -model="$(MODEL)" -config=env/.env.local
+
+.PHONY: embeddings-clear-all
+embeddings-clear-all: ## 🗑️ Clear all embeddings
+	go run ./cmd/embeddings -command=clear -model=all -config=env/.env.local
+
 .PHONY: pre-commit
 pre-commit: fmt tidy lint test sqlc-vet ## ✅ Run all checks
