@@ -10,68 +10,84 @@ import (
 )
 
 type ScryQuestBestiary struct {
-	ID              pgtype.UUID        `json:"id"`
-	Name            string             `json:"name"`
-	Size            pgtype.Text        `json:"size"`
-	Type            pgtype.Text        `json:"type"`
-	Subtype         pgtype.Text        `json:"subtype"`
-	Alignment       pgtype.Text        `json:"alignment"`
-	ArmorClass      pgtype.Int4        `json:"armor_class"`
-	HitPoints       pgtype.Int4        `json:"hit_points"`
-	HitDice         pgtype.Text        `json:"hit_dice"`
-	Speed           []byte             `json:"speed"`
-	Abilities       []byte             `json:"abilities"`
-	Skills          []byte             `json:"skills"`
-	Senses          pgtype.Text        `json:"senses"`
-	Languages       pgtype.Text        `json:"languages"`
-	ChallengeRating pgtype.Text        `json:"challenge_rating"`
-	Embedding       pgvector.Vector    `json:"embedding"`
-	RawData         []byte             `json:"raw_data"`
-	CreatedAt       pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt       pgtype.Timestamptz `json:"updated_at"`
+	ID              pgtype.UUID `json:"id"`
+	Name            string      `json:"name"`
+	Size            pgtype.Text `json:"size"`
+	Type            pgtype.Text `json:"type"`
+	Subtype         pgtype.Text `json:"subtype"`
+	Alignment       pgtype.Text `json:"alignment"`
+	ArmorClass      pgtype.Int4 `json:"armor_class"`
+	HitPoints       pgtype.Int4 `json:"hit_points"`
+	HitDice         pgtype.Text `json:"hit_dice"`
+	Speed           []byte      `json:"speed"`
+	Abilities       []byte      `json:"abilities"`
+	Skills          []byte      `json:"skills"`
+	Senses          pgtype.Text `json:"senses"`
+	Languages       pgtype.Text `json:"languages"`
+	ChallengeRating pgtype.Text `json:"challenge_rating"`
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
+	Embedding      pgvector.Vector    `json:"embedding"`
+	RawData        []byte             `json:"raw_data"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
+	EmbeddingModel pgtype.Text        `json:"embedding_model"`
 }
 
 type ScryQuestClass struct {
-	ID                       pgtype.UUID        `json:"id"`
-	Name                     string             `json:"name"`
-	Description              pgtype.Text        `json:"description"`
-	HitDie                   pgtype.Int4        `json:"hit_die"`
-	PrimaryAbility           pgtype.Text        `json:"primary_ability"`
-	SavingThrowProficiencies pgtype.Text        `json:"saving_throw_proficiencies"`
-	SkillProficiencies       []string           `json:"skill_proficiencies"`
-	Embedding                pgvector.Vector    `json:"embedding"`
-	RawData                  []byte             `json:"raw_data"`
-	CreatedAt                pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt                pgtype.Timestamptz `json:"updated_at"`
+	ID                       pgtype.UUID `json:"id"`
+	Name                     string      `json:"name"`
+	Description              pgtype.Text `json:"description"`
+	HitDie                   pgtype.Int4 `json:"hit_die"`
+	PrimaryAbility           pgtype.Text `json:"primary_ability"`
+	SavingThrowProficiencies pgtype.Text `json:"saving_throw_proficiencies"`
+	SkillProficiencies       []string    `json:"skill_proficiencies"`
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
+	Embedding      pgvector.Vector    `json:"embedding"`
+	RawData        []byte             `json:"raw_data"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
+	EmbeddingModel pgtype.Text        `json:"embedding_model"`
+}
+
+type ScryQuestEmbeddingStat struct {
+	TableName          string      `json:"table_name"`
+	TotalRows          int64       `json:"total_rows"`
+	EmbeddedRows       int64       `json:"embedded_rows"`
+	EmbeddingModel     pgtype.Text `json:"embedding_model"`
+	ExpectedDimensions interface{} `json:"expected_dimensions"`
 }
 
 type ScryQuestSpecy struct {
-	ID                   pgtype.UUID        `json:"id"`
-	Name                 string             `json:"name"`
-	Description          pgtype.Text        `json:"description"`
-	Size                 pgtype.Text        `json:"size"`
-	Speed                pgtype.Int4        `json:"speed"`
-	AbilityScoreIncrease []byte             `json:"ability_score_increase"`
-	Traits               []string           `json:"traits"`
-	Embedding            pgvector.Vector    `json:"embedding"`
-	RawData              []byte             `json:"raw_data"`
-	CreatedAt            pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt            pgtype.Timestamptz `json:"updated_at"`
+	ID                   pgtype.UUID `json:"id"`
+	Name                 string      `json:"name"`
+	Description          pgtype.Text `json:"description"`
+	Size                 pgtype.Text `json:"size"`
+	Speed                pgtype.Int4 `json:"speed"`
+	AbilityScoreIncrease []byte      `json:"ability_score_increase"`
+	Traits               []string    `json:"traits"`
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
+	Embedding      pgvector.Vector    `json:"embedding"`
+	RawData        []byte             `json:"raw_data"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
+	EmbeddingModel pgtype.Text        `json:"embedding_model"`
 }
 
 type ScryQuestSpell struct {
-	ID          pgtype.UUID        `json:"id"`
-	Name        string             `json:"name"`
-	Description pgtype.Text        `json:"description"`
-	Level       int32              `json:"level"`
-	School      pgtype.Text        `json:"school"`
-	CastingTime pgtype.Text        `json:"casting_time"`
-	RangeValue  pgtype.Text        `json:"range_value"`
-	Components  pgtype.Text        `json:"components"`
-	Duration    pgtype.Text        `json:"duration"`
-	Classes     []string           `json:"classes"`
-	Embedding   pgvector.Vector    `json:"embedding"`
-	RawData     []byte             `json:"raw_data"`
-	CreatedAt   pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt   pgtype.Timestamptz `json:"updated_at"`
+	ID          pgtype.UUID `json:"id"`
+	Name        string      `json:"name"`
+	Description pgtype.Text `json:"description"`
+	Level       int32       `json:"level"`
+	School      pgtype.Text `json:"school"`
+	CastingTime pgtype.Text `json:"casting_time"`
+	RangeValue  pgtype.Text `json:"range_value"`
+	Components  pgtype.Text `json:"components"`
+	Duration    pgtype.Text `json:"duration"`
+	Classes     []string    `json:"classes"`
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
+	Embedding      pgvector.Vector    `json:"embedding"`
+	RawData        []byte             `json:"raw_data"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
+	EmbeddingModel pgtype.Text        `json:"embedding_model"`
 }

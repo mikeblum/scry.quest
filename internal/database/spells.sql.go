@@ -13,23 +13,24 @@ import (
 )
 
 const createSpell = `-- name: CreateSpell :one
-INSERT INTO scry_quest.spells (name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-RETURNING id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at
+INSERT INTO scry_quest.spells (name, description, level, school, casting_time, range_value, components, duration, classes, embedding, embedding_model, raw_data)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+RETURNING id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at, embedding_model
 `
 
 type CreateSpellParams struct {
-	Name        string          `json:"name"`
-	Description pgtype.Text     `json:"description"`
-	Level       int32           `json:"level"`
-	School      pgtype.Text     `json:"school"`
-	CastingTime pgtype.Text     `json:"casting_time"`
-	RangeValue  pgtype.Text     `json:"range_value"`
-	Components  pgtype.Text     `json:"components"`
-	Duration    pgtype.Text     `json:"duration"`
-	Classes     []string        `json:"classes"`
-	Embedding   pgvector.Vector `json:"embedding"`
-	RawData     []byte          `json:"raw_data"`
+	Name           string          `json:"name"`
+	Description    pgtype.Text     `json:"description"`
+	Level          int32           `json:"level"`
+	School         pgtype.Text     `json:"school"`
+	CastingTime    pgtype.Text     `json:"casting_time"`
+	RangeValue     pgtype.Text     `json:"range_value"`
+	Components     pgtype.Text     `json:"components"`
+	Duration       pgtype.Text     `json:"duration"`
+	Classes        []string        `json:"classes"`
+	Embedding      pgvector.Vector `json:"embedding"`
+	EmbeddingModel pgtype.Text     `json:"embedding_model"`
+	RawData        []byte          `json:"raw_data"`
 }
 
 func (q *Queries) CreateSpell(ctx context.Context, arg CreateSpellParams) (ScryQuestSpell, error) {
@@ -44,6 +45,7 @@ func (q *Queries) CreateSpell(ctx context.Context, arg CreateSpellParams) (ScryQ
 		arg.Duration,
 		arg.Classes,
 		arg.Embedding,
+		arg.EmbeddingModel,
 		arg.RawData,
 	)
 	var i ScryQuestSpell
@@ -62,6 +64,7 @@ func (q *Queries) CreateSpell(ctx context.Context, arg CreateSpellParams) (ScryQ
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
@@ -76,7 +79,7 @@ func (q *Queries) DeleteSpell(ctx context.Context, id pgtype.UUID) error {
 }
 
 const getSpellByID = `-- name: GetSpellByID :one
-SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at FROM scry_quest.spells WHERE id = $1
+SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.spells WHERE id = $1
 `
 
 func (q *Queries) GetSpellByID(ctx context.Context, id pgtype.UUID) (ScryQuestSpell, error) {
@@ -97,12 +100,13 @@ func (q *Queries) GetSpellByID(ctx context.Context, id pgtype.UUID) (ScryQuestSp
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const getSpellByName = `-- name: GetSpellByName :one
-SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at FROM scry_quest.spells WHERE name = $1
+SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.spells WHERE name = $1
 `
 
 func (q *Queries) GetSpellByName(ctx context.Context, name string) (ScryQuestSpell, error) {
@@ -123,12 +127,13 @@ func (q *Queries) GetSpellByName(ctx context.Context, name string) (ScryQuestSpe
 		&i.RawData,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.EmbeddingModel,
 	)
 	return i, err
 }
 
 const listSpells = `-- name: ListSpells :many
-SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at FROM scry_quest.spells
+SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.spells
 ORDER BY name
 LIMIT $1 OFFSET $2
 `
@@ -162,6 +167,7 @@ func (q *Queries) ListSpells(ctx context.Context, arg ListSpellsParams) ([]ScryQ
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -174,7 +180,7 @@ func (q *Queries) ListSpells(ctx context.Context, arg ListSpellsParams) ([]ScryQ
 }
 
 const listSpellsByLevel = `-- name: ListSpellsByLevel :many
-SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at FROM scry_quest.spells
+SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.spells
 WHERE level = $1
 ORDER BY name
 `
@@ -203,6 +209,7 @@ func (q *Queries) ListSpellsByLevel(ctx context.Context, level int32) ([]ScryQue
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -215,7 +222,7 @@ func (q *Queries) ListSpellsByLevel(ctx context.Context, level int32) ([]ScryQue
 }
 
 const listSpellsBySchool = `-- name: ListSpellsBySchool :many
-SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at FROM scry_quest.spells
+SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at, embedding_model FROM scry_quest.spells
 WHERE school = $1
 ORDER BY name
 `
@@ -244,6 +251,7 @@ func (q *Queries) ListSpellsBySchool(ctx context.Context, school pgtype.Text) ([
 			&i.RawData,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.EmbeddingModel,
 		); err != nil {
 			return nil, err
 		}
@@ -256,37 +264,37 @@ func (q *Queries) ListSpellsBySchool(ctx context.Context, school pgtype.Text) ([
 }
 
 const searchSpellsByEmbedding = `-- name: SearchSpellsByEmbedding :many
-SELECT id, name, description, level, school, casting_time, range_value, components, duration, classes, embedding, raw_data, created_at, updated_at, (embedding <=> $1::vector) as distance
+SELECT 
+    id,
+    name,
+    description,
+    level,
+    school,
+    embedding_model,
+    (1 - (embedding <=> $1)) as similarity
 FROM scry_quest.spells
-ORDER BY embedding <=> $1::vector
+WHERE embedding IS NOT NULL
+ORDER BY embedding <=> $1
 LIMIT $2
 `
 
 type SearchSpellsByEmbeddingParams struct {
-	Column1 pgvector.Vector `json:"column_1"`
-	Limit   int32           `json:"limit"`
+	Embedding pgvector.Vector `json:"embedding"`
+	Limit     int32           `json:"limit"`
 }
 
 type SearchSpellsByEmbeddingRow struct {
-	ID          pgtype.UUID        `json:"id"`
-	Name        string             `json:"name"`
-	Description pgtype.Text        `json:"description"`
-	Level       int32              `json:"level"`
-	School      pgtype.Text        `json:"school"`
-	CastingTime pgtype.Text        `json:"casting_time"`
-	RangeValue  pgtype.Text        `json:"range_value"`
-	Components  pgtype.Text        `json:"components"`
-	Duration    pgtype.Text        `json:"duration"`
-	Classes     []string           `json:"classes"`
-	Embedding   pgvector.Vector    `json:"embedding"`
-	RawData     []byte             `json:"raw_data"`
-	CreatedAt   pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt   pgtype.Timestamptz `json:"updated_at"`
-	Distance    interface{}        `json:"distance"`
+	ID             pgtype.UUID `json:"id"`
+	Name           string      `json:"name"`
+	Description    pgtype.Text `json:"description"`
+	Level          int32       `json:"level"`
+	School         pgtype.Text `json:"school"`
+	EmbeddingModel pgtype.Text `json:"embedding_model"`
+	Similarity     int32       `json:"similarity"`
 }
 
 func (q *Queries) SearchSpellsByEmbedding(ctx context.Context, arg SearchSpellsByEmbeddingParams) ([]SearchSpellsByEmbeddingRow, error) {
-	rows, err := q.db.Query(ctx, searchSpellsByEmbedding, arg.Column1, arg.Limit)
+	rows, err := q.db.Query(ctx, searchSpellsByEmbedding, arg.Embedding, arg.Limit)
 	if err != nil {
 		return nil, err
 	}
@@ -300,16 +308,8 @@ func (q *Queries) SearchSpellsByEmbedding(ctx context.Context, arg SearchSpellsB
 			&i.Description,
 			&i.Level,
 			&i.School,
-			&i.CastingTime,
-			&i.RangeValue,
-			&i.Components,
-			&i.Duration,
-			&i.Classes,
-			&i.Embedding,
-			&i.RawData,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-			&i.Distance,
+			&i.EmbeddingModel,
+			&i.Similarity,
 		); err != nil {
 			return nil, err
 		}
@@ -323,16 +323,17 @@ func (q *Queries) SearchSpellsByEmbedding(ctx context.Context, arg SearchSpellsB
 
 const updateSpellEmbedding = `-- name: UpdateSpellEmbedding :exec
 UPDATE scry_quest.spells 
-SET embedding = $2, updated_at = NOW()
+SET embedding = $2, embedding_model = $3, updated_at = NOW()
 WHERE id = $1
 `
 
 type UpdateSpellEmbeddingParams struct {
-	ID        pgtype.UUID     `json:"id"`
-	Embedding pgvector.Vector `json:"embedding"`
+	ID             pgtype.UUID     `json:"id"`
+	Embedding      pgvector.Vector `json:"embedding"`
+	EmbeddingModel pgtype.Text     `json:"embedding_model"`
 }
 
 func (q *Queries) UpdateSpellEmbedding(ctx context.Context, arg UpdateSpellEmbeddingParams) error {
-	_, err := q.db.Exec(ctx, updateSpellEmbedding, arg.ID, arg.Embedding)
+	_, err := q.db.Exec(ctx, updateSpellEmbedding, arg.ID, arg.Embedding, arg.EmbeddingModel)
 	return err
 }

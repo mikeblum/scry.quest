@@ -11,22 +11,32 @@ import (
 )
 
 type Querier interface {
-	CreateBeast(ctx context.Context, arg CreateBeastParams) (ScryQuestBestiary, error)
+	CountItemsByEmbeddingModel(ctx context.Context) ([]CountItemsByEmbeddingModelRow, error)
 	CreateClass(ctx context.Context, arg CreateClassParams) (ScryQuestClass, error)
+	CreateCreature(ctx context.Context, arg CreateCreatureParams) (ScryQuestBestiary, error)
 	CreateSpecies(ctx context.Context, arg CreateSpeciesParams) (ScryQuestSpecy, error)
 	CreateSpell(ctx context.Context, arg CreateSpellParams) (ScryQuestSpell, error)
 	DeleteBeast(ctx context.Context, id pgtype.UUID) error
 	DeleteClass(ctx context.Context, id pgtype.UUID) error
+	DeleteClassEmbeddings(ctx context.Context, embeddingModel pgtype.Text) error
+	DeleteCreatureEmbeddings(ctx context.Context, embeddingModel pgtype.Text) error
 	DeleteSpecies(ctx context.Context, id pgtype.UUID) error
+	DeleteSpeciesEmbeddings(ctx context.Context, embeddingModel pgtype.Text) error
 	DeleteSpell(ctx context.Context, id pgtype.UUID) error
+	DeleteSpellEmbeddings(ctx context.Context, embeddingModel pgtype.Text) error
 	GetBeastByID(ctx context.Context, id pgtype.UUID) (ScryQuestBestiary, error)
 	GetBeastByName(ctx context.Context, name string) (ScryQuestBestiary, error)
 	GetClassByID(ctx context.Context, id pgtype.UUID) (ScryQuestClass, error)
 	GetClassByName(ctx context.Context, name string) (ScryQuestClass, error)
+	GetClassesWithoutEmbeddings(ctx context.Context) ([]GetClassesWithoutEmbeddingsRow, error)
+	GetCreaturesWithoutEmbeddings(ctx context.Context) ([]GetCreaturesWithoutEmbeddingsRow, error)
+	GetEmbeddingStats(ctx context.Context) ([]ScryQuestEmbeddingStat, error)
 	GetSpeciesByID(ctx context.Context, id pgtype.UUID) (ScryQuestSpecy, error)
 	GetSpeciesByName(ctx context.Context, name string) (ScryQuestSpecy, error)
+	GetSpeciesWithoutEmbeddings(ctx context.Context) ([]GetSpeciesWithoutEmbeddingsRow, error)
 	GetSpellByID(ctx context.Context, id pgtype.UUID) (ScryQuestSpell, error)
 	GetSpellByName(ctx context.Context, name string) (ScryQuestSpell, error)
+	GetSpellsWithoutEmbeddings(ctx context.Context) ([]GetSpellsWithoutEmbeddingsRow, error)
 	ListBeasts(ctx context.Context, arg ListBeastsParams) ([]ScryQuestBestiary, error)
 	ListBeastsByChallengeRating(ctx context.Context, challengeRating pgtype.Text) ([]ScryQuestBestiary, error)
 	ListBeastsByType(ctx context.Context, type_ pgtype.Text) ([]ScryQuestBestiary, error)
@@ -35,12 +45,13 @@ type Querier interface {
 	ListSpells(ctx context.Context, arg ListSpellsParams) ([]ScryQuestSpell, error)
 	ListSpellsByLevel(ctx context.Context, level int32) ([]ScryQuestSpell, error)
 	ListSpellsBySchool(ctx context.Context, school pgtype.Text) ([]ScryQuestSpell, error)
-	SearchBeastsByEmbedding(ctx context.Context, arg SearchBeastsByEmbeddingParams) ([]SearchBeastsByEmbeddingRow, error)
+	SearchAllContentByEmbedding(ctx context.Context, arg SearchAllContentByEmbeddingParams) ([]SearchAllContentByEmbeddingRow, error)
 	SearchClassesByEmbedding(ctx context.Context, arg SearchClassesByEmbeddingParams) ([]SearchClassesByEmbeddingRow, error)
+	SearchCreaturesByEmbedding(ctx context.Context, arg SearchCreaturesByEmbeddingParams) ([]SearchCreaturesByEmbeddingRow, error)
 	SearchSpeciesByEmbedding(ctx context.Context, arg SearchSpeciesByEmbeddingParams) ([]SearchSpeciesByEmbeddingRow, error)
 	SearchSpellsByEmbedding(ctx context.Context, arg SearchSpellsByEmbeddingParams) ([]SearchSpellsByEmbeddingRow, error)
-	UpdateBeastEmbedding(ctx context.Context, arg UpdateBeastEmbeddingParams) error
 	UpdateClassEmbedding(ctx context.Context, arg UpdateClassEmbeddingParams) error
+	UpdateCreatureEmbedding(ctx context.Context, arg UpdateCreatureEmbeddingParams) error
 	UpdateSpeciesEmbedding(ctx context.Context, arg UpdateSpeciesEmbeddingParams) error
 	UpdateSpellEmbedding(ctx context.Context, arg UpdateSpellEmbeddingParams) error
 }
