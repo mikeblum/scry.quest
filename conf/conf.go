@@ -9,23 +9,23 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/knadh/koanf/v2"
 	"github.com/knadh/koanf/parsers/dotenv"
 	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
+	"github.com/knadh/koanf/v2"
 )
 
 const (
 	// EnvConfigPath is the environment variable name used to specify a custom config file path
-	EnvConfigPath   = "CONF_PATH"
+	EnvConfigPath = "CONF_PATH"
 	// EnvVarNamespace is the namespace prefix for environment variables
 	EnvVarNamespace = ""
 	// EnvDelimiter is the delimiter used for environment variable keys
-	EnvDelimiter    = "."
+	EnvDelimiter = "."
 	// PropDelimiter is the delimiter used for property keys
-	PropDelimiter   = "."
+	PropDelimiter = "."
 	// ConfFile is the default configuration file name
-	ConfFile        = ".env"
+	ConfFile = ".env"
 )
 
 // Config wraps koanf configuration management with additional convenience methods
@@ -36,9 +36,9 @@ type Config struct {
 // New creates a new Config instance by loading configuration from .env file and environment variables
 func New(ctx context.Context, configPath string) (*Config, error) {
 	k := koanf.New(".")
-	
+
 	confFile := getConfigPath(configPath)
-	
+
 	if _, err := os.Stat(confFile); err == nil {
 		slog.InfoContext(ctx, "loading configuration", "file", confFile)
 		if err := k.Load(file.Provider(confFile), dotenv.Parser()); err != nil {
@@ -97,18 +97,17 @@ func getConfigPath(configPath string) string {
 	if configPath != "" {
 		return configPath
 	}
-	
+
 	if path := os.Getenv(EnvConfigPath); path != "" {
 		return path
 	}
-	
+
 	if wd, err := os.Getwd(); err == nil {
 		return filepath.Join(wd, ConfFile)
 	}
-	
+
 	return ConfFile
 }
-
 
 // GetEnv returns the environment variable value or the fallback if not set
 func GetEnv(key, fallback string) string {

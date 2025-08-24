@@ -16,6 +16,10 @@ Welcome, brave adventurer, to **scry.quest** - an AI-powered dungeon master that
 
 ## Contributing
 
+Join the party!
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) 👀
+
 ## 📖 The Tome of Contents 📖
 
 ### Core Systems 🏛️
@@ -30,7 +34,7 @@ Welcome, brave adventurer, to **scry.quest** - an AI-powered dungeon master that
 scry.quest/
 ├── srd/                   # The great library of D&D knowledge
 │   ├── spells/            # Arcane formulae and divine miracles
-│   ├── beastiary/         # Creatures both wondrous and terrifying  
+│   ├── bestiary/          # Creatures both wondrous and terrifying  
 │   ├── classes/           # Paths of power and specialization
 │   ├── species/           # The many peoples of the realms
 │   └── items/             # Tools, treasures, and magical artifacts
@@ -55,13 +59,13 @@ All environment variables are prefixed with `SCRY_`. The application comes with 
 
 ### Environment File Setup 📄
 
-1. Copy the provided `.env` file to `.env.local`:
+1. Copy the provided `.env.template` file to `.env`:
    ```bash
-   cp .env.template .env.local
+   cp .env.template .env
    ```
 
-2. Customize `.env.local` with your specific settings
-3. The application will automatically load these variables with the `SCRY_` prefix
+2. Customize `.env` with your specific settings
+3. The application will automatically load these env variables with the `SCRY_` prefix
 
 ## 🎮 For Players & DMs 🎮
 

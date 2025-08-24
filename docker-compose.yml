@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: scry-quest-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: scry_quest
+      POSTGRES_USER: scry_quest
+      POSTGRES_PASSWORD: scry_quest_dev
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+      # Performance tuning for pgvector
+      POSTGRES_SHARED_BUFFERS: "256MB"
+      POSTGRES_MAINTENANCE_WORK_MEM: "64MB"
+      POSTGRES_WORK_MEM: "4MB"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+<<<<<<< HEAD
+      - ./internal/database/migrations/001_init_schema.sql:/docker-entrypoint-initdb.d/001_init_schema.sql
+=======
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+>>>>>>> daa0414 (feat 🐘: postgres + pgvector support)
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    shm_size: 128mb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scry_quest -d scry_quest"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - scry_quest
+
+networks:
+  scry_quest:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

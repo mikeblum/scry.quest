@@ -54,7 +54,7 @@ func TestConf(t *testing.T) {
 func NewValidConfigTest(t *testing.T) {
 	confFile := createTestConfig(t, testEnvContent)
 	config := newTestConfig(t, confFile)
-	
+
 	assert.Equal(t, "hello_world", config.String("TEST_STRING"))
 	assert.Equal(t, 42, config.Int("TEST_INT"))
 	assert.True(t, config.Bool("TEST_BOOL"))
@@ -63,7 +63,7 @@ func NewValidConfigTest(t *testing.T) {
 func NewEnvOnlyConfigTest(t *testing.T) {
 	t.Setenv("TEST_ENV_VAR", "test_value")
 	config := newTestConfig(t, "/nonexistent/.env")
-	
+
 	assert.Equal(t, "test_value", config.String("TEST_ENV_VAR"))
 }
 
@@ -71,7 +71,7 @@ func EnvOverrideConfigTest(t *testing.T) {
 	confFile := createTestConfig(t, "TEST_OVERRIDE=file_value\n")
 	t.Setenv("TEST_OVERRIDE", "env_value")
 	config := newTestConfig(t, confFile)
-	
+
 	assert.Equal(t, "env_value", config.String("TEST_OVERRIDE"))
 }
 
@@ -81,10 +81,10 @@ func NewConfigErrorTest(t *testing.T) {
 	// Create an unreadable file to trigger a file loading error
 	err := os.WriteFile(confFile, []byte("TEST=value"), 0000)
 	require.NoError(t, err)
-	
+
 	ctx := context.Background()
 	config, err := New(ctx, confFile)
-	assert.Error(t, err)
+	require.Error(t, err)
 	assert.Nil(t, config)
 }
 
@@ -130,7 +130,7 @@ func ConfigPathDefaultTest(t *testing.T) {
 	wd, err := os.Getwd()
 	require.NoError(t, err)
 	expected := filepath.Join(wd, ConfFile)
-	
+
 	path := getConfigPath("")
 	assert.Equal(t, expected, path)
 }
