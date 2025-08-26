@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -18,10 +19,10 @@ import (
 type ContentType string
 
 const (
-	ContentTypeSpell    ContentType = "spell"
-	ContentTypeBestiary ContentType = "bestiary"
-	ContentTypeClass    ContentType = "class"
-	ContentTypeSpecies  ContentType = "species"
+	ContentTypeSpell    ContentType = "spell"    //nolint:revive // self-explanatory
+	ContentTypeBestiary ContentType = "bestiary" //nolint:revive // self-explanatory
+	ContentTypeClass    ContentType = "class"    //nolint:revive // self-explanatory
+	ContentTypeSpecies  ContentType = "species"  //nolint:revive // self-explanatory
 )
 
 // ContentItem represents a processed piece of SRD content
@@ -62,7 +63,7 @@ func (p *Pipeline) ProcessAll(ctx context.Context) error {
 	}
 
 	for _, contentType := range contentTypes {
-		fmt.Printf("Processing %s content...\n", contentType)
+		slog.Info("Processing content", "type", contentType)
 		if err := p.ProcessContentType(ctx, contentType); err != nil {
 			return fmt.Errorf("failed to process %s content: %w", contentType, err)
 		}
@@ -78,7 +79,7 @@ func (p *Pipeline) ProcessContentType(ctx context.Context, contentType ContentTy
 		return fmt.Errorf("failed to load content items: %w", err)
 	}
 
-	fmt.Printf("Found %d %s items\n", len(items), contentType)
+	slog.Info("Found content items", "count", len(items), "type", contentType)
 
 	// Process in batches
 	for i := 0; i < len(items); i += p.batchSize {
@@ -92,7 +93,7 @@ func (p *Pipeline) ProcessContentType(ctx context.Context, contentType ContentTy
 			return fmt.Errorf("failed to process batch %d-%d: %w", i, end-1, err)
 		}
 
-		fmt.Printf("Processed %d/%d %s items\n", end, len(items), contentType)
+		slog.Info("Processed content items", "processed", end, "total", len(items), "type", contentType)
 
 		// Small delay to be respectful to the Ollama server
 		time.Sleep(100 * time.Millisecond)
@@ -132,7 +133,7 @@ func (p *Pipeline) loadContentItems(contentType ContentType) ([]*ContentItem, er
 		if !info.IsDir() && strings.HasSuffix(path, fileExt) {
 			item, err := p.loadContentItem(contentType, path)
 			if err != nil {
-				fmt.Printf("Warning: failed to load %s: %v\n", path, err)
+				slog.Warn("Failed to load content item", "path", path, "error", err)
 				return nil // Continue processing other files
 			}
 			items = append(items, item)
@@ -146,7 +147,7 @@ func (p *Pipeline) loadContentItems(contentType ContentType) ([]*ContentItem, er
 
 // loadContentItem loads a single content item from file
 func (p *Pipeline) loadContentItem(contentType ContentType, filePath string) (*ContentItem, error) {
-	data, err := os.ReadFile(filePath)
+	data, err := os.ReadFile(filePath) //nolint:gosec // filePath is validated by filepath.Walk
 	if err != nil {
 		return nil, err
 	}
@@ -204,56 +205,61 @@ func (p *Pipeline) loadContentItem(contentType ContentType, filePath string) (*C
 
 // createSearchableContent creates searchable text from structured data
 func (p *Pipeline) createSearchableContent(contentType ContentType, data map[string]interface{}) string {
-	var parts []string
-
 	switch contentType {
 	case ContentTypeSpell:
-		if name, ok := data["name"].(string); ok {
-			parts = append(parts, name)
-		}
-		if school, ok := data["school"].(string); ok {
-			parts = append(parts, school)
-		}
-		if level, ok := data["level"].(string); ok {
-			parts = append(parts, level)
-		}
-		if desc, ok := data["description"].(string); ok {
-			parts = append(parts, desc)
-		}
-		if higher, ok := data["at_higher_levels"].(string); ok {
-			parts = append(parts, higher)
-		}
-
+		return p.createSpellSearchContent(data)
 	case ContentTypeBestiary:
-		if name, ok := data["name"].(string); ok {
-			parts = append(parts, name)
-		}
-		if size, ok := data["size"].(string); ok {
-			parts = append(parts, size)
-		}
-		if creatureType, ok := data["type"].(string); ok {
-			parts = append(parts, creatureType)
-		}
-		if alignment, ok := data["alignment"].(string); ok {
-			parts = append(parts, alignment)
-		}
+		return p.createBestiarySearchContent(data)
+	default:
+		return ""
+	}
+}
 
-		// Add trait descriptions
-		if traits, ok := data["traits"].([]interface{}); ok {
-			for _, trait := range traits {
-				if traitMap, ok := trait.(map[string]interface{}); ok {
-					if traitName, ok := traitMap["name"].(string); ok {
-						parts = append(parts, traitName)
-					}
-					if traitDesc, ok := traitMap["description"].(string); ok {
-						parts = append(parts, traitDesc)
-					}
-				}
-			}
+func (p *Pipeline) createSpellSearchContent(data map[string]interface{}) string {
+	var parts []string
+	spellFields := []string{"name", "school", "level", "description", "at_higher_levels"}
+
+	for _, field := range spellFields {
+		if value, ok := data[field].(string); ok {
+			parts = append(parts, value)
 		}
 	}
 
 	return strings.Join(parts, " ")
+}
+
+func (p *Pipeline) createBestiarySearchContent(data map[string]interface{}) string {
+	var parts []string
+	creatureFields := []string{"name", "size", "type", "alignment"}
+
+	for _, field := range creatureFields {
+		if value, ok := data[field].(string); ok {
+			parts = append(parts, value)
+		}
+	}
+
+	// Add trait descriptions
+	if traits, ok := data["traits"].([]interface{}); ok {
+		p.addTraitContent(&parts, traits)
+	}
+
+	return strings.Join(parts, " ")
+}
+
+func (p *Pipeline) addTraitContent(parts *[]string, traits []interface{}) {
+	for _, trait := range traits {
+		traitMap, ok := trait.(map[string]interface{})
+		if !ok {
+			continue
+		}
+
+		if traitName, ok := traitMap["name"].(string); ok {
+			*parts = append(*parts, traitName)
+		}
+		if traitDesc, ok := traitMap["description"].(string); ok {
+			*parts = append(*parts, traitDesc)
+		}
+	}
 }
 
 // processBatch processes a batch of content items

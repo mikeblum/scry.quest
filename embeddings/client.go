@@ -1,4 +1,4 @@
-package embeddings
+package embeddings //nolint:revive // package comment not needed
 
 import (
 	"context"
@@ -65,7 +65,7 @@ func (c *Client) GenerateEmbedding(ctx context.Context, text string) ([]float32,
 // GetModelDimensions returns the expected dimensions for the current model
 func (c *Client) GetModelDimensions() int {
 	switch c.model {
-	case "gpt-oss:20b":
+	case defaultOllamaModel:
 		return 1536 // gpt-oss models use 1536 dimensions similar to OpenAI
 	case "nomic-embed-text":
 		return 768
