@@ -164,7 +164,7 @@ func (s *SearchService) searchSpellsDB(ctx context.Context, queryEmbedding pgvec
 		return nil, err
 	}
 
-	var results []*SearchResult
+	results := make([]*SearchResult, 0, len(rows))
 	for _, row := range rows {
 		if float64(row.Similarity) < options.Threshold {
 			continue
@@ -199,7 +199,7 @@ func (s *SearchService) searchBestiaryDB(ctx context.Context, queryEmbedding pgv
 		return nil, err
 	}
 
-	var results []*SearchResult
+	results := make([]*SearchResult, 0, len(rows))
 	for _, row := range rows {
 		if float64(row.Similarity) < options.Threshold {
 			continue
@@ -230,7 +230,7 @@ func (s *SearchService) searchClassesDB(ctx context.Context, queryEmbedding pgve
 		return nil, err
 	}
 
-	var results []*SearchResult
+	results := make([]*SearchResult, 0, len(rows))
 	for _, row := range rows {
 		if float64(row.Similarity) < options.Threshold {
 			continue
@@ -265,7 +265,7 @@ func (s *SearchService) searchSpeciesDB(ctx context.Context, queryEmbedding pgve
 		return nil, err
 	}
 
-	var results []*SearchResult
+	results := make([]*SearchResult, 0, len(rows))
 	for _, row := range rows {
 		if float64(row.Similarity) < options.Threshold {
 			continue

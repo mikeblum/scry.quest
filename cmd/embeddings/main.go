@@ -1,4 +1,4 @@
-package main
+package main //nolint:revive // package comment not needed for main
 
 import (
 	"context"
@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
-	"strings"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
@@ -16,31 +15,118 @@ import (
 	"github.com/mikeblum/scry.quest/log"
 )
 
-func main() {
-	var (
-		configPath  = flag.String("config", "env/.env.local", "Path to configuration file")
-		command     = flag.String("command", "", "Command to run: generate, search, stats, clear")
-		model       = flag.String("model", "gpt-oss:20b", "Embedding model to use (gpt-oss:20b, nomic-embed-text, all-minilm)")
-		ollamaURL   = flag.String("ollama-url", "http://localhost:11434", "Ollama server URL")
-		contentType = flag.String("type", "", "Content type filter (spell, bestiary, class, species)")
-		query       = flag.String("query", "", "Search query (for search command)")
-		limit       = flag.Int("limit", 10, "Number of results to return (for search command)")
-		srdPath     = flag.String("srd", "./srd", "Path to SRD directory")
-	)
-	flag.Parse()
+const (
+	defaultOllamaHost  = "http://localhost:11434"
+	defaultOllamaModel = "gpt-oss:20b"
+)
 
-	if *command == "" {
-		fmt.Println("Usage: embeddings -command <generate|search|stats|clear> [options]")
-		fmt.Println("")
-		fmt.Println("Commands:")
-		fmt.Println("  generate    Generate embeddings for SRD content")
-		fmt.Println("  search      Search content using embeddings")
-		fmt.Println("  stats       Show embedding statistics")
-		fmt.Println("  clear       Clear embeddings for a model")
-		fmt.Println("")
-		fmt.Println("Options:")
-		flag.PrintDefaults()
-		os.Exit(1)
+type config struct {
+	configPath  *string
+	command     *string
+	model       *string
+	ollamaURL   *string
+	contentType *string
+	query       *string
+	limit       *int
+	srdPath     *string
+}
+
+func parseFlags() *config {
+	cfg := &config{
+		configPath:  flag.String("config", "env/.env.local", "Path to configuration file"),
+		command:     flag.String("command", "", "Command to run: generate, search, stats, clear"),
+		model:       flag.String("model", defaultOllamaModel, "Embedding model to use (gpt-oss:20b, nomic-embed-text, all-minilm)"),
+		ollamaURL:   flag.String("ollama-url", defaultOllamaHost, "Ollama server URL"),
+		contentType: flag.String("type", "", "Content type filter (spell, bestiary, class, species)"),
+		query:       flag.String("query", "", "Search query (for search command)"),
+		limit:       flag.Int("limit", 10, "Number of results to return (for search command)"),
+		srdPath:     flag.String("srd", "./srd", "Path to SRD directory"),
+	}
+	flag.Parse()
+	return cfg
+}
+
+func showUsage() {
+	slog.Info("Usage: embeddings -command <generate|search|stats|clear> [options]")
+	slog.Info("")
+	slog.Info("Commands:")
+	slog.Info("  generate    Generate embeddings for SRD content")
+	slog.Info("  search      Search content using embeddings")
+	slog.Info("  stats       Show embedding statistics")
+	slog.Info("  clear       Clear embeddings for a model")
+	slog.Info("")
+	slog.Info("Options:")
+	flag.PrintDefaults()
+}
+
+func setupServices(ctx context.Context, cfg *config) (*embeddings.Client, *database.Queries, func() error, error) {
+	// Load configuration
+	appCfg, err := conf.New(ctx, *cfg.configPath)
+	if err != nil {
+		return nil, nil, nil, fmt.Errorf("failed to load config: %w", err)
+	}
+
+	// Initialize database connection
+	conn, err := pgx.Connect(ctx, appCfg.String("DATABASE_URL"))
+	if err != nil {
+		return nil, nil, nil, fmt.Errorf("failed to connect to database: %w", err)
+	}
+
+	cleanup := func() error {
+		return conn.Close(ctx)
+	}
+
+	queries := database.New(conn)
+
+	// Initialize Ollama client
+	ollamaConfig := embeddings.Config{
+		Host:  *cfg.ollamaURL,
+		Model: *cfg.model,
+	}
+	client, err := embeddings.NewClient(ollamaConfig)
+	if err != nil {
+		if cleanupErr := cleanup(); cleanupErr != nil {
+			slog.Error("Failed to cleanup during client creation failure", "error", cleanupErr)
+		}
+		return nil, nil, nil, fmt.Errorf("failed to create Ollama client: %w", err)
+	}
+
+	// Test Ollama connection
+	if err := client.Ping(ctx); err != nil {
+		if cleanupErr := cleanup(); cleanupErr != nil {
+			slog.Error("Failed to cleanup during ping failure", "error", cleanupErr)
+		}
+		return nil, nil, nil, fmt.Errorf("failed to connect to Ollama server at %s: %w", *cfg.ollamaURL, err)
+	}
+
+	slog.Info("Connected to Ollama server", "url", *cfg.ollamaURL, "model", *cfg.model)
+	return client, queries, cleanup, nil
+}
+
+func runCommand(ctx context.Context, cfg *config, client *embeddings.Client, queries *database.Queries) error {
+	switch *cfg.command {
+	case "generate":
+		return generateEmbeddings(ctx, client, queries, *cfg.srdPath, *cfg.contentType)
+	case "search":
+		if *cfg.query == "" {
+			return fmt.Errorf("query is required for search command")
+		}
+		return searchContent(ctx, client, queries, *cfg.query, *cfg.contentType, *cfg.limit)
+	case "stats":
+		return showStats(ctx, queries)
+	case "clear":
+		return clearEmbeddings(ctx, queries, *cfg.model)
+	default:
+		return fmt.Errorf("unknown command: %s", *cfg.command)
+	}
+}
+
+func main() {
+	cfg := parseFlags()
+
+	if *cfg.command == "" {
+		showUsage()
+		return
 	}
 
 	// Initialize logging
@@ -48,74 +134,20 @@ func main() {
 
 	ctx := context.Background()
 
-	// Load configuration
-	cfg, err := conf.New(ctx, *configPath)
+	client, queries, cleanup, err := setupServices(ctx, cfg)
 	if err != nil {
-		slog.Error("Failed to load config", "error", err)
+		slog.Error("Failed to setup services", "error", err)
 		os.Exit(1)
 	}
-
-	// Initialize database connection
-	conn, err := pgx.Connect(ctx, cfg.String("DATABASE_URL"))
-	if err != nil {
-		slog.Error("Failed to connect to database", "error", err)
-		os.Exit(1)
-	}
-	defer conn.Close(ctx)
-
-	queries := database.New(conn)
-
-	// Initialize Ollama client
-	ollamaConfig := embeddings.Config{
-		Host:  *ollamaURL,
-		Model: *model,
-	}
-	client, err := embeddings.NewClient(ollamaConfig)
-	if err != nil {
-		slog.Error("Failed to create Ollama client", "error", err)
-		os.Exit(1)
-	}
-
-	// Test Ollama connection
-	if err := client.Ping(ctx); err != nil {
-		slog.Error("Failed to connect to Ollama server", "url", *ollamaURL, "error", err)
-		os.Exit(1)
-	}
-
-	fmt.Printf("Connected to Ollama server at %s using model %s\n", *ollamaURL, *model)
-
-	switch *command {
-	case "generate":
-		if err := generateEmbeddings(ctx, client, queries, *srdPath, *contentType); err != nil {
-			slog.Error("Failed to generate embeddings", "error", err)
-			os.Exit(1)
+	defer func() {
+		if err := cleanup(); err != nil {
+			slog.Error("Failed to cleanup", "error", err)
 		}
+	}()
 
-	case "search":
-		if *query == "" {
-			slog.Error("Query is required for search command")
-			os.Exit(1)
-		}
-		if err := searchContent(ctx, client, queries, *query, *contentType, *limit); err != nil {
-			slog.Error("Failed to search content", "error", err)
-			os.Exit(1)
-		}
-
-	case "stats":
-		if err := showStats(ctx, queries); err != nil {
-			slog.Error("Failed to show stats", "error", err)
-			os.Exit(1)
-		}
-
-	case "clear":
-		if err := clearEmbeddings(ctx, queries, *model); err != nil {
-			slog.Error("Failed to clear embeddings", "error", err)
-			os.Exit(1)
-		}
-
-	default:
-		slog.Error("Unknown command", "command", *command)
-		os.Exit(1)
+	if err := runCommand(ctx, cfg, client, queries); err != nil {
+		slog.Error("Command failed", "error", err)
+		return
 	}
 }
 
@@ -123,22 +155,72 @@ func generateEmbeddings(ctx context.Context, client *embeddings.Client, queries 
 	pipeline := embeddings.NewPipeline(client, queries, srdPath)
 
 	if contentType == "" {
-		fmt.Println("Generating embeddings for all content types...")
+		slog.Info("Generating embeddings for all content types...")
 		return pipeline.ProcessAll(ctx)
 	}
 
-	// Process specific content type
+	contentTypeMap := map[string]embeddings.ContentType{
+		"spell":    embeddings.ContentTypeSpell,
+		"bestiary": embeddings.ContentTypeBestiary,
+		"class":    embeddings.ContentTypeClass,
+		"species":  embeddings.ContentTypeSpecies,
+	}
+
+	if ct, ok := contentTypeMap[contentType]; ok {
+		return pipeline.ProcessContentType(ctx, ct)
+	}
+
+	return fmt.Errorf("unknown content type: %s", contentType)
+}
+
+func searchAllContentTypes(ctx context.Context, searchService *embeddings.SearchService, query string, limit int) ([]*embeddings.SearchResult, error) {
+	if limit < 0 || limit > 1000 {
+		limit = 10
+	}
+	limit32 := int32(limit) //nolint:gosec // bounded by check above
+	return searchService.Search(ctx, query, &embeddings.SearchOptions{
+		ContentTypes: []embeddings.ContentType{
+			embeddings.ContentTypeSpell,
+			embeddings.ContentTypeBestiary,
+			embeddings.ContentTypeClass,
+			embeddings.ContentTypeSpecies,
+		},
+		Limit:     limit32,
+		Threshold: 0.6,
+	})
+}
+
+func searchSpecificContentType(ctx context.Context, searchService *embeddings.SearchService, query, contentType string, limit int) ([]*embeddings.SearchResult, error) {
+	if limit < 0 || limit > 1000 {
+		limit = 10
+	}
+	limit32 := int32(limit) //nolint:gosec // bounded by check above
+
 	switch contentType {
 	case "spell":
-		return pipeline.ProcessContentType(ctx, embeddings.ContentTypeSpell)
+		return searchService.SearchSpells(ctx, query, limit32)
 	case "bestiary":
-		return pipeline.ProcessContentType(ctx, embeddings.ContentTypeBestiary)
+		return searchService.SearchBestiary(ctx, query, limit32)
 	case "class":
-		return pipeline.ProcessContentType(ctx, embeddings.ContentTypeClass)
+		return searchService.SearchClasses(ctx, query, limit32)
 	case "species":
-		return pipeline.ProcessContentType(ctx, embeddings.ContentTypeSpecies)
+		return searchService.SearchSpecies(ctx, query, limit32)
 	default:
-		return fmt.Errorf("unknown content type: %s", contentType)
+		return nil, fmt.Errorf("unknown content type: %s", contentType)
+	}
+}
+
+func displaySearchResults(results []*embeddings.SearchResult, query string) {
+	slog.Info("Search results", "count", len(results), "query", query)
+
+	for i, result := range results {
+		content := ""
+		if result.Content != "" && len(result.Content) > 100 {
+			content = result.Content[:100] + "..."
+		} else if result.Content != "" {
+			content = result.Content
+		}
+		slog.Info("Result", "rank", i+1, "name", result.Name, "type", result.Type, "similarity", result.Similarity, "content", content)
 	}
 }
 
@@ -149,49 +231,16 @@ func searchContent(ctx context.Context, client *embeddings.Client, queries *data
 	var err error
 
 	if contentType == "" {
-		// Search all content types
-		results, err = searchService.Search(ctx, query, &embeddings.SearchOptions{
-			ContentTypes: []embeddings.ContentType{
-				embeddings.ContentTypeSpell,
-				embeddings.ContentTypeBestiary,
-				embeddings.ContentTypeClass,
-				embeddings.ContentTypeSpecies,
-			},
-			Limit:     int32(limit),
-			Threshold: 0.6,
-		})
+		results, err = searchAllContentTypes(ctx, searchService, query, limit)
 	} else {
-		// Search specific content type
-		switch contentType {
-		case "spell":
-			results, err = searchService.SearchSpells(ctx, query, int32(limit))
-		case "bestiary":
-			results, err = searchService.SearchBestiary(ctx, query, int32(limit))
-		case "class":
-			results, err = searchService.SearchClasses(ctx, query, int32(limit))
-		case "species":
-			results, err = searchService.SearchSpecies(ctx, query, int32(limit))
-		default:
-			return fmt.Errorf("unknown content type: %s", contentType)
-		}
+		results, err = searchSpecificContentType(ctx, searchService, query, contentType, limit)
 	}
 
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("Found %d results for query: %s\n\n", len(results), query)
-
-	for i, result := range results {
-		fmt.Printf("%d. %s (%s) - Similarity: %.3f\n", i+1, result.Name, result.Type, result.Similarity)
-		if result.Content != "" && len(result.Content) > 100 {
-			fmt.Printf("   %s...\n", result.Content[:100])
-		} else if result.Content != "" {
-			fmt.Printf("   %s\n", result.Content)
-		}
-		fmt.Println()
-	}
-
+	displaySearchResults(results, query)
 	return nil
 }
 
@@ -201,10 +250,7 @@ func showStats(ctx context.Context, queries *database.Queries) error {
 		return err
 	}
 
-	fmt.Println("Embedding Statistics:")
-	fmt.Println("=====================")
-	fmt.Printf("%-12s %-20s %-12s %-12s %-12s\n", "Table", "Model", "Total", "Embedded", "Expected Dims")
-	fmt.Println(strings.Repeat("-", 80))
+	slog.Info("Embedding Statistics")
 
 	for _, stat := range stats {
 		expectedDims := "N/A"
@@ -219,35 +265,25 @@ func showStats(ctx context.Context, queries *database.Queries) error {
 			embeddingModel = stat.EmbeddingModel.String
 		}
 
-		fmt.Printf("%-12s %-20s %-12d %-12d %-12s\n",
-			stat.TableName,
-			embeddingModel,
-			stat.TotalRows,
-			stat.EmbeddedRows,
-			expectedDims)
+		slog.Info("Table stats", "table", stat.TableName, "model", embeddingModel, "total", stat.TotalRows, "embedded", stat.EmbeddedRows, "expected_dims", expectedDims)
 	}
 
 	// Show counts by model
-	fmt.Println("\nCounts by Model:")
-	fmt.Println("================")
-
 	counts, err := queries.CountItemsByEmbeddingModel(ctx)
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("%-12s %-20s %-8s\n", "Table", "Model", "Count")
-	fmt.Println(strings.Repeat("-", 45))
-
+	slog.Info("Counts by Model")
 	for _, count := range counts {
-		fmt.Printf("%-12s %-20s %-8d\n", count.TableName, count.Model, count.Count)
+		slog.Info("Model count", "table", count.TableName, "model", count.Model, "count", count.Count)
 	}
 
 	return nil
 }
 
 func clearEmbeddings(ctx context.Context, queries *database.Queries, model string) error {
-	fmt.Printf("Clearing embeddings for model: %s\n", model)
+	slog.Info("Clearing embeddings for model", "model", model)
 
 	modelText := pgtype.Text{String: model, Valid: true}
 
@@ -267,6 +303,6 @@ func clearEmbeddings(ctx context.Context, queries *database.Queries, model strin
 		return fmt.Errorf("failed to clear species embeddings: %w", err)
 	}
 
-	fmt.Printf("Successfully cleared embeddings for model: %s\n", model)
+	slog.Info("Successfully cleared embeddings for model", "model", model)
 	return nil
 }
