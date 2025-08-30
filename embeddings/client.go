@@ -3,23 +3,28 @@ package embeddings //nolint:revive // package comment not needed
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"net/url"
-	"os"
 
 	"github.com/ollama/ollama/api"
 )
 
+const (
+	defaultOllamaModel = "gpt-oss:20b"
+)
+
+// Client provides Ollama API functionality for generating embeddings
 type Client struct {
 	client *api.Client
 	config *Config
 }
 
+// Config holds configuration for the Ollama client
 type Config struct {
-	Host  string `env:"OLLAMA_HOST" env-default:"http://localhost:11434"`
-	Model string `env:"OLLAMA_MODEL" env-default:"nomic-embed-text"`
+	Host  string
+	Model string
 }
 
+// NewClient creates a new Ollama client with the given configuration
 func NewClient(cfg Config) (*Client, error) {
 	_, err := url.Parse(cfg.Host)
 	if err != nil {
@@ -40,7 +45,7 @@ func NewClient(cfg Config) (*Client, error) {
 // GenerateEmbedding creates an embedding vector for the given text
 func (c *Client) GenerateEmbedding(ctx context.Context, text string) ([]float32, error) {
 	req := &api.EmbeddingRequest{
-		Model:  c.model,
+		Model:  c.config.Model,
 		Prompt: text,
 	}
 
@@ -62,9 +67,18 @@ func (c *Client) GenerateEmbedding(ctx context.Context, text string) ([]float32,
 	return result, nil
 }
 
+// Ping tests the connection to the Ollama server
+func (c *Client) Ping(ctx context.Context) error {
+	_, err := c.client.List(ctx)
+	if err != nil {
+		return fmt.Errorf("failed to ping Ollama server: %w", err)
+	}
+	return nil
+}
+
 // GetModelDimensions returns the expected dimensions for the current model
 func (c *Client) GetModelDimensions() int {
-	switch c.model {
+	switch c.config.Model {
 	case defaultOllamaModel:
 		return 1536 // gpt-oss models use 1536 dimensions similar to OpenAI
 	case "nomic-embed-text":

@@ -1,4 +1,4 @@
-package embeddings
+package embeddings //nolint:revive // package comment not needed
 
 import (
 	"context"
@@ -8,52 +8,30 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
+	"unicode"
 
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/mikeblum/scry.quest/internal/database"
 	"github.com/pgvector/pgvector-go"
 )
 
-// ContentType represents the type of SRD content
-type ContentType string
-
-const (
-	ContentTypeSpell    ContentType = "spell"    //nolint:revive // self-explanatory
-	ContentTypeBestiary ContentType = "bestiary" //nolint:revive // self-explanatory
-	ContentTypeClass    ContentType = "class"    //nolint:revive // self-explanatory
-	ContentTypeSpecies  ContentType = "species"  //nolint:revive // self-explanatory
-)
-
-// ContentItem represents a processed piece of SRD content
-type ContentItem struct {
-	Type      ContentType
-	Name      string
-	Content   string
-	FilePath  string
-	Metadata  map[string]interface{}
-	Embedding []float32
-}
-
-// Pipeline processes SRD content and generates embeddings
+// Pipeline processes SRD content for embedding generation
 type Pipeline struct {
-	client    *Client
-	db        *database.Queries
-	srdPath   string
-	batchSize int
+	client  *Client
+	queries *database.Queries
+	srdPath string
 }
 
-// NewPipeline creates a new embeddings pipeline
-func NewPipeline(client *Client, db *database.Queries, srdPath string) *Pipeline {
+// NewPipeline creates a new content processing pipeline
+func NewPipeline(client *Client, queries *database.Queries, srdPath string) *Pipeline {
 	return &Pipeline{
-		client:    client,
-		db:        db,
-		srdPath:   srdPath,
-		batchSize: 10, // Process in batches to avoid overwhelming the API
+		client:  client,
+		queries: queries,
+		srdPath: srdPath,
 	}
 }
 
-// ProcessAll processes all SRD content and stores embeddings
+// ProcessAll processes all content types
 func (p *Pipeline) ProcessAll(ctx context.Context) error {
 	contentTypes := []ContentType{
 		ContentTypeSpell,
@@ -62,362 +40,317 @@ func (p *Pipeline) ProcessAll(ctx context.Context) error {
 		ContentTypeSpecies,
 	}
 
-	for _, contentType := range contentTypes {
-		slog.Info("Processing content", "type", contentType)
-		if err := p.ProcessContentType(ctx, contentType); err != nil {
-			return fmt.Errorf("failed to process %s content: %w", contentType, err)
+	for _, ct := range contentTypes {
+		if err := p.ProcessContentType(ctx, ct); err != nil {
+			return fmt.Errorf("failed to process %s: %w", ct, err)
 		}
 	}
 
 	return nil
 }
 
-// ProcessContentType processes all content of a specific type
+// ProcessContentType processes a specific content type
 func (p *Pipeline) ProcessContentType(ctx context.Context, contentType ContentType) error {
-	items, err := p.loadContentItems(contentType)
+	slog.InfoContext(ctx, "Processing content type", "type", contentType)
+
+	switch contentType {
+	case ContentTypeSpell:
+		return p.processSpells(ctx)
+	case ContentTypeBestiary:
+		return p.processBestiary(ctx)
+	case ContentTypeClass:
+		return p.processClasses(ctx)
+	case ContentTypeSpecies:
+		return p.processSpecies(ctx)
+	default:
+		return fmt.Errorf("unknown content type: %s", contentType)
+	}
+}
+
+func (p *Pipeline) processSpells(ctx context.Context) error {
+	spellsPath := filepath.Join(p.srdPath, "spells", "spells.md")
+	content, err := os.ReadFile(spellsPath) //nolint:gosec // filepath.Join ensures safe path construction
 	if err != nil {
-		return fmt.Errorf("failed to load content items: %w", err)
+		return fmt.Errorf("failed to read spells file: %w", err)
 	}
 
-	slog.Info("Found content items", "count", len(items), "type", contentType)
-
-	// Process in batches
-	for i := 0; i < len(items); i += p.batchSize {
-		end := i + p.batchSize
-		if end > len(items) {
-			end = len(items)
-		}
-
-		batch := items[i:end]
-		if err := p.processBatch(ctx, batch); err != nil {
-			return fmt.Errorf("failed to process batch %d-%d: %w", i, end-1, err)
-		}
-
-		slog.Info("Processed content items", "processed", end, "total", len(items), "type", contentType)
-
-		// Small delay to be respectful to the Ollama server
-		time.Sleep(100 * time.Millisecond)
+	text := string(content)
+	embedding, err := p.client.GenerateEmbedding(ctx, text)
+	if err != nil {
+		return fmt.Errorf("failed to generate embedding: %w", err)
 	}
 
+	vector := pgvector.NewVector(embedding)
+	modelText := pgtype.Text{String: p.client.config.Model, Valid: true}
+
+	params := database.CreateSpellParams{
+		Name:           "D&D 5e Spells",
+		Description:    pgtype.Text{String: "Complete D&D 5e spell reference", Valid: true},
+		Level:          0,
+		School:         pgtype.Text{String: "reference", Valid: true},
+		CastingTime:    pgtype.Text{String: "N/A", Valid: true},
+		RangeValue:     pgtype.Text{String: "N/A", Valid: true},
+		Components:     pgtype.Text{String: "N/A", Valid: true},
+		Duration:       pgtype.Text{String: "N/A", Valid: true},
+		Classes:        []string{"reference"},
+		Embedding:      vector,
+		RawData:        content,
+		EmbeddingModel: modelText,
+	}
+
+	if _, err := p.queries.CreateSpell(ctx, params); err != nil {
+		return fmt.Errorf("failed to create spell record: %w", err)
+	}
+
+	slog.InfoContext(ctx, "Processed spells", "embedding_dims", len(embedding))
 	return nil
 }
 
-// loadContentItems loads content items from the SRD directory
-func (p *Pipeline) loadContentItems(contentType ContentType) ([]*ContentItem, error) {
-	var items []*ContentItem
-	var searchPath string
-	var fileExt string
-
-	switch contentType {
-	case ContentTypeSpell:
-		searchPath = filepath.Join(p.srdPath, "spells")
-		fileExt = ".json"
-	case ContentTypeBestiary:
-		searchPath = filepath.Join(p.srdPath, "beastiary")
-		fileExt = ".json"
-	case ContentTypeClass:
-		searchPath = filepath.Join(p.srdPath, "classes")
-		fileExt = ".md"
-	case ContentTypeSpecies:
-		searchPath = filepath.Join(p.srdPath, "species")
-		fileExt = ".md"
-	default:
-		return nil, fmt.Errorf("unknown content type: %s", contentType)
-	}
-
-	err := filepath.Walk(searchPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-
-		if !info.IsDir() && strings.HasSuffix(path, fileExt) {
-			item, err := p.loadContentItem(contentType, path)
-			if err != nil {
-				slog.Warn("Failed to load content item", "path", path, "error", err)
-				return nil // Continue processing other files
-			}
-			items = append(items, item)
-		}
-
-		return nil
-	})
-
-	return items, err
-}
-
-// loadContentItem loads a single content item from file
-func (p *Pipeline) loadContentItem(contentType ContentType, filePath string) (*ContentItem, error) {
-	data, err := os.ReadFile(filePath) //nolint:gosec // filePath is validated by filepath.Walk
+func (p *Pipeline) processBestiary(ctx context.Context) error {
+	bestiaryPath := filepath.Join(p.srdPath, "beastiary")
+	entries, err := os.ReadDir(bestiaryPath)
 	if err != nil {
-		return nil, err
+		return fmt.Errorf("failed to read bestiary directory: %w", err)
 	}
 
-	item := &ContentItem{
-		Type:     contentType,
-		FilePath: filePath,
-		Metadata: make(map[string]interface{}),
-	}
-
-	switch contentType {
-	case ContentTypeSpell, ContentTypeBestiary:
-		var jsonData map[string]interface{}
-		if err := json.Unmarshal(data, &jsonData); err != nil {
-			return nil, fmt.Errorf("failed to parse JSON: %w", err)
-		}
-
-		// Extract name
-		if name, ok := jsonData["name"].(string); ok {
-			item.Name = name
-		} else {
-			return nil, fmt.Errorf("missing or invalid name field")
-		}
-
-		// Store full JSON as metadata
-		item.Metadata = jsonData
-
-		// Create searchable text content
-		item.Content = p.createSearchableContent(contentType, jsonData)
-
-	case ContentTypeClass, ContentTypeSpecies:
-		content := string(data)
-		item.Content = content
-
-		// Extract name from markdown content (first heading)
-		lines := strings.Split(content, "\n")
-		for _, line := range lines {
-			if strings.HasPrefix(line, "# ") {
-				item.Name = strings.TrimPrefix(line, "# ")
-				break
-			}
-		}
-
-		if item.Name == "" {
-			// Fallback to filename without extension
-			item.Name = strings.TrimSuffix(filepath.Base(filePath), filepath.Ext(filePath))
-		}
-
-		item.Metadata["file_path"] = filePath
-		item.Metadata["type"] = string(contentType)
-	}
-
-	return item, nil
-}
-
-// createSearchableContent creates searchable text from structured data
-func (p *Pipeline) createSearchableContent(contentType ContentType, data map[string]interface{}) string {
-	switch contentType {
-	case ContentTypeSpell:
-		return p.createSpellSearchContent(data)
-	case ContentTypeBestiary:
-		return p.createBestiarySearchContent(data)
-	default:
-		return ""
-	}
-}
-
-func (p *Pipeline) createSpellSearchContent(data map[string]interface{}) string {
-	var parts []string
-	spellFields := []string{"name", "school", "level", "description", "at_higher_levels"}
-
-	for _, field := range spellFields {
-		if value, ok := data[field].(string); ok {
-			parts = append(parts, value)
-		}
-	}
-
-	return strings.Join(parts, " ")
-}
-
-func (p *Pipeline) createBestiarySearchContent(data map[string]interface{}) string {
-	var parts []string
-	creatureFields := []string{"name", "size", "type", "alignment"}
-
-	for _, field := range creatureFields {
-		if value, ok := data[field].(string); ok {
-			parts = append(parts, value)
-		}
-	}
-
-	// Add trait descriptions
-	if traits, ok := data["traits"].([]interface{}); ok {
-		p.addTraitContent(&parts, traits)
-	}
-
-	return strings.Join(parts, " ")
-}
-
-func (p *Pipeline) addTraitContent(parts *[]string, traits []interface{}) {
-	for _, trait := range traits {
-		traitMap, ok := trait.(map[string]interface{})
-		if !ok {
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".json") {
 			continue
 		}
 
-		if traitName, ok := traitMap["name"].(string); ok {
-			*parts = append(*parts, traitName)
-		}
-		if traitDesc, ok := traitMap["description"].(string); ok {
-			*parts = append(*parts, traitDesc)
-		}
-	}
-}
-
-// processBatch processes a batch of content items
-func (p *Pipeline) processBatch(ctx context.Context, items []*ContentItem) error {
-	// Extract texts for batch embedding generation
-	texts := make([]string, len(items))
-	for i, item := range items {
-		texts[i] = item.Content
-	}
-
-	// Generate embeddings in batch
-	embeddings, err := p.client.GenerateEmbeddings(ctx, texts)
-	if err != nil {
-		return fmt.Errorf("failed to generate embeddings: %w", err)
-	}
-
-	// Store embeddings and content in database
-	for i, item := range items {
-		item.Embedding = embeddings[i]
-		if err := p.storeItem(ctx, item); err != nil {
-			return fmt.Errorf("failed to store item %s: %w", item.Name, err)
+		filePath := filepath.Join(bestiaryPath, entry.Name())
+		if err := p.processBestiaryFile(ctx, filePath); err != nil {
+			slog.ErrorContext(ctx, "Failed to process bestiary file", "file", filePath, "error", err)
 		}
 	}
 
 	return nil
 }
 
-// storeItem stores a content item with its embedding in the database
-func (p *Pipeline) storeItem(ctx context.Context, item *ContentItem) error {
-	embedding := pgvector.NewVector(item.Embedding)
-
-	switch item.Type {
-	case ContentTypeSpell:
-		return p.storeSpell(ctx, item, embedding)
-	case ContentTypeBestiary:
-		return p.storeBeastiary(ctx, item, embedding)
-	case ContentTypeClass:
-		return p.storeClass(ctx, item, embedding)
-	case ContentTypeSpecies:
-		return p.storeSpecies(ctx, item, embedding)
-	default:
-		return fmt.Errorf("unknown content type: %s", item.Type)
+func (p *Pipeline) processBestiaryFile(ctx context.Context, filePath string) error {
+	content, err := os.ReadFile(filePath) //nolint:gosec // filepath.Join ensures safe path construction
+	if err != nil {
+		return fmt.Errorf("failed to read file: %w", err)
 	}
+
+	var creature map[string]interface{}
+	if err := json.Unmarshal(content, &creature); err != nil {
+		return fmt.Errorf("failed to unmarshal creature data: %w", err)
+	}
+
+	params, err := p.buildCreatureParams(ctx, creature, content)
+	if err != nil {
+		return err
+	}
+
+	if _, err := p.queries.CreateCreature(ctx, *params); err != nil {
+		return fmt.Errorf("failed to create creature record: %w", err)
+	}
+
+	slog.InfoContext(ctx, "Processed creature", "name", params.Name)
+	return nil
 }
 
-// storeSpell stores a spell in the database
-func (p *Pipeline) storeSpell(ctx context.Context, item *ContentItem, embedding pgvector.Vector) error {
-	rawData, _ := json.Marshal(item.Metadata)
-
-	params := database.CreateSpellParams{
-		Name:        item.Name,
-		Description: pgtype.Text{String: item.Content, Valid: true},
-		Embedding:   embedding,
-		RawData:     rawData,
+func (p *Pipeline) buildCreatureParams(ctx context.Context, creature map[string]interface{}, content []byte) (*database.CreateCreatureParams, error) {
+	name, ok := creature["name"].(string)
+	if !ok {
+		return nil, fmt.Errorf("missing or invalid name field")
 	}
 
-	// Extract specific fields from metadata
-	if level, ok := item.Metadata["level"].(string); ok {
-		// Parse level from "Level X" format
-		if strings.HasPrefix(level, "Level ") {
-			levelNum := strings.TrimPrefix(level, "Level ")
-			if len(levelNum) > 0 && levelNum[0] >= '0' && levelNum[0] <= '9' {
-				params.Level = int32(levelNum[0] - '0')
-			}
-		}
+	text := fmt.Sprintf("Name: %s\n%s", name, string(content))
+	embedding, err := p.client.GenerateEmbedding(ctx, text)
+	if err != nil {
+		return nil, fmt.Errorf("failed to generate embedding: %w", err)
 	}
 
-	if school, ok := item.Metadata["school"].(string); ok {
-		params.School = pgtype.Text{String: school, Valid: true}
+	vector := pgvector.NewVector(embedding)
+	modelText := pgtype.Text{String: p.client.config.Model, Valid: true}
+
+	abilities, _ := json.Marshal(creature["ability_scores"])
+	skills, _ := json.Marshal(creature["skills"])
+	speed, _ := json.Marshal(creature["speed"])
+
+	params := &database.CreateCreatureParams{
+		Name:           name,
+		Size:           getTextFromMap(creature, "size"),
+		Type:           getTextFromMap(creature, "type"),
+		Alignment:      getTextFromMap(creature, "alignment"),
+		Abilities:      abilities,
+		Skills:         skills,
+		Speed:          speed,
+		Languages:      getTextFromMap(creature, "languages"),
+		Senses:         getTextFromMap(creature, "senses"),
+		Embedding:      vector,
+		RawData:        content,
+		EmbeddingModel: modelText,
 	}
 
-	if castingTime, ok := item.Metadata["casting_time"].(map[string]interface{}); ok {
-		if value, ok := castingTime["value"].(string); ok {
-			if unit, ok := castingTime["unit"].(string); ok {
-				castingTimeStr := fmt.Sprintf("%s %s", value, unit)
-				params.CastingTime = pgtype.Text{String: castingTimeStr, Valid: true}
-			}
-		}
-	}
-
-	_, err := p.db.CreateSpell(ctx, params)
-	return err
+	p.setOptionalCreatureFields(creature, params)
+	return params, nil
 }
 
-// storeBeastiary stores a creature in the bestiary table
-func (p *Pipeline) storeBeastiary(ctx context.Context, item *ContentItem, embedding pgvector.Vector) error {
-	rawData, _ := json.Marshal(item.Metadata)
-
-	params := database.CreateCreatureParams{
-		Name:      item.Name,
-		Embedding: embedding,
-		RawData:   rawData,
+func (p *Pipeline) setOptionalCreatureFields(creature map[string]interface{}, params *database.CreateCreatureParams) {
+	if armorClass, ok := creature["armor_class"].(float64); ok {
+		params.ArmorClass = pgtype.Int4{Int32: int32(armorClass), Valid: true}
 	}
 
-	// Extract specific fields from metadata
-	if size, ok := item.Metadata["size"].(string); ok {
-		params.Size = pgtype.Text{String: size, Valid: true}
-	}
-
-	if creatureType, ok := item.Metadata["type"].(string); ok {
-		params.Type = pgtype.Text{String: creatureType, Valid: true}
-	}
-
-	if alignment, ok := item.Metadata["alignment"].(string); ok {
-		params.Alignment = pgtype.Text{String: alignment, Valid: true}
-	}
-
-	if ac, ok := item.Metadata["armor_class"].(float64); ok {
-		acInt := int32(ac)
-		params.ArmorClass = pgtype.Int4{Int32: acInt, Valid: true}
-	}
-
-	if hp, ok := item.Metadata["hit_points"].(map[string]interface{}); ok {
-		if average, ok := hp["average"].(float64); ok {
-			hpInt := int32(average)
-			params.HitPoints = pgtype.Int4{Int32: hpInt, Valid: true}
+	if hitPoints, ok := creature["hit_points"].(map[string]interface{}); ok {
+		if avg, ok := hitPoints["average"].(float64); ok {
+			params.HitPoints = pgtype.Int4{Int32: int32(avg), Valid: true}
 		}
-		if dice, ok := hp["dice"].(string); ok {
+		if dice, ok := hitPoints["dice"].(string); ok {
 			params.HitDice = pgtype.Text{String: dice, Valid: true}
 		}
 	}
 
-	if cr, ok := item.Metadata["challenge_rating"].(map[string]interface{}); ok {
+	if cr, ok := creature["challenge_rating"].(map[string]interface{}); ok {
 		if rating, ok := cr["rating"].(string); ok {
 			params.ChallengeRating = pgtype.Text{String: rating, Valid: true}
 		}
 	}
-
-	_, err := p.db.CreateCreature(ctx, params)
-	return err
 }
 
-// storeClass stores a class in the database
-func (p *Pipeline) storeClass(ctx context.Context, item *ContentItem, embedding pgvector.Vector) error {
-	rawData, _ := json.Marshal(item.Metadata)
+func (p *Pipeline) processClasses(ctx context.Context) error {
+	classesPath := filepath.Join(p.srdPath, "classes")
+	entries, err := os.ReadDir(classesPath)
+	if err != nil {
+		return fmt.Errorf("failed to read classes directory: %w", err)
+	}
+
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".md") {
+			continue
+		}
+
+		filePath := filepath.Join(classesPath, entry.Name())
+		if err := p.processClassFile(ctx, filePath); err != nil {
+			slog.ErrorContext(ctx, "Failed to process class file", "file", filePath, "error", err)
+		}
+	}
+
+	return nil
+}
+
+func (p *Pipeline) processClassFile(ctx context.Context, filePath string) error {
+	content, err := os.ReadFile(filePath) //nolint:gosec // filepath.Join ensures safe path construction
+	if err != nil {
+		return fmt.Errorf("failed to read file: %w", err)
+	}
+
+	fileName := filepath.Base(filePath)
+	className := toTitleCase(strings.TrimSuffix(fileName, ".md"))
+
+	text := string(content)
+	embedding, err := p.client.GenerateEmbedding(ctx, text)
+	if err != nil {
+		return fmt.Errorf("failed to generate embedding: %w", err)
+	}
+
+	vector := pgvector.NewVector(embedding)
+	modelText := pgtype.Text{String: p.client.config.Model, Valid: true}
 
 	params := database.CreateClassParams{
-		Name:        item.Name,
-		Description: pgtype.Text{String: item.Content, Valid: true},
-		Embedding:   embedding,
-		RawData:     rawData,
+		Name:           className,
+		Description:    pgtype.Text{String: text[:minInt(1000, len(text))], Valid: true},
+		Embedding:      vector,
+		RawData:        content,
+		EmbeddingModel: modelText,
 	}
 
-	_, err := p.db.CreateClass(ctx, params)
-	return err
+	if _, err := p.queries.CreateClass(ctx, params); err != nil {
+		return fmt.Errorf("failed to create class record: %w", err)
+	}
+
+	slog.InfoContext(ctx, "Processed class", "name", className, "embedding_dims", len(embedding))
+	return nil
 }
 
-// storeSpecies stores a species in the database
-func (p *Pipeline) storeSpecies(ctx context.Context, item *ContentItem, embedding pgvector.Vector) error {
-	rawData, _ := json.Marshal(item.Metadata)
-
-	params := database.CreateSpeciesParams{
-		Name:        item.Name,
-		Description: pgtype.Text{String: item.Content, Valid: true},
-		Embedding:   embedding,
-		RawData:     rawData,
+func (p *Pipeline) processSpecies(ctx context.Context) error {
+	speciesPath := filepath.Join(p.srdPath, "species")
+	entries, err := os.ReadDir(speciesPath)
+	if err != nil {
+		return fmt.Errorf("failed to read species directory: %w", err)
 	}
 
-	_, err := p.db.CreateSpecies(ctx, params)
-	return err
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".md") {
+			continue
+		}
+
+		filePath := filepath.Join(speciesPath, entry.Name())
+		if err := p.processSpeciesFile(ctx, filePath); err != nil {
+			slog.ErrorContext(ctx, "Failed to process species file", "file", filePath, "error", err)
+		}
+	}
+
+	return nil
+}
+
+func (p *Pipeline) processSpeciesFile(ctx context.Context, filePath string) error {
+	content, err := os.ReadFile(filePath) //nolint:gosec // filepath.Join ensures safe path construction
+	if err != nil {
+		return fmt.Errorf("failed to read file: %w", err)
+	}
+
+	fileName := filepath.Base(filePath)
+	speciesName := toTitleCase(strings.TrimSuffix(fileName, ".md"))
+
+	text := string(content)
+	embedding, err := p.client.GenerateEmbedding(ctx, text)
+	if err != nil {
+		return fmt.Errorf("failed to generate embedding: %w", err)
+	}
+
+	vector := pgvector.NewVector(embedding)
+	modelText := pgtype.Text{String: p.client.config.Model, Valid: true}
+
+	params := database.CreateSpeciesParams{
+		Name:           speciesName,
+		Description:    pgtype.Text{String: text[:minInt(1000, len(text))], Valid: true},
+		Traits:         []string{},
+		Embedding:      vector,
+		RawData:        content,
+		EmbeddingModel: modelText,
+	}
+
+	if _, err := p.queries.CreateSpecies(ctx, params); err != nil {
+		return fmt.Errorf("failed to create species record: %w", err)
+	}
+
+	slog.InfoContext(ctx, "Processed species", "name", speciesName, "embedding_dims", len(embedding))
+	return nil
+}
+
+func getTextFromMap(m map[string]interface{}, key string) pgtype.Text {
+	if val, ok := m[key]; ok {
+		if str, ok := val.(string); ok {
+			return pgtype.Text{String: str, Valid: true}
+		}
+		if slice, ok := val.([]interface{}); ok && len(slice) > 0 {
+			var strs []string
+			for _, item := range slice {
+				if s, ok := item.(string); ok {
+					strs = append(strs, s)
+				}
+			}
+			if len(strs) > 0 {
+				return pgtype.Text{String: strings.Join(strs, ", "), Valid: true}
+			}
+		}
+	}
+	return pgtype.Text{}
+}
+
+func minInt(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func toTitleCase(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	return string(unicode.ToUpper(rune(s[0]))) + s[1:]
 }
