@@ -1,308 +1,193 @@
-package embeddings
+package embeddings //nolint:revive // package comment not needed
 
 import (
 	"context"
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/mikeblum/scry.quest/internal/database"
 	"github.com/pgvector/pgvector-go"
 )
 
-// SearchResult represents a search result with similarity score
-type SearchResult struct {
-	ID         string                 `json:"id"`
-	Name       string                 `json:"name"`
-	Type       ContentType            `json:"type"`
-	Content    string                 `json:"content,omitempty"`
-	Metadata   map[string]interface{} `json:"metadata,omitempty"`
-	Similarity float64                `json:"similarity"`
-}
-
-// SearchService provides semantic search functionality
+// SearchService provides embedding-based search functionality
 type SearchService struct {
-	client *Client
-	db     *database.Queries
+	client  *Client
+	queries *database.Queries
 }
 
 // NewSearchService creates a new search service
-func NewSearchService(client *Client, db *database.Queries) *SearchService {
+func NewSearchService(client *Client, queries *database.Queries) *SearchService {
 	return &SearchService{
-		client: client,
-		db:     db,
+		client:  client,
+		queries: queries,
 	}
 }
 
-// SearchOptions configures search behavior
-type SearchOptions struct {
-	ContentTypes []ContentType `json:"content_types,omitempty"`
-	Limit        int32         `json:"limit,omitempty"`
-	Threshold    float64       `json:"threshold,omitempty"`
-}
-
-// DefaultSearchOptions returns sensible default search options
-func DefaultSearchOptions() *SearchOptions {
-	return &SearchOptions{
-		ContentTypes: []ContentType{
-			ContentTypeSpell,
-			ContentTypeBestiary,
-			ContentTypeClass,
-			ContentTypeSpecies,
-		},
-		Limit:     10,
-		Threshold: 0.7, // Minimum similarity score
-	}
-}
-
-// Search performs semantic search across all content types
-func (s *SearchService) Search(ctx context.Context, query string, options *SearchOptions) ([]*SearchResult, error) {
-	if options == nil {
-		options = DefaultSearchOptions()
-	}
-
-	// Generate embedding for the search query
-	queryEmbedding, err := s.client.GenerateEmbedding(ctx, query)
-	if err != nil {
-		return nil, fmt.Errorf("failed to generate query embedding: %w", err)
+// Search performs semantic search across multiple content types
+func (s *SearchService) Search(ctx context.Context, query string, opts *SearchOptions) ([]*SearchResult, error) {
+	if opts == nil {
+		opts = &SearchOptions{
+			ContentTypes: []ContentType{ContentTypeSpell, ContentTypeBestiary, ContentTypeClass, ContentTypeSpecies},
+			Limit:        10,
+			Threshold:    0.6,
+		}
 	}
 
 	var allResults []*SearchResult
 
-	// Search in each content type
-	for _, contentType := range options.ContentTypes {
-		results, err := s.searchContentType(ctx, contentType, queryEmbedding, options)
+	for _, contentType := range opts.ContentTypes {
+		results, err := s.searchByType(ctx, query, contentType, opts.Limit)
 		if err != nil {
-			return nil, fmt.Errorf("failed to search %s content: %w", contentType, err)
+			return nil, fmt.Errorf("failed to search %s: %w", contentType, err)
 		}
 		allResults = append(allResults, results...)
 	}
 
-	// Sort by similarity and apply limit
-	allResults = s.sortAndLimitResults(allResults, options.Limit)
-
-	return allResults, nil
+	return s.filterAndLimitResults(allResults, opts), nil
 }
 
-// SearchSpells performs semantic search specifically for spells
-func (s *SearchService) SearchSpells(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
-	queryEmbedding, err := s.client.GenerateEmbedding(ctx, query)
+func (s *SearchService) searchByType(ctx context.Context, query string, contentType ContentType, limit int32) ([]*SearchResult, error) {
+	embedding, err := s.client.GenerateEmbedding(ctx, query)
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate query embedding: %w", err)
 	}
 
-	return s.searchContentType(ctx, ContentTypeSpell, queryEmbedding, &SearchOptions{
-		Limit:     limit,
-		Threshold: 0.7,
-	})
-}
-
-// SearchBestiary performs semantic search specifically for creatures
-func (s *SearchService) SearchBestiary(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
-	queryEmbedding, err := s.client.GenerateEmbedding(ctx, query)
-	if err != nil {
-		return nil, fmt.Errorf("failed to generate query embedding: %w", err)
-	}
-
-	return s.searchContentType(ctx, ContentTypeBestiary, queryEmbedding, &SearchOptions{
-		Limit:     limit,
-		Threshold: 0.7,
-	})
-}
-
-// SearchClasses performs semantic search specifically for classes
-func (s *SearchService) SearchClasses(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
-	queryEmbedding, err := s.client.GenerateEmbedding(ctx, query)
-	if err != nil {
-		return nil, fmt.Errorf("failed to generate query embedding: %w", err)
-	}
-
-	return s.searchContentType(ctx, ContentTypeClass, queryEmbedding, &SearchOptions{
-		Limit:     limit,
-		Threshold: 0.7,
-	})
-}
-
-// SearchSpecies performs semantic search specifically for species
-func (s *SearchService) SearchSpecies(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
-	queryEmbedding, err := s.client.GenerateEmbedding(ctx, query)
-	if err != nil {
-		return nil, fmt.Errorf("failed to generate query embedding: %w", err)
-	}
-
-	return s.searchContentType(ctx, ContentTypeSpecies, queryEmbedding, &SearchOptions{
-		Limit:     limit,
-		Threshold: 0.7,
-	})
-}
-
-// searchContentType performs similarity search for a specific content type
-func (s *SearchService) searchContentType(ctx context.Context, contentType ContentType, queryEmbedding []float32, options *SearchOptions) ([]*SearchResult, error) {
-	embedding := pgvector.NewVector(queryEmbedding)
+	vector := pgvector.NewVector(embedding)
 
 	switch contentType {
 	case ContentTypeSpell:
-		return s.searchSpellsDB(ctx, embedding, options)
+		return s.searchSpells(ctx, vector, limit)
 	case ContentTypeBestiary:
-		return s.searchBestiaryDB(ctx, embedding, options)
+		return s.searchBestiary(ctx, vector, limit)
 	case ContentTypeClass:
-		return s.searchClassesDB(ctx, embedding, options)
+		return s.searchClasses(ctx, vector, limit)
 	case ContentTypeSpecies:
-		return s.searchSpeciesDB(ctx, embedding, options)
+		return s.searchSpecies(ctx, vector, limit)
 	default:
 		return nil, fmt.Errorf("unknown content type: %s", contentType)
 	}
 }
 
-// searchSpellsDB searches spells using vector similarity
-func (s *SearchService) searchSpellsDB(ctx context.Context, queryEmbedding pgvector.Vector, options *SearchOptions) ([]*SearchResult, error) {
-	params := database.SearchSpellsByEmbeddingParams{
-		Embedding: queryEmbedding,
-		Limit:     options.Limit,
-	}
-
-	rows, err := s.db.SearchSpellsByEmbedding(ctx, params)
+func (s *SearchService) searchSpells(ctx context.Context, vector pgvector.Vector, limit int32) ([]*SearchResult, error) {
+	spells, err := s.queries.SearchSpellsByEmbedding(ctx, database.SearchSpellsByEmbeddingParams{
+		Embedding: vector,
+		Limit:     limit,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	results := make([]*SearchResult, 0, len(rows))
-	for _, row := range rows {
-		if float64(row.Similarity) < options.Threshold {
-			continue
-		}
-
-		result := &SearchResult{
-			ID:         row.ID.String(),
-			Name:       row.Name,
+	results := make([]*SearchResult, len(spells))
+	for i, spell := range spells {
+		results[i] = &SearchResult{
+			ID:         uuid.UUID(spell.ID.Bytes).String(),
+			Name:       spell.Name,
 			Type:       ContentTypeSpell,
-			Similarity: float64(row.Similarity),
+			Content:    spell.Description.String,
+			Similarity: float64(spell.Similarity),
 		}
-
-		if row.Description.Valid {
-			result.Content = row.Description.String
-		}
-
-		results = append(results, result)
 	}
-
 	return results, nil
 }
 
-// searchBestiaryDB searches bestiary using vector similarity
-func (s *SearchService) searchBestiaryDB(ctx context.Context, queryEmbedding pgvector.Vector, options *SearchOptions) ([]*SearchResult, error) {
-	params := database.SearchCreaturesByEmbeddingParams{
-		Embedding: queryEmbedding,
-		Limit:     options.Limit,
-	}
-
-	rows, err := s.db.SearchCreaturesByEmbedding(ctx, params)
+func (s *SearchService) searchBestiary(ctx context.Context, vector pgvector.Vector, limit int32) ([]*SearchResult, error) {
+	creatures, err := s.queries.SearchCreaturesByEmbedding(ctx, database.SearchCreaturesByEmbeddingParams{
+		Embedding: vector,
+		Limit:     limit,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	results := make([]*SearchResult, 0, len(rows))
-	for _, row := range rows {
-		if float64(row.Similarity) < options.Threshold {
-			continue
-		}
-
-		result := &SearchResult{
-			ID:         row.ID.String(),
-			Name:       row.Name,
+	results := make([]*SearchResult, len(creatures))
+	for i, creature := range creatures {
+		results[i] = &SearchResult{
+			ID:         uuid.UUID(creature.ID.Bytes).String(),
+			Name:       creature.Name,
 			Type:       ContentTypeBestiary,
-			Similarity: float64(row.Similarity),
+			Content:    fmt.Sprintf("%s %s", creature.Type.String, creature.Size.String),
+			Similarity: float64(creature.Similarity),
 		}
-
-		results = append(results, result)
 	}
-
 	return results, nil
 }
 
-// searchClassesDB searches classes using vector similarity
-func (s *SearchService) searchClassesDB(ctx context.Context, queryEmbedding pgvector.Vector, options *SearchOptions) ([]*SearchResult, error) {
-	params := database.SearchClassesByEmbeddingParams{
-		Embedding: queryEmbedding,
-		Limit:     options.Limit,
-	}
-
-	rows, err := s.db.SearchClassesByEmbedding(ctx, params)
+func (s *SearchService) searchClasses(ctx context.Context, vector pgvector.Vector, limit int32) ([]*SearchResult, error) {
+	classes, err := s.queries.SearchClassesByEmbedding(ctx, database.SearchClassesByEmbeddingParams{
+		Embedding: vector,
+		Limit:     limit,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	results := make([]*SearchResult, 0, len(rows))
-	for _, row := range rows {
-		if float64(row.Similarity) < options.Threshold {
-			continue
-		}
-
-		result := &SearchResult{
-			ID:         row.ID.String(),
-			Name:       row.Name,
+	results := make([]*SearchResult, len(classes))
+	for i, class := range classes {
+		results[i] = &SearchResult{
+			ID:         uuid.UUID(class.ID.Bytes).String(),
+			Name:       class.Name,
 			Type:       ContentTypeClass,
-			Similarity: float64(row.Similarity),
+			Content:    class.Description.String,
+			Similarity: float64(class.Similarity),
 		}
-
-		if row.Description.Valid {
-			result.Content = row.Description.String
-		}
-
-		results = append(results, result)
 	}
-
 	return results, nil
 }
 
-// searchSpeciesDB searches species using vector similarity
-func (s *SearchService) searchSpeciesDB(ctx context.Context, queryEmbedding pgvector.Vector, options *SearchOptions) ([]*SearchResult, error) {
-	params := database.SearchSpeciesByEmbeddingParams{
-		Embedding: queryEmbedding,
-		Limit:     options.Limit,
-	}
-
-	rows, err := s.db.SearchSpeciesByEmbedding(ctx, params)
+func (s *SearchService) searchSpecies(ctx context.Context, vector pgvector.Vector, limit int32) ([]*SearchResult, error) {
+	species, err := s.queries.SearchSpeciesByEmbedding(ctx, database.SearchSpeciesByEmbeddingParams{
+		Embedding: vector,
+		Limit:     limit,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	results := make([]*SearchResult, 0, len(rows))
-	for _, row := range rows {
-		if float64(row.Similarity) < options.Threshold {
-			continue
-		}
-
-		result := &SearchResult{
-			ID:         row.ID.String(),
-			Name:       row.Name,
+	results := make([]*SearchResult, len(species))
+	for i, sp := range species {
+		results[i] = &SearchResult{
+			ID:         uuid.UUID(sp.ID.Bytes).String(),
+			Name:       sp.Name,
 			Type:       ContentTypeSpecies,
-			Similarity: float64(row.Similarity),
+			Content:    sp.Description.String,
+			Similarity: float64(sp.Similarity),
 		}
-
-		if row.Description.Valid {
-			result.Content = row.Description.String
-		}
-
-		results = append(results, result)
 	}
-
 	return results, nil
 }
 
-// sortAndLimitResults sorts results by similarity and applies limit
-func (s *SearchService) sortAndLimitResults(results []*SearchResult, limit int32) []*SearchResult {
-	// Sort by similarity descending
-	for i := 0; i < len(results)-1; i++ {
-		for j := i + 1; j < len(results); j++ {
-			if results[i].Similarity < results[j].Similarity {
-				results[i], results[j] = results[j], results[i]
-			}
+// SearchSpells searches spell content
+func (s *SearchService) SearchSpells(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
+	return s.searchByType(ctx, query, ContentTypeSpell, limit)
+}
+
+// SearchBestiary searches bestiary content
+func (s *SearchService) SearchBestiary(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
+	return s.searchByType(ctx, query, ContentTypeBestiary, limit)
+}
+
+// SearchClasses searches class content
+func (s *SearchService) SearchClasses(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
+	return s.searchByType(ctx, query, ContentTypeClass, limit)
+}
+
+// SearchSpecies searches species content
+func (s *SearchService) SearchSpecies(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
+	return s.searchByType(ctx, query, ContentTypeSpecies, limit)
+}
+
+func (s *SearchService) filterAndLimitResults(results []*SearchResult, opts *SearchOptions) []*SearchResult {
+	var filtered []*SearchResult
+
+	for _, result := range results {
+		if result.Similarity >= opts.Threshold {
+			filtered = append(filtered, result)
 		}
 	}
 
-	// Apply limit
-	if limit > 0 && int(limit) < len(results) {
-		results = results[:limit]
+	if len(filtered) > int(opts.Limit) {
+		filtered = filtered[:opts.Limit]
 	}
 
-	return results
+	return filtered
 }
