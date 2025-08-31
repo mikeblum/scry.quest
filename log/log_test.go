@@ -10,237 +10,140 @@ import (
 
 func TestParseLevel(t *testing.T) {
 	tests := []struct {
-		name  string
-		level string
+		level LogLevel
 		want  slog.Level
 	}{
-		{
-			name:  "debug level",
-			level: "debug",
-			want:  slog.LevelDebug,
-		},
-		{
-			name:  "info level",
-			level: "info",
-			want:  slog.LevelInfo,
-		},
-		{
-			name:  "warn level",
-			level: "warn",
-			want:  slog.LevelWarn,
-		},
-		{
-			name:  "error level",
-			level: "error",
-			want:  slog.LevelError,
-		},
-		{
-			name:  "uppercase level",
-			level: "DEBUG",
-			want:  slog.LevelDebug,
-		},
-		{
-			name:  "mixed case level",
-			level: "WaRn",
-			want:  slog.LevelWarn,
-		},
-		{
-			name:  "unknown level defaults to info",
-			level: "unknown",
-			want:  slog.LevelInfo,
-		},
-		{
-			name:  "empty level defaults to info",
-			level: "",
-			want:  slog.LevelInfo,
-		},
+		{LOG_LEVEL_DEBUG, slog.LevelDebug},
+		{LOG_LEVEL_INFO, slog.LevelInfo},
+		{LOG_LEVEL_WARN, slog.LevelWarn},
+		{LOG_LEVEL_ERROR, slog.LevelError},
+		{"DEBUG", slog.LevelDebug},
+		{"WaRn", slog.LevelWarn},
+		{"unknown", slog.LevelInfo},
+		{"", slog.LevelInfo},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := parseLevel(tt.level)
-			if got != tt.want {
-				t.Errorf("parseLevel(%q) = %v, want %v", tt.level, got, tt.want)
-			}
-		})
+		got := parseLevel(tt.level)
+		if got != tt.want {
+			t.Errorf("parseLevel(%q) = %v, want %v", tt.level, got, tt.want)
+		}
 	}
 }
 
 func TestNew(t *testing.T) {
-	tests := []struct {
-		name   string
-		config Config
-	}{
-		{
-			name: "json handler with debug level",
-			config: Config{
-				Level:  "debug",
-				Format: "json",
-				Output: &bytes.Buffer{},
-			},
-		},
-		{
-			name: "text handler with info level",
-			config: Config{
-				Level:  "info",
-				Format: "text",
-				Output: &bytes.Buffer{},
-			},
-		},
-		{
-			name: "default output when nil",
-			config: Config{
-				Level:  "warn",
-				Format: "json",
-				Output: nil,
-			},
-		},
-		{
-			name: "unknown format defaults to json",
-			config: Config{
-				Level:  "error",
-				Format: "unknown",
-				Output: &bytes.Buffer{},
-			},
-		},
+	tests := []Config{
+		{LOG_LEVEL_DEBUG, LOG_FORMAT_JSON, &bytes.Buffer{}},
+		{LOG_LEVEL_INFO, LOG_FORMAT_TEXT, &bytes.Buffer{}},
+		{LOG_LEVEL_WARN, LOG_FORMAT_JSON, nil},
+		{LOG_LEVEL_ERROR, "unknown", &bytes.Buffer{}},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			original := slog.Default()
-			defer slog.SetDefault(original)
+	for _, config := range tests {
+		original := slog.Default()
+		defer slog.SetDefault(original)
 
-			New(tt.config)
+		New(config)
 
-			logger := slog.Default()
-			if logger == nil {
-				t.Error("New() did not set a default logger")
-			}
+		if slog.Default() == nil {
+			t.Error("New() did not set a default logger")
+		}
 
-			logger.Info("test message")
-		})
+		slog.Default().Info("test message")
 	}
 }
 
 func TestNewFromEnv(t *testing.T) {
 	tests := []struct {
-		name      string
 		logLevel  string
 		logFormat string
 	}{
-		{
-			name:      "default values when env vars not set",
-			logLevel:  "",
-			logFormat: "",
-		},
-		{
-			name:      "custom level and format from env",
-			logLevel:  "debug",
-			logFormat: "text",
-		},
-		{
-			name:      "mixed env values",
-			logLevel:  "error",
-			logFormat: "json",
-		},
+		{"", ""},
+		{string(LOG_LEVEL_DEBUG), string(LOG_FORMAT_TEXT)},
+		{string(LOG_LEVEL_ERROR), string(LOG_FORMAT_JSON)},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			original := slog.Default()
-			defer slog.SetDefault(original)
+		original := slog.Default()
+		defer slog.SetDefault(original)
 
-			if tt.logLevel != "" {
-				_ = os.Setenv("SCRY_LOG_LEVEL", tt.logLevel)
-				defer func() { _ = os.Unsetenv("SCRY_LOG_LEVEL") }()
-			} else {
-				_ = os.Unsetenv("SCRY_LOG_LEVEL")
-			}
+		if tt.logLevel != "" {
+			_ = os.Setenv(ENV_LOG_LEVEL, tt.logLevel)
+			defer func() { _ = os.Unsetenv(ENV_LOG_LEVEL) }()
+		} else {
+			_ = os.Unsetenv(ENV_LOG_LEVEL)
+		}
 
-			if tt.logFormat != "" {
-				_ = os.Setenv("SCRY_LOG_FORMAT", tt.logFormat)
-				defer func() { _ = os.Unsetenv("SCRY_LOG_FORMAT") }()
-			} else {
-				_ = os.Unsetenv("SCRY_LOG_FORMAT")
-			}
+		if tt.logFormat != "" {
+			_ = os.Setenv(ENV_LOG_FORMAT, tt.logFormat)
+			defer func() { _ = os.Unsetenv(ENV_LOG_FORMAT) }()
+		} else {
+			_ = os.Unsetenv(ENV_LOG_FORMAT)
+		}
 
-			NewFromEnv()
+		NewFromEnv()
 
-			logger := slog.Default()
-			if logger == nil {
-				t.Error("NewFromEnv() did not set a default logger")
-			}
+		if slog.Default() == nil {
+			t.Error("NewFromEnv() did not set a default logger")
+		}
 
-			logger.Info("test message from env")
-		})
+		slog.Default().Info("test message from env")
 	}
 }
 
 func TestConfig(t *testing.T) {
-	const textFormat = "text"
 	cfg := Config{
-		Level:  "debug",
-		Format: textFormat,
+		Level:  LOG_LEVEL_DEBUG,
+		Format: LOG_FORMAT_TEXT,
 		Output: &bytes.Buffer{},
 	}
 
-	if cfg.Level != "debug" {
-		t.Errorf("Config.Level = %q, want %q", cfg.Level, "debug")
+	if cfg.Level != LOG_LEVEL_DEBUG {
+		t.Errorf("LOG_LEVEL = %q, want %q", cfg.Level, LOG_LEVEL_DEBUG)
 	}
 
-	if cfg.Format != textFormat {
-		t.Errorf("Config.Format = %q, want %q", cfg.Format, textFormat)
+	if cfg.Format != LOG_FORMAT_TEXT {
+		t.Errorf("LOG_FORMAT = %q, want %q", cfg.Format, LOG_FORMAT_TEXT)
 	}
 
 	if cfg.Output == nil {
-		t.Error("Config.Output should not be nil")
+		t.Error("LOG_OUTPUT should not be nil")
 	}
 }
 
 func TestLoggerOutput(t *testing.T) {
 	tests := []struct {
-		name   string
-		format string
-		level  string
+		format LogFormat
+		level  LogLevel
 	}{
-		{
-			name:   "json format produces valid output",
-			format: "json",
-			level:  "info",
-		},
-		{
-			name:   "text format produces valid output",
-			format: "text",
-			level:  "debug",
-		},
+		{LOG_FORMAT_JSON, LOG_LEVEL_INFO},
+		{LOG_FORMAT_TEXT, LOG_LEVEL_DEBUG},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			original := slog.Default()
-			defer slog.SetDefault(original)
+		original := slog.Default()
+		defer slog.SetDefault(original)
 
-			buf := &bytes.Buffer{}
+		buf := &bytes.Buffer{}
 
-			New(Config{
-				Level:  tt.level,
-				Format: tt.format,
-				Output: buf,
-			})
-
-			slog.Info("test message", "key", "value")
-
-			output := buf.String()
-			if output == "" {
-				t.Error("expected log output, got empty string")
-			}
-
-			if tt.format == "json" && !strings.Contains(output, `"msg":"test message"`) {
-				t.Error("json format should contain structured message")
-			}
-			if tt.format == "text" && !strings.Contains(output, "test message") {
-				t.Error("text format should contain readable message")
-			}
+		New(Config{
+			Level:  tt.level,
+			Format: tt.format,
+			Output: buf,
 		})
+
+		slog.Info("test message", "key", "value")
+
+		output := buf.String()
+		if output == "" {
+			t.Error("expected log output, got empty string")
+		}
+
+		if tt.format == LOG_FORMAT_JSON && !strings.Contains(output, `"msg":"test message"`) {
+			t.Error("json format should contain structured message")
+		}
+		if tt.format == LOG_FORMAT_TEXT && !strings.Contains(output, "test message") {
+			t.Error("text format should contain readable message")
+		}
 	}
 }

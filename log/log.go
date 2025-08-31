@@ -10,14 +10,29 @@ import (
 	"github.com/mikeblum/scry.quest/env"
 )
 
-// Config holds the logger configuration
+type LogFormat string
+type LogLevel string
+
+const (
+	// env
+	ENV_LOG_FORMAT = "LOG_FORMAT"
+	ENV_LOG_LEVEL  = "LOG_LEVEL"
+	// log formats
+	LOG_FORMAT_JSON LogFormat = "json"
+	LOG_FORMAT_TEXT LogFormat = "text"
+	// log levels
+	LOG_LEVEL_DEBUG LogLevel = "debug"
+	LOG_LEVEL_INFO  LogLevel = "info"
+	LOG_LEVEL_WARN  LogLevel = "warn"
+	LOG_LEVEL_ERROR LogLevel = "error"
+)
+
 type Config struct {
-	Level  string `env:"LOG_LEVEL" env-default:"info"`
-	Format string `env:"LOG_FORMAT" env-default:"json"`
+	Level  LogLevel
+	Format LogFormat
 	Output io.Writer
 }
 
-// New creates and sets a new default logger with the given configuration
 func New(cfg Config) {
 	opts := &slog.HandlerOptions{
 		Level:     parseLevel(cfg.Level),
@@ -30,7 +45,7 @@ func New(cfg Config) {
 	}
 
 	var handler slog.Handler
-	if cfg.Format == "text" {
+	if cfg.Format == LOG_FORMAT_TEXT {
 		handler = slog.NewTextHandler(output, opts)
 	} else {
 		handler = slog.NewJSONHandler(output, opts)
@@ -39,24 +54,22 @@ func New(cfg Config) {
 	slog.SetDefault(slog.New(handler))
 }
 
-// NewFromEnv creates a logger configured from environment variables
 func NewFromEnv() {
 	New(Config{
-		Level:  env.GetEnv("LOG_LEVEL", "info"),
-		Format: env.GetEnv("LOG_FORMAT", "json"),
+		Level:  LogLevel(env.GetEnv(ENV_LOG_LEVEL, string(LOG_LEVEL_INFO))),
+		Format: LogFormat(env.GetEnv(ENV_LOG_FORMAT, string(LOG_FORMAT_JSON))),
 	})
 }
 
-// parseLevel converts string level to slog.Level
-func parseLevel(level string) slog.Level {
-	switch strings.ToLower(level) {
-	case "debug":
+func parseLevel(level LogLevel) slog.Level {
+	switch strings.ToLower(string(level)) {
+	case string(LOG_LEVEL_DEBUG):
 		return slog.LevelDebug
-	case "info":
+	case string(LOG_LEVEL_INFO):
 		return slog.LevelInfo
-	case "warn":
+	case string(LOG_LEVEL_WARN):
 		return slog.LevelWarn
-	case "error":
+	case string(LOG_LEVEL_ERROR):
 		return slog.LevelError
 	default:
 		return slog.LevelInfo
