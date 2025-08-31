@@ -55,5 +55,9 @@ sqlc-vet: ## 🐘 Vet SQL queries
 docker-up: ## 🐳 Start docker compose services
 	docker compose up -d
 
+.PHONY: docker-down
+docker-down: ## 🐳 Teardown docker compose services
+	docker compose down
+
 .PHONY: pre-commit
 pre-commit: fmt tidy lint test sqlc-vet ## ✅ Run all checks
