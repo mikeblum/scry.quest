@@ -10,29 +10,39 @@ import (
 	"github.com/mikeblum/scry.quest/env"
 )
 
-type LogFormat string
-type LogLevel string
+// Format represents the output format for logs
+type Format string
+
+// Level represents the severity level for logs
+type Level string
 
 const (
-	// env
-	ENV_LOG_FORMAT = "LOG_FORMAT"
-	ENV_LOG_LEVEL  = "LOG_LEVEL"
-	// log formats
-	LOG_FORMAT_JSON LogFormat = "json"
-	LOG_FORMAT_TEXT LogFormat = "text"
-	// log levels
-	LOG_LEVEL_DEBUG LogLevel = "debug"
-	LOG_LEVEL_INFO  LogLevel = "info"
-	LOG_LEVEL_WARN  LogLevel = "warn"
-	LOG_LEVEL_ERROR LogLevel = "error"
+	// EnvLogFormat is the environment variable for log format
+	EnvLogFormat = "LOG_FORMAT"
+	// EnvLogLevel is the environment variable for log level
+	EnvLogLevel = "LOG_LEVEL"
+	// LogFormatJSON represents JSON log format
+	LogFormatJSON Format = "json"
+	// LogFormatText represents text log format
+	LogFormatText Format = "text"
+	// LogLevelDebug represents debug log level
+	LogLevelDebug Level = "debug"
+	// LogLevelInfo represents info log level
+	LogLevelInfo Level = "info"
+	// LogLevelWarn represents warn log level
+	LogLevelWarn Level = "warn"
+	// LogLevelError represents error log level
+	LogLevelError Level = "error"
 )
 
+// Config holds logger configuration
 type Config struct {
-	Level  LogLevel
-	Format LogFormat
+	Level  Level
+	Format Format
 	Output io.Writer
 }
 
+// New initializes the global logger with the provided configuration
 func New(cfg Config) {
 	opts := &slog.HandlerOptions{
 		Level:     parseLevel(cfg.Level),
@@ -45,7 +55,7 @@ func New(cfg Config) {
 	}
 
 	var handler slog.Handler
-	if cfg.Format == LOG_FORMAT_TEXT {
+	if cfg.Format == LogFormatText {
 		handler = slog.NewTextHandler(output, opts)
 	} else {
 		handler = slog.NewJSONHandler(output, opts)
@@ -54,22 +64,23 @@ func New(cfg Config) {
 	slog.SetDefault(slog.New(handler))
 }
 
+// NewFromEnv initializes the global logger from environment variables
 func NewFromEnv() {
 	New(Config{
-		Level:  LogLevel(env.GetEnv(ENV_LOG_LEVEL, string(LOG_LEVEL_INFO))),
-		Format: LogFormat(env.GetEnv(ENV_LOG_FORMAT, string(LOG_FORMAT_JSON))),
+		Level:  Level(env.GetEnv(EnvLogLevel, string(LogLevelInfo))),
+		Format: Format(env.GetEnv(EnvLogFormat, string(LogFormatJSON))),
 	})
 }
 
-func parseLevel(level LogLevel) slog.Level {
+func parseLevel(level Level) slog.Level {
 	switch strings.ToLower(string(level)) {
-	case string(LOG_LEVEL_DEBUG):
+	case string(LogLevelDebug):
 		return slog.LevelDebug
-	case string(LOG_LEVEL_INFO):
+	case string(LogLevelInfo):
 		return slog.LevelInfo
-	case string(LOG_LEVEL_WARN):
+	case string(LogLevelWarn):
 		return slog.LevelWarn
-	case string(LOG_LEVEL_ERROR):
+	case string(LogLevelError):
 		return slog.LevelError
 	default:
 		return slog.LevelInfo

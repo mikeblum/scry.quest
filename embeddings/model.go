@@ -1,24 +1,24 @@
 package embeddings
 
-// Model represents different Ollama models available for embeddings
+// Model represents Ollama embedding models.
 type Model string
 
 const (
-	// Chat model for general purpose text generation
-	Chat Model = "gpt-oss:20b"
-	// Embedding model for text embeddings
-	Embedding Model = "nomic-embed-text"
+	// Chat model used for chat completions (2880-dimensional embeddings)
+	Chat Model = "gpt-oss:20b" // 2880-dimensional
+	// Embedding model used for text embeddings (768-dimensional embeddings)
+	Embedding Model = "nomic-embed-text" // 768-dimensional
 )
 
-// ModelDimension maps model to dimensions
+// ModelDimension returns embedding dimensions.
 func ModelDimension(model Model) int {
 	switch model {
 	case Chat:
-		return 1536 // gpt-oss models use 1536 dimensions similar to OpenAI
+		return 2880 // gpt-oss:20b actual embedding length
 	case Embedding:
-		return 768
+		return 768 // nomic-embed-text embedding length
 	default:
 		// Default to gpt-oss:20b dimensions
-		return 1536
+		return 2880
 	}
 }

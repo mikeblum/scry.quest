@@ -4,14 +4,12 @@ import (
 	"context"
 	"log"
 	"os"
-
-	"github.com/mikeblum/scry.quest/embeddings"
 )
 
 func main() {
-	engine := embeddings.NewEngine()
+	app := NewEmbeddingsCLI()
 
-	if err := engine.RunContext(context.Background(), os.Args); err != nil {
+	if err := app.RunContext(context.Background(), os.Args); err != nil {
 		log.Fatal(err)
 	}
 }

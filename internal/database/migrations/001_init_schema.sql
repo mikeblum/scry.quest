@@ -1,3 +1,4 @@
+-- +goose Up
 -- Enable pgvector extension for embeddings
 CREATE EXTENSION IF NOT EXISTS vector;
 
@@ -99,17 +100,21 @@ CREATE INDEX idx_bestiary_challenge_rating ON scry_quest.bestiary(challenge_rati
 CREATE INDEX idx_classes_name ON scry_quest.classes(name);
 CREATE INDEX idx_species_name ON scry_quest.species(name);
 
--- Update trigger function for updated_at timestamps
+-- +goose StatementBegin
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = NOW();
     RETURN NEW;
 END;
-$$ language 'plpgsql';
+$$ LANGUAGE plpgsql;
+-- +goose StatementEnd
 
 -- Apply update triggers to all tables
 CREATE TRIGGER update_spells_updated_at BEFORE UPDATE ON scry_quest.spells FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_bestiary_updated_at BEFORE UPDATE ON scry_quest.bestiary FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_classes_updated_at BEFORE UPDATE ON scry_quest.classes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_species_updated_at BEFORE UPDATE ON scry_quest.species FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- +goose Down
+DROP SCHEMA IF EXISTS scry_quest CASCADE;

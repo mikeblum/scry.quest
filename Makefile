@@ -30,6 +30,10 @@ fmt: ## ✨ Format code
 tidy: ## 📚 Tidy modules
 	go mod tidy
 
+.PHONY: docs
+docs: ## 📖 Godocs
+	go doc -http
+
 .PHONY: test
 test: ## 🧪 Run all tests
 	go test -test.v -race -covermode=atomic -coverprofile=coverage.out ./... && go tool cover -html=coverage.out && rm coverage.out
@@ -58,6 +62,10 @@ docker-up: ## 🐳 Start docker compose services
 .PHONY: docker-down
 docker-down: ## 🐳 Teardown docker compose services
 	docker compose down
+
+.PHONY: embeddings
+embeddings: ## 🔮 Run embeddings CLI
+	go run ./cmd/embeddings $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: pre-commit
 pre-commit: fmt tidy lint test sqlc-vet ## ✅ Run all checks
