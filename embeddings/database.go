@@ -15,8 +15,8 @@ const (
 	defaultPostgresURI = "postgres://localhost/scry_quest?sslmode=disable"
 )
 
-// NewDB creates a new database connection and returns queries interface
-func NewDB(ctx context.Context) (*database.Queries, func() error, error) {
+// NewDBConn creates a new database connection and returns queries interface
+func NewDBConn(ctx context.Context) (*database.Queries, func() error, error) {
 	conf, err := conf.New(ctx, nil)
 	if err != nil {
 		return nil, nil, err
