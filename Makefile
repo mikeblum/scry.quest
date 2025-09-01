@@ -36,11 +36,23 @@ docs: ## 📖 Godocs
 
 .PHONY: test
 test: ## 🧪 Run all tests
-	go test -test.v -race -covermode=atomic -coverprofile=coverage.out ./... && go tool cover -html=coverage.out && rm coverage.out
+	go test -test.v -race -covermode=atomic -coverprofile=coverage.out ./... && \
+	if [ -z "$$SSH_CLIENT" ] && [ -z "$$SSH_TTY" ]; then \
+		go tool cover -html=coverage.out; \
+	else \
+		go tool cover -html=coverage.out -o coverage.html && echo "Coverage report saved to coverage.html"; \
+	fi && \
+	rm -f coverage.out
 
 .PHONY: test-perf
 test-perf: ## ⚡ Run benchmark tests
-	go test -test.v -benchmem -bench=. -coverprofile=coverage-bench.out ./... && go tool cover -html=coverage-bench.out && rm coverage-bench.out
+	go test -test.v -benchmem -bench=. -coverprofile=coverage-bench.out ./... && \
+	if [ -z "$$SSH_CLIENT" ] && [ -z "$$SSH_TTY" ]; then \
+		go tool cover -html=coverage-bench.out; \
+	else \
+		go tool cover -html=coverage-bench.out -o coverage-bench.html && echo "Coverage report saved to coverage-bench.html"; \
+	fi && \
+	rm -f coverage-bench.out
 
 .PHONY: vuln
 vuln: ## 🛡️ Scan for vulnerabilities
