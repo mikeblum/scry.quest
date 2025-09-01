@@ -6,10 +6,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/jackc/pgx/v5"
 	"github.com/mikeblum/scry.quest/conf"
 	"github.com/mikeblum/scry.quest/embeddings"
-	"github.com/mikeblum/scry.quest/internal/database"
 	"github.com/mikeblum/scry.quest/log"
 	"github.com/urfave/cli/v2"
 )
@@ -102,7 +100,7 @@ func run(c *cli.Context, handler func(*cli.Context, *embeddings.Engine) error) e
 		return fmt.Errorf("failed to load configuration: %w", err)
 	}
 
-	log.NewFromEnv()
+	log.NewFromEnv(config)
 
 	engine, cleanup, err := setupServices(c.Context, c, config)
 	if err != nil {
@@ -120,21 +118,11 @@ func run(c *cli.Context, handler func(*cli.Context, *embeddings.Engine) error) e
 }
 
 func setupServices(ctx context.Context, c *cli.Context, config *conf.Config) (*embeddings.Engine, func() error, error) {
-	databaseURL := config.GetPrefixedEnv("DATABASE_URL", "postgres://localhost/scry_quest?sslmode=disable")
-
-	// Initialize database connection
-	conn, err := pgx.Connect(ctx, databaseURL)
+	queries, cleanup, err := embeddings.NewDBConn(ctx)
 	if err != nil {
-		return nil, nil, fmt.Errorf("failed to connect to database: %w", err)
+		return nil, nil, err
 	}
 
-	cleanup := func() error {
-		return conn.Close(ctx)
-	}
-
-	queries := database.New(conn)
-
-	// Initialize Ollama client
 	client, err := embeddings.NewOllamaClient(ctx, c, config, cleanup)
 	if err != nil {
 		return nil, nil, err

@@ -69,3 +69,6 @@ embeddings: ## 🔮 Run embeddings CLI
 
 .PHONY: pre-commit
 pre-commit: fmt tidy lint test sqlc-vet ## ✅ Run all checks
+
+%:
+	@:

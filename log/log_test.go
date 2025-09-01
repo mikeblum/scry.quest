@@ -2,10 +2,13 @@ package log
 
 import (
 	"bytes"
+	"context"
 	"log/slog"
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/mikeblum/scry.quest/conf"
 )
 
 func TestParseLevel(t *testing.T) {
@@ -81,13 +84,64 @@ func TestNewFromEnv(t *testing.T) {
 			_ = os.Unsetenv(EnvLogFormat)
 		}
 
-		NewFromEnv()
+		config, err := conf.New(context.Background(), nil)
+		if err != nil {
+			t.Fatalf("failed to create config: %v", err)
+		}
+
+		NewFromEnv(config)
 
 		if slog.Default() == nil {
 			t.Error("NewFromEnv() did not set a default logger")
 		}
 
 		slog.Default().Info("test message from env")
+	}
+}
+
+func TestNewFromEnvWithPrefixedVars(t *testing.T) {
+	tests := []struct {
+		name      string
+		logLevel  string
+		logFormat string
+	}{
+		{"default values", "", ""},
+		{"debug json", "debug", "json"},
+		{"error text", "error", "text"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			original := slog.Default()
+			defer slog.SetDefault(original)
+
+			if tt.logLevel != "" {
+				_ = os.Setenv("SCRY_LOG_LEVEL", tt.logLevel)
+				defer func() { _ = os.Unsetenv("SCRY_LOG_LEVEL") }()
+			} else {
+				_ = os.Unsetenv("SCRY_LOG_LEVEL")
+			}
+
+			if tt.logFormat != "" {
+				_ = os.Setenv("SCRY_LOG_FORMAT", tt.logFormat)
+				defer func() { _ = os.Unsetenv("SCRY_LOG_FORMAT") }()
+			} else {
+				_ = os.Unsetenv("SCRY_LOG_FORMAT")
+			}
+
+			config, err := conf.New(context.Background(), nil)
+			if err != nil {
+				t.Fatalf("failed to create config: %v", err)
+			}
+
+			NewFromEnv(config)
+
+			if slog.Default() == nil {
+				t.Error("NewFromEnv() did not set a default logger")
+			}
+
+			slog.Default().Info("test message from prefixed env")
+		})
 	}
 }
 

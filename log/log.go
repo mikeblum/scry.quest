@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/mikeblum/scry.quest/env"
+	"github.com/mikeblum/scry.quest/conf"
 )
 
 // Format represents the output format for logs
@@ -65,10 +65,10 @@ func New(cfg Config) {
 }
 
 // NewFromEnv initializes the global logger from environment variables
-func NewFromEnv() {
+func NewFromEnv(config *conf.Config) {
 	New(Config{
-		Level:  Level(env.GetEnv(EnvLogLevel, string(LogLevelInfo))),
-		Format: Format(env.GetEnv(EnvLogFormat, string(LogFormatJSON))),
+		Level:  Level(config.GetPrefixedEnv("LOG_LEVEL", string(LogLevelInfo))),
+		Format: Format(config.GetPrefixedEnv("LOG_FORMAT", string(LogFormatText))),
 	})
 }
 
