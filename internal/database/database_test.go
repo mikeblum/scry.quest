@@ -3,129 +3,111 @@ package database
 import (
 	"context"
 	"fmt"
-	"strings"
 	"testing"
+	"time"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/stretchr/testify/suite"
-
-	"github.com/mikeblum/scry.quest/conf"
+	"github.com/testcontainers/testcontainers-go"
+	"github.com/testcontainers/testcontainers-go/modules/postgres"
+	"github.com/testcontainers/testcontainers-go/wait"
 )
-
-func pgTestConf(ctx context.Context) (Config, error) {
-	testConf := "../../.env.test"
-	config, err := conf.New(ctx, &testConf)
-	if err != nil {
-		return Config{}, err
-	}
-
-	databaseURL := config.GetPrefixedEnv("DATABASE_URL", "postgres://localhost/scry_quest_test?sslmode=disable")
-
-	dbConfig, err := pgx.ParseConfig(databaseURL)
-	if err != nil {
-		return Config{}, fmt.Errorf("failed to parse database URL: %w", err)
-	}
-
-	return Config{
-		Host:     dbConfig.Host,
-		Port:     fmt.Sprintf("%d", dbConfig.Port),
-		User:     dbConfig.User,
-		Password: dbConfig.Password,
-		Database: dbConfig.Database,
-		SSLMode:  "disable",
-	}, nil
-}
 
 type DatabaseTestSuite struct {
 	suite.Suite
-	db     *Database
-	ctx    context.Context
-	config Config
-}
-
-func (suite *DatabaseTestSuite) ensureTestDatabase() error {
-	adminConfig := suite.config
-	adminConfig.Database = "postgres"
-
-	conn, err := pgx.Connect(suite.ctx, fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
-		adminConfig.Host,
-		adminConfig.Port,
-		adminConfig.User,
-		adminConfig.Password,
-		adminConfig.Database,
-		adminConfig.SSLMode,
-	))
-	if err != nil {
-		return fmt.Errorf("failed to connect to postgres database: %w", err)
-	}
-	defer func() {
-		_ = conn.Close(suite.ctx)
-	}()
-
-	var exists bool
-	err = conn.QueryRow(suite.ctx, "SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = $1)", suite.config.Database).Scan(&exists)
-	if err != nil {
-		return fmt.Errorf("failed to check if database exists: %w", err)
-	}
-
-	if exists {
-		return nil
-	}
-
-	// create test db
-	dbName := strings.ReplaceAll(suite.config.Database, "'", "''")
-	_, err = conn.Exec(suite.ctx, fmt.Sprintf("CREATE DATABASE %s", dbName))
-	if err != nil {
-		return fmt.Errorf("failed to create test database: %w", err)
-	}
-
-	userConn, err := pgx.Connect(suite.ctx, fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
-		suite.config.Host,
-		suite.config.Port,
-		suite.config.User,
-		suite.config.Password,
-		suite.config.Database,
-		suite.config.SSLMode,
-	))
-	if err != nil {
-		return fmt.Errorf("failed to connect to test database: %w", err)
-	}
-	defer func() {
-		_ = userConn.Close(suite.ctx)
-	}()
-
-	_, err = userConn.Exec(suite.ctx, fmt.Sprintf("CREATE USER %s WITH PASSWORD '%s'", suite.config.User, suite.config.Password))
-	if err != nil && !strings.Contains(err.Error(), "already exists") {
-		return fmt.Errorf("failed to create test user: %w", err)
-	}
-
-	_, err = userConn.Exec(suite.ctx, fmt.Sprintf("GRANT ALL PRIVILEGES ON DATABASE %s TO %s", dbName, suite.config.User))
-	if err != nil {
-		return fmt.Errorf("failed to grant privileges to test user: %w", err)
-	}
-
-	return nil
+	db        *Database
+	ctx       context.Context
+	config    Config
+	container *postgres.PostgresContainer
 }
 
 func (suite *DatabaseTestSuite) SetupSuite() {
 	suite.ctx = context.Background()
-	config, err := pgTestConf(suite.ctx)
+
+	container, err := postgres.Run(suite.ctx,
+		"pgvector/pgvector:pg17",
+		postgres.WithDatabase("testdb"),
+		postgres.WithUsername("testuser"),
+		postgres.WithPassword("testpass"),
+		testcontainers.WithEnv(map[string]string{
+			"POSTGRES_INITDB_ARGS": "--auth-host=scram-sha-256",
+		}),
+		testcontainers.WithCmd(
+			"postgres",
+			"-c", "shared_buffers=256MB",
+			"-c", "maintenance_work_mem=64MB",
+			"-c", "work_mem=4MB",
+		),
+		testcontainers.WithWaitStrategy(
+			wait.ForLog("database system is ready to accept connections").
+				WithOccurrence(2).
+				WithStartupTimeout(60*time.Second),
+		),
+	)
 	if err != nil {
-		suite.T().Fatalf("Failed to load test configuration: %v", err)
+		suite.T().Fatalf("Failed to start postgres container: %v", err)
 	}
-	suite.config = config
+	suite.container = container
 
-	if err := suite.ensureTestDatabase(); err != nil {
-		suite.T().Fatalf("Failed to ensure test database exists: %v", err)
+	host, err := container.Host(suite.ctx)
+	if err != nil {
+		suite.T().Fatalf("Failed to get container host: %v", err)
 	}
 
-	db, err := NewDatabase(suite.ctx, config)
+	port, err := container.MappedPort(suite.ctx, "5432")
+	if err != nil {
+		suite.T().Fatalf("Failed to get container port: %v", err)
+	}
+
+	suite.config = Config{
+		Host:     host,
+		Port:     port.Port(),
+		User:     "testuser",
+		Password: "testpass",
+		Database: "testdb",
+		SSLMode:  "disable",
+	}
+
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		suite.config.Host, suite.config.Port, suite.config.User, suite.config.Password, suite.config.Database, suite.config.SSLMode)
+
+	conn, err := pgx.Connect(suite.ctx, connStr)
+	if err != nil {
+		suite.T().Fatalf("Failed to connect to test database: %v", err)
+	}
+	defer func() { _ = conn.Close(suite.ctx) }()
+
+	_, err = conn.Exec(suite.ctx, "CREATE USER scry_quest WITH PASSWORD 'scry_quest_pass'")
+	if err != nil {
+		suite.T().Fatalf("Failed to create scry_quest user: %v", err)
+	}
+
+	db, err := NewDatabase(suite.ctx, suite.config)
 	if err != nil {
 		suite.T().Fatalf("PostgreSQL not available for testing: %v", err)
 	}
 	suite.db = db
+}
+
+func (suite *DatabaseTestSuite) SetupTest() {
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		suite.config.Host, suite.config.Port, suite.config.User, suite.config.Password, suite.config.Database, suite.config.SSLMode)
+
+	conn, err := pgx.Connect(suite.ctx, connStr)
+	if err != nil {
+		suite.T().Fatalf("Failed to connect to test database: %v", err)
+	}
+	defer func() { _ = conn.Close(suite.ctx) }()
+
+	_, err = conn.Exec(suite.ctx, "DROP TABLE IF EXISTS migrations CASCADE")
+	if err != nil {
+		suite.T().Fatalf("Failed to clean migrations table: %v", err)
+	}
+
+	_, err = conn.Exec(suite.ctx, "DROP SCHEMA IF EXISTS scry_quest CASCADE")
+	if err != nil {
+		suite.T().Fatalf("Failed to clean schema: %v", err)
+	}
 
 	err = suite.db.RunMigrations(suite.ctx, suite.config)
 	suite.Require().NoError(err)
@@ -134,6 +116,9 @@ func (suite *DatabaseTestSuite) SetupSuite() {
 func (suite *DatabaseTestSuite) TearDownSuite() {
 	if suite.db != nil {
 		_ = suite.db.Close(suite.ctx)
+	}
+	if suite.container != nil {
+		_ = suite.container.Terminate(suite.ctx)
 	}
 }
 
