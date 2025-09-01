@@ -4,7 +4,7 @@ services:
     container_name: scry-quest-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: scry_quest
+      POSTGRES_DB: scry_quest_dev
       POSTGRES_USER: scry_quest
       POSTGRES_PASSWORD: scry_quest_dev
       POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
@@ -19,7 +19,7 @@ services:
       - ./internal/database/migrations/001_init_schema.sql:/docker-entrypoint-initdb.d/001_init_schema.sql
     shm_size: 128mb
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U scry_quest -d scry_quest"]
+      test: ["CMD-SHELL", "pg_isready -U scry_quest -d scry_quest_dev"]
       interval: 10s
       timeout: 5s
       retries: 5
