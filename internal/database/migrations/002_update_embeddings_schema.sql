@@ -9,36 +9,35 @@ DROP INDEX IF EXISTS idx_classes_embedding;
 DROP INDEX IF EXISTS idx_species_embedding;
 
 -- Add model metadata columns to track which embedding model was used
-ALTER TABLE scry_quest.spells ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'gpt-oss:20b';
-ALTER TABLE scry_quest.bestiary ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'gpt-oss:20b';
-ALTER TABLE scry_quest.classes ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'gpt-oss:20b';
-ALTER TABLE scry_quest.species ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'gpt-oss:20b';
+ALTER TABLE scry_quest.spells ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'nomic-embed-text';
+ALTER TABLE scry_quest.bestiary ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'nomic-embed-text';
+ALTER TABLE scry_quest.classes ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'nomic-embed-text';
+ALTER TABLE scry_quest.species ADD COLUMN IF NOT EXISTS embedding_model TEXT DEFAULT 'nomic-embed-text';
 
--- Update embedding column dimensions for gpt-oss:20b (1536 dimensions)
--- Note: We use 1536 as default for gpt-oss:20b, similar to OpenAI models
-ALTER TABLE scry_quest.spells ALTER COLUMN embedding TYPE VECTOR(1536);
-ALTER TABLE scry_quest.bestiary ALTER COLUMN embedding TYPE VECTOR(1536);
-ALTER TABLE scry_quest.classes ALTER COLUMN embedding TYPE VECTOR(1536);
-ALTER TABLE scry_quest.species ALTER COLUMN embedding TYPE VECTOR(1536);
+-- Update embedding column dimensions for nomic-embed-text (768 dimensions)
+ALTER TABLE scry_quest.spells ALTER COLUMN embedding TYPE VECTOR(768);
+ALTER TABLE scry_quest.bestiary ALTER COLUMN embedding TYPE VECTOR(768);
+ALTER TABLE scry_quest.classes ALTER COLUMN embedding TYPE VECTOR(768);
+ALTER TABLE scry_quest.species ALTER COLUMN embedding TYPE VECTOR(768);
 
 -- Update comments to reflect Ollama models
-COMMENT ON COLUMN scry_quest.spells.embedding IS 'Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)';
-COMMENT ON COLUMN scry_quest.bestiary.embedding IS 'Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)';
-COMMENT ON COLUMN scry_quest.classes.embedding IS 'Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)';
-COMMENT ON COLUMN scry_quest.species.embedding IS 'Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)';
+COMMENT ON COLUMN scry_quest.spells.embedding IS 'Embedding vector from Ollama model (default: nomic-embed-text 768 dims)';
+COMMENT ON COLUMN scry_quest.bestiary.embedding IS 'Embedding vector from Ollama model (default: nomic-embed-text 768 dims)';
+COMMENT ON COLUMN scry_quest.classes.embedding IS 'Embedding vector from Ollama model (default: nomic-embed-text 768 dims)';
+COMMENT ON COLUMN scry_quest.species.embedding IS 'Embedding vector from Ollama model (default: nomic-embed-text 768 dims)';
 
 -- Recreate indexes for vector similarity search with updated dimensions
 -- Using ivfflat for approximate nearest neighbor search
-CREATE INDEX idx_spells_embedding ON scry_quest.spells USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
-CREATE INDEX idx_bestiary_embedding ON scry_quest.bestiary USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
-CREATE INDEX idx_classes_embedding ON scry_quest.classes USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
-CREATE INDEX idx_species_embedding ON scry_quest.species USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS idx_spells_embedding ON scry_quest.spells USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS idx_bestiary_embedding ON scry_quest.bestiary USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS idx_classes_embedding ON scry_quest.classes USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS idx_species_embedding ON scry_quest.species USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 
 -- Add additional indexes for embedding model tracking
-CREATE INDEX idx_spells_embedding_model ON scry_quest.spells(embedding_model);
-CREATE INDEX idx_bestiary_embedding_model ON scry_quest.bestiary(embedding_model);
-CREATE INDEX idx_classes_embedding_model ON scry_quest.classes(embedding_model);
-CREATE INDEX idx_species_embedding_model ON scry_quest.species(embedding_model);
+CREATE INDEX IF NOT EXISTS idx_spells_embedding_model ON scry_quest.spells(embedding_model);
+CREATE INDEX IF NOT EXISTS idx_bestiary_embedding_model ON scry_quest.bestiary(embedding_model);
+CREATE INDEX IF NOT EXISTS idx_classes_embedding_model ON scry_quest.classes(embedding_model);
+CREATE INDEX IF NOT EXISTS idx_species_embedding_model ON scry_quest.species(embedding_model);
 
 -- +goose StatementBegin
 CREATE OR REPLACE FUNCTION validate_embedding_dimensions()
@@ -47,8 +46,8 @@ BEGIN
     -- Check if the embedding dimension matches the expected model dimension
     CASE NEW.embedding_model
         WHEN 'gpt-oss:20b' THEN
-            IF vector_dims(NEW.embedding) != 1536 THEN
-                RAISE EXCEPTION 'Embedding dimension % does not match expected 1536 for model %', 
+            IF vector_dims(NEW.embedding) != 2880 THEN
+                RAISE EXCEPTION 'Embedding dimension % does not match expected 2880 for model %', 
                     vector_dims(NEW.embedding), NEW.embedding_model;
             END IF;
         WHEN 'nomic-embed-text' THEN
@@ -72,24 +71,28 @@ $$ LANGUAGE plpgsql;
 -- +goose StatementEnd
 
 -- Add validation triggers
+DROP TRIGGER IF EXISTS validate_spells_embedding_dimensions ON scry_quest.spells;
 CREATE TRIGGER validate_spells_embedding_dimensions 
     BEFORE INSERT OR UPDATE ON scry_quest.spells 
     FOR EACH ROW 
     WHEN (NEW.embedding IS NOT NULL AND NEW.embedding_model IS NOT NULL)
     EXECUTE FUNCTION validate_embedding_dimensions();
 
+DROP TRIGGER IF EXISTS validate_bestiary_embedding_dimensions ON scry_quest.bestiary;
 CREATE TRIGGER validate_bestiary_embedding_dimensions 
     BEFORE INSERT OR UPDATE ON scry_quest.bestiary 
     FOR EACH ROW 
     WHEN (NEW.embedding IS NOT NULL AND NEW.embedding_model IS NOT NULL)
     EXECUTE FUNCTION validate_embedding_dimensions();
 
+DROP TRIGGER IF EXISTS validate_classes_embedding_dimensions ON scry_quest.classes;
 CREATE TRIGGER validate_classes_embedding_dimensions 
     BEFORE INSERT OR UPDATE ON scry_quest.classes 
     FOR EACH ROW 
     WHEN (NEW.embedding IS NOT NULL AND NEW.embedding_model IS NOT NULL)
     EXECUTE FUNCTION validate_embedding_dimensions();
 
+DROP TRIGGER IF EXISTS validate_species_embedding_dimensions ON scry_quest.species;
 CREATE TRIGGER validate_species_embedding_dimensions 
     BEFORE INSERT OR UPDATE ON scry_quest.species 
     FOR EACH ROW 
@@ -104,7 +107,7 @@ SELECT
     COUNT(embedding) as embedded_rows,
     embedding_model,
     CASE embedding_model
-        WHEN 'gpt-oss:20b' THEN 1536
+        WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
         WHEN 'all-minilm' THEN 384
         ELSE NULL
@@ -120,7 +123,7 @@ SELECT
     COUNT(embedding) as embedded_rows,
     embedding_model,
     CASE embedding_model
-        WHEN 'gpt-oss:20b' THEN 1536
+        WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
         WHEN 'all-minilm' THEN 384
         ELSE NULL
@@ -136,7 +139,7 @@ SELECT
     COUNT(embedding) as embedded_rows,
     embedding_model,
     CASE embedding_model
-        WHEN 'gpt-oss:20b' THEN 1536
+        WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
         WHEN 'all-minilm' THEN 384
         ELSE NULL
@@ -152,7 +155,7 @@ SELECT
     COUNT(embedding) as embedded_rows,
     embedding_model,
     CASE embedding_model
-        WHEN 'gpt-oss:20b' THEN 1536
+        WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
         WHEN 'all-minilm' THEN 384
         ELSE NULL
