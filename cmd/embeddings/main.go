@@ -2,7 +2,7 @@ package main //nolint:revive // package comment not needed for main
 
 import (
 	"context"
-	"log"
+	"log/slog"
 	"os"
 )
 
@@ -10,6 +10,7 @@ func main() {
 	app := NewEmbeddingsCLI()
 
 	if err := app.RunContext(context.Background(), os.Args); err != nil {
-		log.Fatal(err)
+		slog.Error("Application failed", "error", err)
+		os.Exit(1)
 	}
 }
