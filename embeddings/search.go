@@ -1,4 +1,4 @@
-package embeddings //nolint:revive // package comment not needed
+package embeddings
 
 import (
 	"context"
@@ -9,13 +9,36 @@ import (
 	"github.com/pgvector/pgvector-go"
 )
 
-// SearchService provides embedding-based search functionality
+const (
+	// SearchLimit default # records
+	SearchLimit = 10
+	// SearchThreshold defaults to 60%
+	SearchThreshold = 0.6
+)
+
+// SearchResult represents a search result.
+type SearchResult struct {
+	ID         uuid.UUID   `json:"id"`
+	Name       string      `json:"name"`
+	Type       ContentType `json:"type"`
+	Content    string      `json:"content"`
+	Similarity float64     `json:"similarity"`
+}
+
+// SearchOptions configures search parameters.
+type SearchOptions struct {
+	ContentTypes []ContentType `json:"content_types"`
+	Limit        int32         `json:"limit"`
+	Threshold    float64       `json:"threshold"`
+}
+
+// SearchService provides semantic search across SRD content.
 type SearchService struct {
 	client  *Client
 	queries *database.Queries
 }
 
-// NewSearchService creates a new search service
+// NewSearchService creates a search service.
 func NewSearchService(client *Client, queries *database.Queries) *SearchService {
 	return &SearchService{
 		client:  client,
@@ -23,13 +46,13 @@ func NewSearchService(client *Client, queries *database.Queries) *SearchService 
 	}
 }
 
-// Search performs semantic search across multiple content types
+// Search performs semantic similarity search across the SRD
 func (s *SearchService) Search(ctx context.Context, query string, opts *SearchOptions) ([]*SearchResult, error) {
 	if opts == nil {
 		opts = &SearchOptions{
 			ContentTypes: []ContentType{ContentTypeSpell, ContentTypeBestiary, ContentTypeClass, ContentTypeSpecies},
-			Limit:        10,
-			Threshold:    0.6,
+			Limit:        SearchLimit,
+			Threshold:    SearchThreshold,
 		}
 	}
 
@@ -80,7 +103,7 @@ func (s *SearchService) searchSpells(ctx context.Context, vector pgvector.Vector
 	results := make([]*SearchResult, len(spells))
 	for i, spell := range spells {
 		results[i] = &SearchResult{
-			ID:         uuid.UUID(spell.ID.Bytes).String(),
+			ID:         uuid.UUID(spell.ID.Bytes),
 			Name:       spell.Name,
 			Type:       ContentTypeSpell,
 			Content:    spell.Description.String,
@@ -102,7 +125,7 @@ func (s *SearchService) searchBestiary(ctx context.Context, vector pgvector.Vect
 	results := make([]*SearchResult, len(creatures))
 	for i, creature := range creatures {
 		results[i] = &SearchResult{
-			ID:         uuid.UUID(creature.ID.Bytes).String(),
+			ID:         uuid.UUID(creature.ID.Bytes),
 			Name:       creature.Name,
 			Type:       ContentTypeBestiary,
 			Content:    fmt.Sprintf("%s %s", creature.Type.String, creature.Size.String),
@@ -124,7 +147,7 @@ func (s *SearchService) searchClasses(ctx context.Context, vector pgvector.Vecto
 	results := make([]*SearchResult, len(classes))
 	for i, class := range classes {
 		results[i] = &SearchResult{
-			ID:         uuid.UUID(class.ID.Bytes).String(),
+			ID:         uuid.UUID(class.ID.Bytes),
 			Name:       class.Name,
 			Type:       ContentTypeClass,
 			Content:    class.Description.String,
@@ -146,7 +169,7 @@ func (s *SearchService) searchSpecies(ctx context.Context, vector pgvector.Vecto
 	results := make([]*SearchResult, len(species))
 	for i, sp := range species {
 		results[i] = &SearchResult{
-			ID:         uuid.UUID(sp.ID.Bytes).String(),
+			ID:         uuid.UUID(sp.ID.Bytes),
 			Name:       sp.Name,
 			Type:       ContentTypeSpecies,
 			Content:    sp.Description.String,
@@ -156,22 +179,22 @@ func (s *SearchService) searchSpecies(ctx context.Context, vector pgvector.Vecto
 	return results, nil
 }
 
-// SearchSpells searches spell content
+// SearchSpells searches spells only.
 func (s *SearchService) SearchSpells(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
 	return s.searchByType(ctx, query, ContentTypeSpell, limit)
 }
 
-// SearchBestiary searches bestiary content
+// SearchBestiary searches creatures only.
 func (s *SearchService) SearchBestiary(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
 	return s.searchByType(ctx, query, ContentTypeBestiary, limit)
 }
 
-// SearchClasses searches class content
+// SearchClasses searches classes only.
 func (s *SearchService) SearchClasses(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
 	return s.searchByType(ctx, query, ContentTypeClass, limit)
 }
 
-// SearchSpecies searches species content
+// SearchSpecies searches species only.
 func (s *SearchService) SearchSpecies(ctx context.Context, query string, limit int32) ([]*SearchResult, error) {
 	return s.searchByType(ctx, query, ContentTypeSpecies, limit)
 }

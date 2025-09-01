@@ -58,6 +58,8 @@ linters-settings:
     forbid:
       - p: ^fmt\.Print.*$
         msg: "use slog instead of fmt.Print statements"
+      - p: ^fmt\.Fprintf$
+        msg: "use strings.Builder.WriteString or report.WriteString instead of fmt.Fprintf"
 
   goconst:
     min-len: 2

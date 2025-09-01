@@ -41,7 +41,7 @@ func (d *Database) RunMigrations(ctx context.Context, config Config) error {
 
 	goose.SetVerbose(true)
 	goose.SetBaseFS(embedMigrations)
-	goose.SetTableName("migrations")
+	goose.SetTableName(migrationsDir)
 
 	if err := goose.SetDialect(migrationsDialect); err != nil {
 		return fmt.Errorf("failed to set dialect: %w", err)

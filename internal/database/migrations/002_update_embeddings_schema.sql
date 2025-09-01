@@ -1,3 +1,4 @@
+-- +goose Up
 -- Update embeddings schema for Ollama models
 -- This migration updates the vector dimensions and adds metadata for embedding models
 
@@ -39,7 +40,7 @@ CREATE INDEX idx_bestiary_embedding_model ON scry_quest.bestiary(embedding_model
 CREATE INDEX idx_classes_embedding_model ON scry_quest.classes(embedding_model);
 CREATE INDEX idx_species_embedding_model ON scry_quest.species(embedding_model);
 
--- Create a function to validate embedding dimensions against model
+-- +goose StatementBegin
 CREATE OR REPLACE FUNCTION validate_embedding_dimensions()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -68,6 +69,7 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+-- +goose StatementEnd
 
 -- Add validation triggers
 CREATE TRIGGER validate_spells_embedding_dimensions 
@@ -157,3 +159,26 @@ SELECT
     END as expected_dimensions
 FROM scry_quest.species
 GROUP BY embedding_model;
+
+-- +goose Down
+-- Remove the embedding statistics view
+DROP VIEW IF EXISTS scry_quest.embedding_stats;
+
+-- Remove validation triggers and function
+DROP TRIGGER IF EXISTS validate_spells_embedding_dimensions ON scry_quest.spells;
+DROP TRIGGER IF EXISTS validate_bestiary_embedding_dimensions ON scry_quest.bestiary;
+DROP TRIGGER IF EXISTS validate_classes_embedding_dimensions ON scry_quest.classes;
+DROP TRIGGER IF EXISTS validate_species_embedding_dimensions ON scry_quest.species;
+DROP FUNCTION IF EXISTS validate_embedding_dimensions;
+
+-- Remove embedding model indexes
+DROP INDEX IF EXISTS idx_spells_embedding_model;
+DROP INDEX IF EXISTS idx_bestiary_embedding_model;  
+DROP INDEX IF EXISTS idx_classes_embedding_model;
+DROP INDEX IF EXISTS idx_species_embedding_model;
+
+-- Remove embedding model columns
+ALTER TABLE scry_quest.spells DROP COLUMN IF EXISTS embedding_model;
+ALTER TABLE scry_quest.bestiary DROP COLUMN IF EXISTS embedding_model;
+ALTER TABLE scry_quest.classes DROP COLUMN IF EXISTS embedding_model;
+ALTER TABLE scry_quest.species DROP COLUMN IF EXISTS embedding_model;

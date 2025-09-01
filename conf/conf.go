@@ -18,6 +18,8 @@ import (
 const (
 	// EnvConfigPath is the environment variable name used to specify a custom config file path
 	EnvConfigPath = "CONF_PATH"
+	// EnvPrefix to scope env vars to scry_quest. See [env.template](../.env.template) for examples
+	EnvPrefix = "SCRY_"
 	// EnvVarNamespace is the namespace prefix for environment variables
 	EnvVarNamespace = ""
 	// EnvDelimiter is the delimiter used for environment variable keys
@@ -34,7 +36,7 @@ type Config struct {
 }
 
 // New creates a new Config instance by loading configuration from .env file and environment variables
-func New(ctx context.Context, configPath string) (*Config, error) {
+func New(ctx context.Context, configPath *string) (*Config, error) {
 	k := koanf.New(".")
 
 	confFile := getConfigPath(configPath)
@@ -60,31 +62,6 @@ func (c *Config) String(key string) string {
 	return c.koanf.String(key)
 }
 
-// Int returns the integer value for the given key
-func (c *Config) Int(key string) int {
-	return c.koanf.Int(key)
-}
-
-// Bool returns the boolean value for the given key
-func (c *Config) Bool(key string) bool {
-	return c.koanf.Bool(key)
-}
-
-// StringSlice returns a string slice for the given key
-func (c *Config) StringSlice(key string) []string {
-	return c.koanf.Strings(key)
-}
-
-// Exists returns true if the key exists in the configuration
-func (c *Config) Exists(key string) bool {
-	return c.koanf.Exists(key)
-}
-
-// All returns all configuration key-value pairs
-func (c *Config) All() map[string]interface{} {
-	return c.koanf.All()
-}
-
 // MustString returns the string value for the given key or panics if not found
 func (c *Config) MustString(key string) string {
 	if !c.koanf.Exists(key) {
@@ -93,9 +70,9 @@ func (c *Config) MustString(key string) string {
 	return c.koanf.String(key)
 }
 
-func getConfigPath(configPath string) string {
-	if configPath != "" {
-		return configPath
+func getConfigPath(configPath *string) string {
+	if configPath != nil && *configPath != "" {
+		return *configPath
 	}
 
 	if path := os.Getenv(EnvConfigPath); path != "" {
@@ -115,4 +92,42 @@ func GetEnv(key, fallback string) string {
 		return value
 	}
 	return fallback
+}
+
+// GetPrefixedEnv returns the configuration value with SCRY_ prefix from config or env, or fallback if not set
+func (c *Config) GetPrefixedEnv(key, fallback string) string {
+	prefixedKey := EnvPrefix + key
+
+	// First check if it exists in koanf (from .env file or environment)
+	if c.koanf.Exists(prefixedKey) {
+		return c.koanf.String(prefixedKey)
+	}
+
+	// Fallback to direct environment lookup
+	if value, exists := os.LookupEnv(prefixedKey); exists {
+		return value
+	}
+
+	return fallback
+}
+
+// CLIContext represents a CLI context that can return string flag values
+type CLIContext interface {
+	String(name string) string
+}
+
+// FromCLI resolves a configuration value with the following priority:
+// 1. CLI context flag value (if provided)
+// 2. Configuration/environment value via GetPrefixedEnv
+// 3. Default fallback value
+func (c *Config) FromCLI(cliContext CLIContext, flagName, envKey, fallback string) string {
+	// Try CLI flag first if context is provided
+	if cliContext != nil {
+		if flagValue := cliContext.String(flagName); flagValue != "" {
+			return flagValue
+		}
+	}
+
+	// Fall back to prefixed environment variable or config
+	return c.GetPrefixedEnv(envKey, fallback)
 }
