@@ -55,11 +55,6 @@ BEGIN
                 RAISE EXCEPTION 'Embedding dimension % does not match expected 768 for model %', 
                     vector_dims(NEW.embedding), NEW.embedding_model;
             END IF;
-        WHEN 'all-minilm' THEN
-            IF vector_dims(NEW.embedding) != 384 THEN
-                RAISE EXCEPTION 'Embedding dimension % does not match expected 384 for model %', 
-                    vector_dims(NEW.embedding), NEW.embedding_model;
-            END IF;
         ELSE
             -- For unknown models, just log a warning
             RAISE NOTICE 'Unknown embedding model: %', NEW.embedding_model;
@@ -109,7 +104,6 @@ SELECT
     CASE embedding_model
         WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
-        WHEN 'all-minilm' THEN 384
         ELSE NULL
     END as expected_dimensions
 FROM scry_quest.spells
@@ -125,7 +119,6 @@ SELECT
     CASE embedding_model
         WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
-        WHEN 'all-minilm' THEN 384
         ELSE NULL
     END as expected_dimensions
 FROM scry_quest.bestiary
@@ -141,7 +134,6 @@ SELECT
     CASE embedding_model
         WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
-        WHEN 'all-minilm' THEN 384
         ELSE NULL
     END as expected_dimensions
 FROM scry_quest.classes
@@ -157,7 +149,6 @@ SELECT
     CASE embedding_model
         WHEN 'gpt-oss:20b' THEN 2880
         WHEN 'nomic-embed-text' THEN 768
-        WHEN 'all-minilm' THEN 384
         ELSE NULL
     END as expected_dimensions
 FROM scry_quest.species

@@ -32,7 +32,7 @@ SELECT
     level,
     school,
     embedding_model,
-    (1 - (embedding <=> $1)) as similarity
+    (1 - (embedding <=> $1))::float8 as similarity
 FROM scry_quest.spells
 WHERE embedding IS NOT NULL
 ORDER BY embedding <=> $1

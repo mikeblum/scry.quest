@@ -312,7 +312,7 @@ SELECT
     alignment,
     challenge_rating,
     embedding_model,
-    (1 - (embedding <=> $1)) as similarity
+    (1 - (embedding <=> $1))::float8 as similarity
 FROM scry_quest.bestiary
 WHERE embedding IS NOT NULL
 ORDER BY embedding <=> $1
@@ -332,7 +332,7 @@ type SearchCreaturesByEmbeddingRow struct {
 	Alignment       pgtype.Text `json:"alignment"`
 	ChallengeRating pgtype.Text `json:"challenge_rating"`
 	EmbeddingModel  pgtype.Text `json:"embedding_model"`
-	Similarity      int32       `json:"similarity"`
+	Similarity      float64     `json:"similarity"`
 }
 
 func (q *Queries) SearchCreaturesByEmbedding(ctx context.Context, arg SearchCreaturesByEmbeddingParams) ([]SearchCreaturesByEmbeddingRow, error) {

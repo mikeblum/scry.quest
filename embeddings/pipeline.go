@@ -51,8 +51,17 @@ func (p *GenericPipeline) ProcessSource(ctx context.Context, source DataSource) 
 		}
 
 		results = append(results, result)
-		slog.InfoContext(ctx, "Processed content item",
-			"id", item.ID, "type", item.Type, "embedding_dims", len(result.Embedding))
+		
+		logFields := []interface{}{
+			"id", item.ID, 
+			"type", item.Type,
+		}
+		if name := extractName(item); name != nil {
+			logFields = append(logFields, "name", *name)
+		}
+		logFields = append(logFields, "vector_size", len(result.Embedding))
+		
+		slog.InfoContext(ctx, "Processed content item", logFields...)
 	}
 
 	if len(results) > 0 {
@@ -77,4 +86,13 @@ func (p *GenericPipeline) ProcessItem(ctx context.Context, item *ContentItem) (*
 	}
 
 	return result, nil
+}
+
+func extractName(item *ContentItem) *string {
+	if nameVal, ok := item.Metadata["name"]; ok {
+		if nameStr, ok := nameVal.(string); ok {
+			return &nameStr
+		}
+	}
+	return nil
 }

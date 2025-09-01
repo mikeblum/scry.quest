@@ -6,7 +6,7 @@ SELECT
     s.name,
     s.description,
     s.embedding_model,
-    (1 - (s.embedding <=> $1)) as similarity
+    (1 - (s.embedding <=> $1))::float8 as similarity
 FROM scry_quest.spells s
 WHERE s.embedding IS NOT NULL
 
@@ -18,7 +18,7 @@ SELECT
     b.name,
     CONCAT(b.size, ' ', b.type, ', ', b.alignment) as description,
     b.embedding_model,
-    (1 - (b.embedding <=> $1)) as similarity
+    (1 - (b.embedding <=> $1))::float8 as similarity
 FROM scry_quest.bestiary b
 WHERE b.embedding IS NOT NULL
 
@@ -30,7 +30,7 @@ SELECT
     c.name,
     c.description,
     c.embedding_model,
-    (1 - (c.embedding <=> $1)) as similarity
+    (1 - (c.embedding <=> $1))::float8 as similarity
 FROM scry_quest.classes c
 WHERE c.embedding IS NOT NULL
 
@@ -42,7 +42,7 @@ SELECT
     sp.name,
     sp.description,
     sp.embedding_model,
-    (1 - (sp.embedding <=> $1)) as similarity
+    (1 - (sp.embedding <=> $1))::float8 as similarity
 FROM scry_quest.species sp
 WHERE sp.embedding IS NOT NULL
 

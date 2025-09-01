@@ -21,7 +21,7 @@ SELECT
     description,
     primary_ability,
     embedding_model,
-    (1 - (embedding <=> $1)) as similarity
+    (1 - (embedding <=> $1))::float8 as similarity
 FROM scry_quest.classes
 WHERE embedding IS NOT NULL
 ORDER BY embedding <=> $1
