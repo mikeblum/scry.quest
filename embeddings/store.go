@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/jackc/pgx/v5/pgtype"
@@ -25,23 +26,96 @@ func NewDatabaseEmbeddingStore(queries *database.Queries) *DatabaseEmbeddingStor
 	}
 }
 
-// Store stores an embedding result.
+// Store implements the EmbeddingStore interface
 func (s *DatabaseEmbeddingStore) Store(ctx context.Context, result *EmbeddingResult) error {
+	vector := pgvector.NewVector(result.Embedding)
+	model := getString(result.Metadata, "model", "nomic-embed-text")
+	modelText := pgtype.Text{String: model, Valid: true}
+
+	originalContent := result.Metadata["original_content"].([]byte)
+	description := string(originalContent)
+	if len(description) > 1000 {
+		description = description[:1000]
+	}
+
+	// Convert content to valid JSON for storage
+	rawData, err := ensureValidJSON(originalContent)
+	if err != nil {
+		return fmt.Errorf("failed to convert content to JSON: %w", err)
+	}
+
+	// Extract a simple name from the content or use filename
+	name := extractSimpleName(result, string(originalContent))
+	if name == "" {
+		name = result.ContentID.String() // Use UUID as fallback
+	}
+
 	switch result.ContentType {
 	case string(ContentTypeSpell):
-		return s.storeSpell(ctx, result)
+		params := database.CreateSpellParams{
+			Name:           name,
+			Description:    pgtype.Text{String: description, Valid: true},
+			Level:          0, // Default level, actual parsing can be added later if needed
+			School:         pgtype.Text{String: "N/A", Valid: true},
+			CastingTime:    pgtype.Text{String: "N/A", Valid: true},
+			RangeValue:     pgtype.Text{String: "N/A", Valid: true},
+			Components:     pgtype.Text{String: "N/A", Valid: true},
+			Duration:       pgtype.Text{String: "N/A", Valid: true},
+			Classes:        []string{},
+			Embedding:      vector,
+			RawData:        rawData,
+			EmbeddingModel: modelText,
+		}
+		_, err := s.queries.CreateSpell(ctx, params)
+		return err
+
 	case string(ContentTypeBestiary):
-		return s.storeCreature(ctx, result)
+		params := database.CreateCreatureParams{
+			Name:           name,
+			Size:           pgtype.Text{String: "Medium", Valid: true}, // Default
+			Type:           pgtype.Text{Valid: false},
+			Alignment:      pgtype.Text{String: "Unaligned", Valid: true},
+			Abilities:      []byte("{}"),
+			Skills:         []byte("{}"),
+			Speed:          []byte("{}"),
+			Languages:      pgtype.Text{String: "—", Valid: true},
+			Senses:         pgtype.Text{String: "—", Valid: true},
+			Embedding:      vector,
+			RawData:        rawData,
+			EmbeddingModel: modelText,
+		}
+		_, err := s.queries.CreateCreature(ctx, params)
+		return err
+
 	case string(ContentTypeClass):
-		return s.storeClass(ctx, result)
+		params := database.CreateClassParams{
+			Name:           name,
+			Description:    pgtype.Text{String: description, Valid: true},
+			Embedding:      vector,
+			RawData:        rawData,
+			EmbeddingModel: modelText,
+		}
+		_, err := s.queries.CreateClass(ctx, params)
+		return err
+
 	case string(ContentTypeSpecies):
-		return s.storeSpecies(ctx, result)
+		params := database.CreateSpeciesParams{
+			Name:           name,
+			Description:    pgtype.Text{String: description, Valid: true},
+			Traits:         []string{},
+			Embedding:      vector,
+			RawData:        rawData,
+			EmbeddingModel: modelText,
+		}
+		_, err := s.queries.CreateSpecies(ctx, params)
+		return err
+
 	default:
 		return fmt.Errorf("unsupported content type: %s", result.ContentType)
 	}
 }
 
-// StoreAll stores multiple results.
+// StoreAll implements the EmbeddingStore interface
 func (s *DatabaseEmbeddingStore) StoreAll(ctx context.Context, results []*EmbeddingResult) error {
 	for _, result := range results {
 		if err := s.Store(ctx, result); err != nil {
@@ -51,186 +125,89 @@ func (s *DatabaseEmbeddingStore) StoreAll(ctx context.Context, results []*Embedd
 	return nil
 }
 
-func (s *DatabaseEmbeddingStore) storeSpell(ctx context.Context, result *EmbeddingResult) error {
-	vector := pgvector.NewVector(result.Embedding)
-	model := getStringFromMetadata(result.Metadata, "model", nil)
-	modelText := pgtype.Text{String: model, Valid: true}
-
-	// For spells, we typically have one large document
-	params := database.CreateSpellParams{
-		Name:           "D&D 5e Spells",
-		Description:    pgtype.Text{String: "Complete D&D 5e spell reference", Valid: true},
-		Level:          0,
-		School:         pgtype.Text{String: "reference", Valid: true},
-		CastingTime:    pgtype.Text{String: "N/A", Valid: true},
-		RangeValue:     pgtype.Text{String: "N/A", Valid: true},
-		Components:     pgtype.Text{String: "N/A", Valid: true},
-		Duration:       pgtype.Text{String: "N/A", Valid: true},
-		Classes:        []string{"reference"},
-		Embedding:      vector,
-		RawData:        result.Metadata["original_content"].([]byte),
-		EmbeddingModel: modelText,
-	}
-
-	if _, err := s.queries.CreateSpell(ctx, params); err != nil {
-		return fmt.Errorf("failed to create spell record: %w", err)
-	}
-
-	return nil
-}
-
-func (s *DatabaseEmbeddingStore) storeCreature(ctx context.Context, result *EmbeddingResult) error {
-	vector := pgvector.NewVector(result.Embedding)
-	model := getStringFromMetadata(result.Metadata, "model", nil)
-	modelText := pgtype.Text{String: model, Valid: true}
-
-	// Extract creature data from metadata
-	var creature map[string]interface{}
-	if jsonData, ok := result.Metadata["json_data"].(map[string]interface{}); ok {
-		creature = jsonData
-	} else {
-		return fmt.Errorf("missing creature JSON data in metadata")
-	}
-
-	contentIDStr := result.ContentID.String()
-	name := getStringFromMetadata(creature, "name", &contentIDStr)
-
-	abilities, _ := json.Marshal(creature["ability_scores"])
-	skills, _ := json.Marshal(creature["skills"])
-	speed, _ := json.Marshal(creature["speed"])
-
-	params := database.CreateCreatureParams{
-		Name:           name,
-		Size:           getTextFromMap(creature, "size"),
-		Type:           getTextFromMap(creature, "type"),
-		Alignment:      getTextFromMap(creature, "alignment"),
-		Abilities:      abilities,
-		Skills:         skills,
-		Speed:          speed,
-		Languages:      getTextFromMap(creature, "languages"),
-		Senses:         getTextFromMap(creature, "senses"),
-		Embedding:      vector,
-		RawData:        result.Metadata["original_content"].([]byte),
-		EmbeddingModel: modelText,
-	}
-
-	// Set optional fields
-	if armorClass, ok := creature["armor_class"].(float64); ok {
-		params.ArmorClass = pgtype.Int4{Int32: int32(armorClass), Valid: true}
-	}
-
-	if hitPoints, ok := creature["hit_points"].(map[string]interface{}); ok {
-		if avg, ok := hitPoints["average"].(float64); ok {
-			params.HitPoints = pgtype.Int4{Int32: int32(avg), Valid: true}
-		}
-		if dice, ok := hitPoints["dice"].(string); ok {
-			params.HitDice = pgtype.Text{String: dice, Valid: true}
-		}
-	}
-
-	if cr, ok := creature["challenge_rating"].(map[string]interface{}); ok {
-		if rating, ok := cr["rating"].(string); ok {
-			params.ChallengeRating = pgtype.Text{String: rating, Valid: true}
-		}
-	}
-
-	if _, err := s.queries.CreateCreature(ctx, params); err != nil {
-		return fmt.Errorf("failed to create creature record: %w", err)
-	}
-
-	return nil
-}
-
-func (s *DatabaseEmbeddingStore) storeClass(ctx context.Context, result *EmbeddingResult) error {
-	vector := pgvector.NewVector(result.Embedding)
-	model := getStringFromMetadata(result.Metadata, "model", nil)
-	modelText := pgtype.Text{String: model, Valid: true}
-
-	contentIDStr := result.ContentID.String()
-	name := getStringFromMetadata(result.Metadata, "base_name", &contentIDStr)
-	name = cases.Title(language.English).String(strings.ToLower(name))
-
-	content := string(result.Metadata["content"].([]byte))
-	description := content
-	if len(content) > 1000 {
-		description = content[:1000]
-	}
-
-	params := database.CreateClassParams{
-		Name:           name,
-		Description:    pgtype.Text{String: description, Valid: true},
-		Embedding:      vector,
-		RawData:        result.Metadata["original_content"].([]byte),
-		EmbeddingModel: modelText,
-	}
-
-	if _, err := s.queries.CreateClass(ctx, params); err != nil {
-		return fmt.Errorf("failed to create class record: %w", err)
-	}
-
-	return nil
-}
-
-func (s *DatabaseEmbeddingStore) storeSpecies(ctx context.Context, result *EmbeddingResult) error {
-	vector := pgvector.NewVector(result.Embedding)
-	model := getStringFromMetadata(result.Metadata, "model", nil)
-	modelText := pgtype.Text{String: model, Valid: true}
-
-	contentIDStr := result.ContentID.String()
-	name := getStringFromMetadata(result.Metadata, "base_name", &contentIDStr)
-	name = cases.Title(language.English).String(strings.ToLower(name))
-
-	content := string(result.Metadata["content"].([]byte))
-	description := content
-	if len(content) > 1000 {
-		description = content[:1000]
-	}
-
-	params := database.CreateSpeciesParams{
-		Name:           name,
-		Description:    pgtype.Text{String: description, Valid: true},
-		Traits:         []string{},
-		Embedding:      vector,
-		RawData:        result.Metadata["original_content"].([]byte),
-		EmbeddingModel: modelText,
-	}
-
-	if _, err := s.queries.CreateSpecies(ctx, params); err != nil {
-		return fmt.Errorf("failed to create species record: %w", err)
-	}
-
-	return nil
-}
-
-// Helpers
-func getStringFromMetadata(metadata map[string]interface{}, key string, defaultValue *string) string {
+// Simple helpers
+func getString(metadata map[string]any, key, defaultValue string) string {
 	if val, ok := metadata[key]; ok {
 		if str, ok := val.(string); ok {
 			return str
 		}
 	}
-	if defaultValue != nil {
-		return *defaultValue
+	return defaultValue
+}
+
+func extractSimpleName(result *EmbeddingResult, content string) string {
+	if name := extractFromFilename(result); name != "" {
+		return name
+	}
+	if name := extractFromJSON(content); name != "" {
+		return name
+	}
+	if name := extractFromMarkdown(content); name != "" {
+		return name
 	}
 	return ""
 }
 
-func getTextFromMap(m map[string]interface{}, key string) pgtype.Text {
-	if val, ok := m[key]; ok {
-		if str, ok := val.(string); ok {
-			return pgtype.Text{String: str, Valid: true}
-		}
-		if slice, ok := val.([]interface{}); ok && len(slice) > 0 {
-			var strs []string
-			for _, item := range slice {
-				if s, ok := item.(string); ok {
-					strs = append(strs, s)
-				}
-			}
-			if len(strs) > 0 {
-				return pgtype.Text{String: strings.Join(strs, ", "), Valid: true}
-			}
+func extractFromFilename(result *EmbeddingResult) string {
+	filename, ok := result.Metadata["filename"].(string)
+	if !ok {
+		return ""
+	}
+	name := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
+	name = strings.ReplaceAll(name, "_", " ")
+	return cases.Title(language.English).String(strings.ToLower(name))
+}
+
+func extractFromJSON(content string) string {
+	if !strings.HasPrefix(content, "{") {
+		return ""
+	}
+	lines := strings.Split(content, "\n")
+	limit := min(5, len(lines))
+	for _, line := range lines[:limit] {
+		if name := parseJSONNameLine(line); name != "" {
+			return name
 		}
 	}
-	return pgtype.Text{}
+	return ""
+}
+
+func parseJSONNameLine(line string) string {
+	if !strings.Contains(line, `"name"`) || !strings.Contains(line, ":") {
+		return ""
+	}
+	parts := strings.Split(line, ":")
+	if len(parts) <= 1 {
+		return ""
+	}
+	name := strings.Trim(strings.Trim(parts[1], `,"`), `"`)
+	return name
+}
+
+func extractFromMarkdown(content string) string {
+	if !strings.HasPrefix(content, "#") {
+		return ""
+	}
+	lines := strings.Split(content, "\n")
+	if len(lines) == 0 {
+		return ""
+	}
+	return strings.TrimSpace(strings.TrimLeft(lines[0], "#"))
+}
+
+// ensureValidJSON converts content to valid JSON for database storage.
+// If content is already valid JSON, returns it as-is.
+// If not, wraps it in a JSON object with a "content" field.
+func ensureValidJSON(content []byte) ([]byte, error) {
+	// First check if it's already valid JSON
+	var dummy interface{}
+	if err := json.Unmarshal(content, &dummy); err == nil {
+		return content, nil
+	}
+
+	// If not valid JSON, wrap it in a JSON object
+	wrapper := map[string]string{
+		"content": string(content),
+	}
+	return json.Marshal(wrapper)
 }

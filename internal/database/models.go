@@ -25,7 +25,7 @@ type ScryQuestBestiary struct {
 	Senses          pgtype.Text `json:"senses"`
 	Languages       pgtype.Text `json:"languages"`
 	ChallengeRating pgtype.Text `json:"challenge_rating"`
-	// Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
 	Embedding      pgvector.Vector    `json:"embedding"`
 	RawData        []byte             `json:"raw_data"`
 	CreatedAt      pgtype.Timestamptz `json:"created_at"`
@@ -41,7 +41,7 @@ type ScryQuestClass struct {
 	PrimaryAbility           pgtype.Text `json:"primary_ability"`
 	SavingThrowProficiencies pgtype.Text `json:"saving_throw_proficiencies"`
 	SkillProficiencies       []string    `json:"skill_proficiencies"`
-	// Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
 	Embedding      pgvector.Vector    `json:"embedding"`
 	RawData        []byte             `json:"raw_data"`
 	CreatedAt      pgtype.Timestamptz `json:"created_at"`
@@ -65,7 +65,7 @@ type ScryQuestSpecy struct {
 	Speed                pgtype.Int4 `json:"speed"`
 	AbilityScoreIncrease []byte      `json:"ability_score_increase"`
 	Traits               []string    `json:"traits"`
-	// Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
 	Embedding      pgvector.Vector    `json:"embedding"`
 	RawData        []byte             `json:"raw_data"`
 	CreatedAt      pgtype.Timestamptz `json:"created_at"`
@@ -84,7 +84,7 @@ type ScryQuestSpell struct {
 	Components  pgtype.Text `json:"components"`
 	Duration    pgtype.Text `json:"duration"`
 	Classes     []string    `json:"classes"`
-	// Embedding vector from Ollama model (default: gpt-oss:20b 1536 dims)
+	// Embedding vector from Ollama model (default: nomic-embed-text 768 dims)
 	Embedding      pgvector.Vector    `json:"embedding"`
 	RawData        []byte             `json:"raw_data"`
 	CreatedAt      pgtype.Timestamptz `json:"created_at"`

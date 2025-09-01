@@ -30,27 +30,32 @@ func (p *DefaultContentProcessor) Process(ctx context.Context, item *ContentItem
 		return nil, fmt.Errorf("content cannot be empty")
 	}
 
+	// Respect model context length
+	maxLength := ModelContextLength(p.model)
+	if len(text) > maxLength {
+		text = text[:maxLength]
+	}
+
 	embedding, err := p.generator.GenerateEmbedding(ctx, text)
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate embedding: %w", err)
 	}
 
+	// Simple result - copy original metadata and add processor metadata
 	result := &EmbeddingResult{
 		ContentID:   item.ID,
 		Embedding:   embedding,
 		ContentType: item.Type,
-		Metadata:    make(map[string]interface{}),
+		Metadata:    make(map[string]any),
 	}
 
-	// Copy metadata from item
+	// Copy all original metadata
 	for k, v := range item.Metadata {
 		result.Metadata[k] = v
 	}
 
-	// Store the original content
-	result.Metadata["original_content"] = item.Content
-
 	// Add processor metadata
+	result.Metadata["original_content"] = item.Content
 	result.Metadata["model"] = string(p.model)
 	result.Metadata["embedding_dimensions"] = len(embedding)
 

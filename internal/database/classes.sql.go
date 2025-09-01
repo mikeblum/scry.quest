@@ -168,7 +168,7 @@ SELECT
     description,
     primary_ability,
     embedding_model,
-    (1 - (embedding <=> $1)) as similarity
+    (1 - (embedding <=> $1))::float8 as similarity
 FROM scry_quest.classes
 WHERE embedding IS NOT NULL
 ORDER BY embedding <=> $1
@@ -186,7 +186,7 @@ type SearchClassesByEmbeddingRow struct {
 	Description    pgtype.Text `json:"description"`
 	PrimaryAbility pgtype.Text `json:"primary_ability"`
 	EmbeddingModel pgtype.Text `json:"embedding_model"`
-	Similarity     int32       `json:"similarity"`
+	Similarity     float64     `json:"similarity"`
 }
 
 func (q *Queries) SearchClassesByEmbedding(ctx context.Context, arg SearchClassesByEmbeddingParams) ([]SearchClassesByEmbeddingRow, error) {

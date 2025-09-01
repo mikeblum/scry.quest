@@ -271,7 +271,7 @@ SELECT
     level,
     school,
     embedding_model,
-    (1 - (embedding <=> $1)) as similarity
+    (1 - (embedding <=> $1))::float8 as similarity
 FROM scry_quest.spells
 WHERE embedding IS NOT NULL
 ORDER BY embedding <=> $1
@@ -290,7 +290,7 @@ type SearchSpellsByEmbeddingRow struct {
 	Level          int32       `json:"level"`
 	School         pgtype.Text `json:"school"`
 	EmbeddingModel pgtype.Text `json:"embedding_model"`
-	Similarity     int32       `json:"similarity"`
+	Similarity     float64     `json:"similarity"`
 }
 
 func (q *Queries) SearchSpellsByEmbedding(ctx context.Context, arg SearchSpellsByEmbeddingParams) ([]SearchSpellsByEmbeddingRow, error) {

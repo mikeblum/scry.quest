@@ -169,7 +169,7 @@ SELECT
     size,
     speed,
     embedding_model,
-    (1 - (embedding <=> $1)) as similarity
+    (1 - (embedding <=> $1))::float8 as similarity
 FROM scry_quest.species
 WHERE embedding IS NOT NULL
 ORDER BY embedding <=> $1
@@ -188,7 +188,7 @@ type SearchSpeciesByEmbeddingRow struct {
 	Size           pgtype.Text `json:"size"`
 	Speed          pgtype.Int4 `json:"speed"`
 	EmbeddingModel pgtype.Text `json:"embedding_model"`
-	Similarity     int32       `json:"similarity"`
+	Similarity     float64     `json:"similarity"`
 }
 
 func (q *Queries) SearchSpeciesByEmbedding(ctx context.Context, arg SearchSpeciesByEmbeddingParams) ([]SearchSpeciesByEmbeddingRow, error) {
