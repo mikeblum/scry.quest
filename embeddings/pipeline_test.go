@@ -62,7 +62,7 @@ func (m *mockEmbeddingStore) StoreAll(_ context.Context, results []*EmbeddingRes
 	return nil
 }
 
-func TestGenericPipeline(t *testing.T) {
+func TestPipeline(t *testing.T) {
 	t.Run("processes source successfully", func(t *testing.T) {
 		generator := &mockEmbeddingGenerator{
 			embeddings: [][]float32{{0.1, 0.2, 0.3}, {0.4, 0.5, 0.6}},
@@ -70,7 +70,7 @@ func TestGenericPipeline(t *testing.T) {
 		processor := &mockContentProcessor{}
 		store := &mockEmbeddingStore{}
 
-		pipeline := NewGenericPipeline(generator, processor, store)
+		pipeline := NewPipeline(generator, processor, store)
 
 		source := &mockDataSource{
 			items: []*ContentItem{
@@ -98,7 +98,7 @@ func TestGenericPipeline(t *testing.T) {
 		processor := &mockContentProcessor{}
 		store := &mockEmbeddingStore{}
 
-		pipeline := NewGenericPipeline(generator, processor, store)
+		pipeline := NewPipeline(generator, processor, store)
 
 		item := &ContentItem{
 			ID:      uuid.New(),

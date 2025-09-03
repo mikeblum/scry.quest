@@ -67,8 +67,8 @@ func New(cfg Config) {
 // NewFromEnv initializes the global logger from environment variables
 func NewFromEnv(config *conf.Config) {
 	New(Config{
-		Level:  Level(config.GetPrefixedEnv("LOG_LEVEL", string(LogLevelInfo))),
-		Format: Format(config.GetPrefixedEnv("LOG_FORMAT", string(LogFormatText))),
+		Level:  Level(config.GetPrefixedEnv(EnvLogLevel, string(LogLevelInfo))),
+		Format: Format(config.GetPrefixedEnv(EnvLogFormat, string(LogFormatText))),
 	})
 }
 

@@ -6,16 +6,16 @@ import (
 	"log/slog"
 )
 
-// GenericPipeline processes content through pluggable components.
-type GenericPipeline struct {
+// Pipeline processes content through pluggable components.
+type Pipeline struct {
 	generator EmbeddingGenerator
 	processor ContentProcessor
 	store     EmbeddingStore
 }
 
-// NewGenericPipeline creates a processing pipeline.
-func NewGenericPipeline(generator EmbeddingGenerator, processor ContentProcessor, store EmbeddingStore) *GenericPipeline {
-	return &GenericPipeline{
+// NewPipeline creates a processing pipeline.
+func NewPipeline(generator EmbeddingGenerator, processor ContentProcessor, store EmbeddingStore) *Pipeline {
+	return &Pipeline{
 		generator: generator,
 		processor: processor,
 		store:     store,
@@ -23,7 +23,7 @@ func NewGenericPipeline(generator EmbeddingGenerator, processor ContentProcessor
 }
 
 // ProcessSource processes DataSource items through pipeline.
-func (p *GenericPipeline) ProcessSource(ctx context.Context, source DataSource) error {
+func (p *Pipeline) ProcessSource(ctx context.Context, source DataSource) error {
 	defer func() {
 		if err := source.Close(); err != nil {
 			slog.ErrorContext(ctx, "Failed to close data source", "error", err)
@@ -75,7 +75,7 @@ func (p *GenericPipeline) ProcessSource(ctx context.Context, source DataSource) 
 }
 
 // ProcessItem processes a single ContentItem.
-func (p *GenericPipeline) ProcessItem(ctx context.Context, item *ContentItem) (*EmbeddingResult, error) {
+func (p *Pipeline) ProcessItem(ctx context.Context, item *ContentItem) (*EmbeddingResult, error) {
 	result, err := p.processor.Process(ctx, item)
 	if err != nil {
 		return nil, fmt.Errorf("failed to process item %s: %w", item.ID, err)

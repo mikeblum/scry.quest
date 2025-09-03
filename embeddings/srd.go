@@ -18,15 +18,15 @@ type SRDPipelineConfig struct {
 }
 
 // CreateSRDPipeline creates an SRD content pipeline.
-func CreateSRDPipeline(config SRDPipelineConfig) *GenericPipeline {
+func CreateSRDPipeline(config SRDPipelineConfig) *Pipeline {
 	processor := NewDefaultContentProcessor(config.Client, config.Model)
 	store := NewDatabaseEmbeddingStore(config.Queries)
 
-	return NewGenericPipeline(config.Client, processor, store)
+	return NewPipeline(config.Client, processor, store)
 }
 
 // ProcessSRDContentType processes specific SRD content type.
-func ProcessSRDContentType(ctx context.Context, pipeline *GenericPipeline, contentType ContentType, srdPath string) error {
+func ProcessSRDContentType(ctx context.Context, pipeline *Pipeline, contentType ContentType, srdPath string) error {
 	var source DataSource
 	var err error
 
@@ -52,7 +52,7 @@ func ProcessSRDContentType(ctx context.Context, pipeline *GenericPipeline, conte
 }
 
 // ProcessAllSRDContent processes all SRD content types.
-func ProcessAllSRDContent(ctx context.Context, pipeline *GenericPipeline, srdPath string) error {
+func ProcessAllSRDContent(ctx context.Context, pipeline *Pipeline, srdPath string) error {
 	contentTypes := []ContentType{
 		ContentTypeSpell,
 		ContentTypeBestiary,
