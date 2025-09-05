@@ -69,6 +69,10 @@ docker-up: ## 🐳 Start docker compose services
 docker-down: ## 🐳 Teardown docker compose services
 	docker compose down
 
+.PHONY: psql
+psql: ## 🐘 Connect to postgres dev
+	docker exec -it scry-quest-postgres psql -U scry_quest -d scry_quest_dev
+
 .PHONY: embeddings
 embeddings: ## 🔮 Run embeddings CLI
 	go run ./cmd/embeddings $(filter-out $@,$(MAKECMDGOALS))
