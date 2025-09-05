@@ -37,10 +37,8 @@ func (p *Pipeline) ProcessSource(ctx context.Context, source DataSource) error {
 
 	results := make([]*EmbeddingResult, 0)
 	for item := range items {
-		select {
-		case <-ctx.Done():
+		if ctx.Err() != nil {
 			return ctx.Err()
-		default:
 		}
 
 		result, err := p.processor.Process(ctx, item)
@@ -52,15 +50,14 @@ func (p *Pipeline) ProcessSource(ctx context.Context, source DataSource) error {
 
 		results = append(results, result)
 
-		logFields := []interface{}{
-			"id", item.ID,
-			"type", item.Type,
-		}
+		logFields := []interface{}{"id", item.ID, "type", item.Type}
 		if name := extractName(item); name != nil {
 			logFields = append(logFields, "name", *name)
 		}
+		if filePath := extractFilePath(item); filePath != nil {
+			logFields = append(logFields, "file", *filePath)
+		}
 		logFields = append(logFields, "vector_size", len(result.Embedding))
-
 		slog.InfoContext(ctx, "Processed content item", logFields...)
 	}
 
@@ -68,7 +65,6 @@ func (p *Pipeline) ProcessSource(ctx context.Context, source DataSource) error {
 		if err := p.store.StoreAll(ctx, results); err != nil {
 			return fmt.Errorf("failed to store results: %w", err)
 		}
-		slog.InfoContext(ctx, "Stored embedding results", "count", len(results))
 	}
 
 	return nil
@@ -92,6 +88,15 @@ func extractName(item *ContentItem) *string {
 	if nameVal, ok := item.Metadata["name"]; ok {
 		if nameStr, ok := nameVal.(string); ok {
 			return &nameStr
+		}
+	}
+	return nil
+}
+
+func extractFilePath(item *ContentItem) *string {
+	if pathVal, ok := item.Metadata["file_path"]; ok {
+		if pathStr, ok := pathVal.(string); ok {
+			return &pathStr
 		}
 	}
 	return nil

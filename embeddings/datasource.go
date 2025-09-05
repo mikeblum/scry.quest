@@ -109,8 +109,7 @@ func (fs *FileSystemDataSource) createContentItem(path string) (*ContentItem, er
 		Content: content,
 		Type:    fs.contentType,
 		Metadata: map[string]interface{}{
-			"file_path": path,
-			"rel_path":  relPath,
+			"file_path": relPath,
 			"file_size": len(content),
 			"extension": filepath.Ext(path),
 			"base_name": strings.TrimSuffix(filepath.Base(path), filepath.Ext(path)),

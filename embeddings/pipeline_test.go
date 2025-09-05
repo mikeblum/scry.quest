@@ -116,3 +116,56 @@ func TestPipeline(t *testing.T) {
 		assert.Len(t, store.storedResults, 1)
 	})
 }
+
+func TestExtractFilePath(t *testing.T) {
+	tests := []struct {
+		name     string
+		item     *ContentItem
+		expected *string
+	}{
+		{
+			name: "extracts file_path when present",
+			item: &ContentItem{
+				Metadata: map[string]interface{}{
+					"file_path": "test/path.json",
+				},
+			},
+			expected: &[]string{"test/path.json"}[0],
+		},
+		{
+			name: "returns nil when file_path not present",
+			item: &ContentItem{
+				Metadata: map[string]interface{}{
+					"other_field": "value",
+				},
+			},
+			expected: nil,
+		},
+		{
+			name: "returns nil when file_path is not string",
+			item: &ContentItem{
+				Metadata: map[string]interface{}{
+					"file_path": 123,
+				},
+			},
+			expected: nil,
+		},
+		{
+			name:     "returns nil when metadata is nil",
+			item:     &ContentItem{},
+			expected: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := extractFilePath(tt.item)
+			if tt.expected == nil {
+				assert.Nil(t, result)
+			} else {
+				require.NotNil(t, result)
+				assert.Equal(t, *tt.expected, *result)
+			}
+		})
+	}
+}
