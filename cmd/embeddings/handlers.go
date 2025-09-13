@@ -19,6 +19,7 @@ func generateEmbeddings(c *cli.Context, engine *embeddings.Engine) error {
 		SRDPath: "./srd",
 		Client:  engine.Client,
 		Queries: engine.Queries,
+		Conn:    engine.Conn,
 		Model:   embeddings.Model(engine.Config.GetPrefixedEnv("OLLAMA_MODEL", "nomic-embed-text")),
 	}
 	pipeline := embeddings.CreateSRDPipeline(config)

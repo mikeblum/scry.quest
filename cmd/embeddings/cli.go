@@ -100,7 +100,7 @@ func run(c *cli.Context, handler func(*cli.Context, *embeddings.Engine) error) e
 		return fmt.Errorf("failed to load configuration: %w", err)
 	}
 
-	log.NewFromEnv(config)
+	log.NewFromCLI(c)
 
 	engine, cleanup, err := setupServices(c.Context, c, config)
 	if err != nil {
@@ -118,7 +118,7 @@ func run(c *cli.Context, handler func(*cli.Context, *embeddings.Engine) error) e
 }
 
 func setupServices(ctx context.Context, c *cli.Context, config *conf.Config) (*embeddings.Engine, func() error, error) {
-	queries, cleanup, err := embeddings.NewDBConn(ctx)
+	queries, conn, cleanup, err := embeddings.NewDBConn(ctx)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -132,6 +132,7 @@ func setupServices(ctx context.Context, c *cli.Context, config *conf.Config) (*e
 		Config:  config,
 		Client:  client,
 		Queries: queries,
+		Conn:    conn,
 	}
 
 	return engine, cleanup, nil

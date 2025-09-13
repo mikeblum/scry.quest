@@ -3,6 +3,20 @@ INSERT INTO scry_quest.classes (name, description, hit_die, primary_ability, sav
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 RETURNING *;
 
+-- name: CreateClasses :batchexec
+INSERT INTO scry_quest.classes (name, description, hit_die, primary_ability, saving_throw_proficiencies, skill_proficiencies, embedding, embedding_model, raw_data)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+ON CONFLICT (name) DO UPDATE SET
+    description = EXCLUDED.description,
+    hit_die = EXCLUDED.hit_die,
+    primary_ability = EXCLUDED.primary_ability,
+    saving_throw_proficiencies = EXCLUDED.saving_throw_proficiencies,
+    skill_proficiencies = EXCLUDED.skill_proficiencies,
+    embedding = EXCLUDED.embedding,
+    embedding_model = EXCLUDED.embedding_model,
+    raw_data = EXCLUDED.raw_data,
+    updated_at = NOW();
+
 -- name: GetClassByID :one
 SELECT * FROM scry_quest.classes WHERE id = $1;
 

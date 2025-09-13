@@ -3,6 +3,23 @@ INSERT INTO scry_quest.spells (name, description, level, school, casting_time, r
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
 RETURNING *;
 
+-- name: CreateSpells :batchexec
+INSERT INTO scry_quest.spells (name, description, level, school, casting_time, range_value, components, duration, classes, embedding, embedding_model, raw_data)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+ON CONFLICT (name) DO UPDATE SET
+    description = EXCLUDED.description,
+    level = EXCLUDED.level,
+    school = EXCLUDED.school,
+    casting_time = EXCLUDED.casting_time,
+    range_value = EXCLUDED.range_value,
+    components = EXCLUDED.components,
+    duration = EXCLUDED.duration,
+    classes = EXCLUDED.classes,
+    embedding = EXCLUDED.embedding,
+    embedding_model = EXCLUDED.embedding_model,
+    raw_data = EXCLUDED.raw_data,
+    updated_at = NOW();
+
 -- name: GetSpellByID :one
 SELECT * FROM scry_quest.spells WHERE id = $1;
 

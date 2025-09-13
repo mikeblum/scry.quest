@@ -13,9 +13,13 @@ import (
 type Querier interface {
 	CountItemsByEmbeddingModel(ctx context.Context) ([]CountItemsByEmbeddingModelRow, error)
 	CreateClass(ctx context.Context, arg CreateClassParams) (ScryQuestClass, error)
+	CreateClasses(ctx context.Context, arg []CreateClassesParams) *CreateClassesBatchResults
 	CreateCreature(ctx context.Context, arg CreateCreatureParams) (ScryQuestBestiary, error)
+	CreateCreatures(ctx context.Context, arg []CreateCreaturesParams) *CreateCreaturesBatchResults
 	CreateSpecies(ctx context.Context, arg CreateSpeciesParams) (ScryQuestSpecy, error)
+	CreateSpeciesBatch(ctx context.Context, arg []CreateSpeciesBatchParams) *CreateSpeciesBatchBatchResults
 	CreateSpell(ctx context.Context, arg CreateSpellParams) (ScryQuestSpell, error)
+	CreateSpells(ctx context.Context, arg []CreateSpellsParams) *CreateSpellsBatchResults
 	DeleteBeast(ctx context.Context, id pgtype.UUID) error
 	DeleteClass(ctx context.Context, id pgtype.UUID) error
 	DeleteClassEmbeddings(ctx context.Context, embeddingModel pgtype.Text) error

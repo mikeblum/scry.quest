@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"time"
 )
 
 // Pipeline processes content through pluggable components.
@@ -40,7 +41,7 @@ func (p *Pipeline) ProcessSource(ctx context.Context, source DataSource) error {
 		if ctx.Err() != nil {
 			return ctx.Err()
 		}
-
+		start := time.Now().UTC()
 		result, err := p.processor.Process(ctx, item)
 		if err != nil {
 			slog.ErrorContext(ctx, "Failed to process content item",
@@ -50,7 +51,7 @@ func (p *Pipeline) ProcessSource(ctx context.Context, source DataSource) error {
 
 		results = append(results, result)
 
-		logFields := []interface{}{"id", item.ID, "type", item.Type}
+		logFields := []interface{}{"id", item.ID, "type", item.Type, "duration", time.Since(start)}
 		if name := extractName(item); name != nil {
 			logFields = append(logFields, "name", *name)
 		}
@@ -58,7 +59,7 @@ func (p *Pipeline) ProcessSource(ctx context.Context, source DataSource) error {
 			logFields = append(logFields, "file", *filePath)
 		}
 		logFields = append(logFields, "vector_size", len(result.Embedding))
-		slog.InfoContext(ctx, "Processed content item", logFields...)
+		slog.InfoContext(ctx, "Processed SRD item", logFields...)
 	}
 
 	if len(results) > 0 {

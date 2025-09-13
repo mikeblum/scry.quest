@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	"github.com/mikeblum/scry.quest/conf"
+	"github.com/mikeblum/scry.quest/param"
+	"github.com/urfave/cli/v2"
 )
 
 // Format represents the output format for logs
@@ -44,9 +46,10 @@ type Config struct {
 
 // New initializes the global logger with the provided configuration
 func New(cfg Config) {
+	logLvl := parseLevel(cfg.Level)
 	opts := &slog.HandlerOptions{
-		Level:     parseLevel(cfg.Level),
-		AddSource: true,
+		Level:     logLvl,
+		AddSource: logLvl == slog.LevelDebug,
 	}
 
 	output := cfg.Output
@@ -69,6 +72,34 @@ func NewFromEnv(config *conf.Config) {
 	New(Config{
 		Level:  Level(config.GetPrefixedEnv(EnvLogLevel, string(LogLevelInfo))),
 		Format: Format(config.GetPrefixedEnv(EnvLogFormat, string(LogFormatText))),
+	})
+}
+
+// NewFromCLI initializes the global logger from CLI context
+func NewFromCLI(ctx *cli.Context) {
+	format := Format(ctx.String(string(param.FlagLogFormat)))
+	if format == "" {
+		format = LogFormatText
+	}
+
+	if ctx.Bool(string(param.FlagJSON)) || strings.EqualFold(string(format), string(LogFormatJSON)) {
+		format = LogFormatJSON
+	} else if ctx.Bool(string(param.FlagText)) || strings.EqualFold(string(format), string(LogFormatText)) {
+		format = LogFormatText
+	}
+
+	level := Level(ctx.String(string(param.FlagLogLevel)))
+	if level == "" {
+		level = LogLevelInfo
+	}
+
+	if ctx.Bool(string(param.FlagDebug)) {
+		level = LogLevelDebug
+	}
+
+	New(Config{
+		Level:  level,
+		Format: format,
 	})
 }
 

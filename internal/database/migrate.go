@@ -4,6 +4,9 @@ import (
 	"context"
 	"embed"
 	"fmt"
+	"log/slog"
+	"regexp"
+	"strings"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/stdlib"
@@ -16,7 +19,27 @@ var embedMigrations embed.FS
 const (
 	migrationsDir     = "migrations"
 	migrationsDialect = "postgres"
+	ansiRegex         = `(?mi)(\\x9b|\\x1b)\[[0-?]*[ -\/]*[@-~]`
 )
+
+type slogBridge struct {
+	re *regexp.Regexp
+}
+
+func (s *slogBridge) Fatalf(format string, v ...interface{}) {
+	slog.Error(fmt.Sprintf(s.format(format), v...))
+}
+
+func (s *slogBridge) Printf(format string, v ...interface{}) {
+	slog.Info(fmt.Sprintf(s.format(format), v...))
+}
+
+func (s *slogBridge) format(format string) string {
+	if s.re == nil {
+		s.re = regexp.MustCompile(ansiRegex)
+	}
+	return strings.TrimSpace(strings.TrimSuffix(s.re.ReplaceAllString(format, ""), "\n"))
+}
 
 // RunMigrations applies all pending database migrations using Goose.
 func (d *Database) RunMigrations(ctx context.Context, config Config) error {
@@ -39,7 +62,7 @@ func (d *Database) RunMigrations(ctx context.Context, config Config) error {
 		_ = sqlDB.Close()
 	}()
 
-	goose.SetVerbose(true)
+	goose.SetLogger(&slogBridge{})
 	goose.SetBaseFS(embedMigrations)
 	goose.SetTableName(migrationsDir)
 

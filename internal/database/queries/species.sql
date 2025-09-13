@@ -3,6 +3,20 @@ INSERT INTO scry_quest.species (name, description, size, speed, ability_score_in
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 RETURNING *;
 
+-- name: CreateSpeciesBatch :batchexec
+INSERT INTO scry_quest.species (name, description, size, speed, ability_score_increase, traits, embedding, embedding_model, raw_data)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+ON CONFLICT (name) DO UPDATE SET
+    description = EXCLUDED.description,
+    size = EXCLUDED.size,
+    speed = EXCLUDED.speed,
+    ability_score_increase = EXCLUDED.ability_score_increase,
+    traits = EXCLUDED.traits,
+    embedding = EXCLUDED.embedding,
+    embedding_model = EXCLUDED.embedding_model,
+    raw_data = EXCLUDED.raw_data,
+    updated_at = NOW();
+
 -- name: GetSpeciesByID :one
 SELECT * FROM scry_quest.species WHERE id = $1;
 

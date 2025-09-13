@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"path/filepath"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/mikeblum/scry.quest/internal/database"
 )
 
@@ -14,13 +15,14 @@ type SRDPipelineConfig struct {
 	SRDPath string
 	Client  *Client
 	Queries *database.Queries
+	Conn    *pgx.Conn
 	Model   Model
 }
 
 // CreateSRDPipeline creates an SRD content pipeline.
 func CreateSRDPipeline(config SRDPipelineConfig) *Pipeline {
 	processor := NewDefaultContentProcessor(config.Client, config.Model)
-	store := NewDatabaseEmbeddingStore(config.Queries)
+	store := NewDatabaseEmbeddingStore(config.Queries, config.Conn)
 
 	return NewPipeline(config.Client, processor, store)
 }
