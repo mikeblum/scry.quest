@@ -63,15 +63,15 @@ sqlc-vet: ## 🐘 Vet SQL queries
 
 .PHONY: docker-up
 docker-up: ## 🐳 Start docker compose services
-	docker compose up -d
+	podman compose up -d
 
 .PHONY: docker-down
 docker-down: ## 🐳 Teardown docker compose services
-	docker compose down
+	podman compose down
 
 .PHONY: psql
 psql: ## 🐘 Connect to postgres dev
-	docker exec -it scry-quest-postgres psql -U scry_quest -d scry_quest_dev
+	podman exec -it scry-quest-postgres psql -U scry_quest -d scry_quest_dev
 
 .PHONY: embeddings
 embeddings: ## 🔮 Run embeddings CLI

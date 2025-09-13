@@ -2,9 +2,10 @@ version: '3.8'
 
 services:
   postgres:
-    image: pgvector/pgvector:pg17
+    image: docker.io/pgvector/pgvector:pg17
     container_name: scry-quest-postgres
     restart: unless-stopped
+    network_mode: host
     environment:
       POSTGRES_DB: scry_quest_dev
       POSTGRES_USER: scry_quest
@@ -15,8 +16,6 @@ services:
       -c shared_buffers=256MB
       -c maintenance_work_mem=64MB
       -c work_mem=4MB
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     shm_size: 128mb
@@ -26,8 +25,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
-    networks:
-      - scry_quest
 
 networks:
   scry_quest:
