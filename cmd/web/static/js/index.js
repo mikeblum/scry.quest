@@ -1,3 +1,7 @@
+// Constants
+const REFOCUS_DELAY_MS = 200;
+const MOCK_RESPONSE_DELAY_MS = 300;
+
 // Theme management
 function initTheme() {
   const theme = localStorage.getItem('theme') ||
@@ -49,10 +53,118 @@ function hideWelcomeScreen() {
 function scrollToBottom() {
   const container = document.getElementById('messages-scroll-container');
   if (container) {
-    setTimeout(() => {
-      container.scrollTop = container.scrollHeight;
-    }, 100);
+    container.scrollTop = container.scrollHeight;
   }
+}
+
+function showLoadingState() {
+  const submitBtn = document.getElementById('chat-submit-btn');
+  const icon = document.getElementById('submit-icon');
+  const userInput = document.getElementById('user-input');
+
+  if (submitBtn) submitBtn.disabled = true;
+  if (icon) {
+    icon.textContent = 'refresh';
+    icon.classList.add('animate-spin');
+  }
+  if (userInput) userInput.disabled = true;
+}
+
+function hideLoadingState() {
+  const submitBtn = document.getElementById('chat-submit-btn');
+  const icon = document.getElementById('submit-icon');
+  const userInput = document.getElementById('user-input');
+
+  if (submitBtn) submitBtn.disabled = false;
+  if (icon) {
+    icon.textContent = 'send';
+    icon.classList.remove('animate-spin');
+  }
+  if (userInput) userInput.disabled = false;
+}
+
+function handleMockSubmit(event) {
+  event.preventDefault();
+
+  const userInput = document.getElementById('user-input');
+  const messagesContainer = document.getElementById('messages');
+
+  if (!userInput.value.trim()) {
+    return false;
+  }
+
+  const userMessage = userInput.value.trim();
+
+  // Show loading state
+  showLoadingState();
+  hideWelcomeScreen();
+
+  // Add user message
+  const userBubbleHtml = `
+    <div class="mb-6 flex justify-end chat-message">
+      <div class="max-w-3xl bg-crystal-600 text-white rounded-lg px-4 py-3">
+        <div class="whitespace-pre-wrap">${userMessage}</div>
+      </div>
+    </div>
+  `;
+
+  if (messagesContainer) {
+    messagesContainer.insertAdjacentHTML('beforeend', userBubbleHtml);
+  }
+
+  // Clear input
+  userInput.value = '';
+  userInput.style.height = 'auto';
+
+  // Scroll to bottom
+  setTimeout(scrollToBottom, 100);
+
+  // Mock AI response after delay
+  setTimeout(() => {
+    const aiResponses = [
+      "That's an interesting question about D&D 5e! Let me help you with that.",
+      "Here's what you need to know about that spell/monster/rule...",
+      "Great question! In D&D 5e, this works differently than you might expect.",
+      "I can definitely help you understand that mechanic better.",
+      "That's a common question among D&D players. Here's the answer..."
+    ];
+
+    const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+
+    const aiBubbleHtml = `
+      <div class="mb-6 chat-message">
+        <div class="flex items-start space-x-3">
+          <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <span class="text-2xl">🔮</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-primary whitespace-pre-wrap leading-relaxed">
+              ${randomResponse}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (messagesContainer) {
+      messagesContainer.insertAdjacentHTML('beforeend', aiBubbleHtml);
+    }
+
+    // Hide loading state and scroll
+    hideLoadingState();
+    setTimeout(scrollToBottom, 300);
+
+    // Refocus on the input after response
+    setTimeout(() => {
+      const input = document.getElementById('user-input');
+      if (input) {
+        input.focus();
+      }
+    }, REFOCUS_DELAY_MS);
+
+  }, MOCK_RESPONSE_DELAY_MS);
+
+  return false;
 }
 
 // Auto-expand textarea

@@ -68,4 +68,35 @@
   .light .bg-theme-panel {
     background-color: rgba(255, 255, 255, 0.95);
   }
+
+  #messages-scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  }
+
+  #messages-scroll-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #messages-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #messages-scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(139, 92, 246, 0.3);
+    border-radius: 4px;
+  }
+
+  #messages-scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(139, 92, 246, 0.5);
+  }
+
+  #user-input {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  #user-input::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -1,7 +1,7 @@
 package templates
 
 templ ChatInterface() {
-	<div class="flex flex-col h-full min-h-0 overflow-hidden">
+	<div class="relative h-full min-h-0 overflow-hidden">
 		<!-- Menu button for when sidebar is closed -->
 		<button
 			id="open-sidebar-btn"
@@ -12,53 +12,53 @@ templ ChatInterface() {
 			<span class="material-icons text-sm">menu</span>
 		</button>
 
-		<!-- Welcome Section - Fixed at Top -->
-		<div class="flex-shrink-0 p-4 border-b border-glass">
-			<div class="max-w-4xl mx-auto text-center">
-				<div class="text-6xl mb-4">🔮</div>
-				<h2 class="text-xl lg:text-2xl font-semibold text-primary mb-2 select-none">Welcome to Scry Quest</h2>
-				<p class="text-secondary mb-6 select-none">Ask me anything about D&D 5e - spells, monsters, rules, or create custom content!</p>
 
-				<div id="welcome-screen">
-					<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-2xl mx-auto">
-						<button
-							class="p-4 btn-glass rounded-lg text-left"
-							onclick="document.getElementById('user-input').value = 'Tell me about the Fireball spell'; document.getElementById('chat-form').requestSubmit();"
-						>
-							<div class="font-medium text-primary mb-1 select-none">✨ Spell Information</div>
-							<div class="text-sm text-secondary select-none">Learn about spells, their mechanics, and usage</div>
-						</button>
+		<!-- Messages Area - Scrollable -->
+		<div id="messages-scroll-container" class="absolute inset-0 overflow-y-auto scrollbar-thin scrollbar-thumb-crystal-300 scrollbar-track-glass" style="scroll-behavior: smooth; padding-bottom: 100px;">
+			<!-- Welcome Section - Only shown when no messages -->
+			<div id="welcome-section" class="p-4 border-b border-glass">
+				<div class="max-w-4xl mx-auto text-center">
+					<div class="text-6xl mb-4">🔮</div>
+					<h2 class="text-xl lg:text-2xl font-semibold text-primary mb-2 select-none">Welcome to Scry Quest</h2>
+					<p class="text-secondary mb-6 select-none">Ask me anything about D&D 5e - spells, monsters, rules, or create custom content!</p>
 
-						<button
-							class="p-4 btn-glass rounded-lg text-left"
-							onclick="document.getElementById('user-input').value = 'Show me a CR 5 monster'; document.getElementById('chat-form').requestSubmit();"
-						>
-							<div class="font-medium text-primary mb-1 select-none">🐉 Monster Stats</div>
-							<div class="text-sm text-secondary select-none">Get creature stats and encounter ideas</div>
-						</button>
+					<div id="welcome-screen">
+						<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-2xl mx-auto">
+							<button
+								class="p-4 btn-glass rounded-lg text-left"
+								onclick="document.getElementById('user-input').value = 'Tell me about the Fireball spell'; document.getElementById('chat-form').requestSubmit();"
+							>
+								<div class="font-medium text-primary mb-1 select-none">✨ Spell Information</div>
+								<div class="text-sm text-secondary select-none">Learn about spells, their mechanics, and usage</div>
+							</button>
 
-						<button
-							class="p-4 btn-glass rounded-lg text-left"
-							onclick="document.getElementById('user-input').value = 'Explain how combat works'; document.getElementById('chat-form').requestSubmit();"
-						>
-							<div class="font-medium text-primary mb-1 select-none">⚔️ Rules & Mechanics</div>
-							<div class="text-sm text-secondary select-none">Understand D&D 5e rules and mechanics</div>
-						</button>
+							<button
+								class="p-4 btn-glass rounded-lg text-left"
+								onclick="document.getElementById('user-input').value = 'Show me a CR 5 monster'; document.getElementById('chat-form').requestSubmit();"
+							>
+								<div class="font-medium text-primary mb-1 select-none">🐉 Monster Stats</div>
+								<div class="text-sm text-secondary select-none">Get creature stats and encounter ideas</div>
+							</button>
 
-						<button
-							class="p-4 btn-glass rounded-lg text-left"
-							onclick="document.getElementById('user-input').value = 'Create a custom magic item'; document.getElementById('chat-form').requestSubmit();"
-						>
-							<div class="font-medium text-primary mb-1 select-none">🛡️ Custom Content</div>
-							<div class="text-sm text-secondary select-none">Generate homebrew content and ideas</div>
-						</button>
+							<button
+								class="p-4 btn-glass rounded-lg text-left"
+								onclick="document.getElementById('user-input').value = 'Explain how combat works'; document.getElementById('chat-form').requestSubmit();"
+							>
+								<div class="font-medium text-primary mb-1 select-none">⚔️ Rules & Mechanics</div>
+								<div class="text-sm text-secondary select-none">Understand D&D 5e rules and mechanics</div>
+							</button>
+
+							<button
+								class="p-4 btn-glass rounded-lg text-left"
+								onclick="document.getElementById('user-input').value = 'Create a custom magic item'; document.getElementById('chat-form').requestSubmit();"
+							>
+								<div class="font-medium text-primary mb-1 select-none">🛡️ Custom Content</div>
+								<div class="text-sm text-secondary select-none">Generate homebrew content and ideas</div>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<!-- Messages Area - Scrollable -->
-		<div id="messages-scroll-container" class="flex-1 min-h-0 overflow-y-auto" style="scroll-behavior: smooth;">
 			<div class="p-4">
 				<div id="messages" class="max-w-4xl mx-auto space-y-4">
 					<!-- Chat messages will appear here -->
@@ -66,16 +66,12 @@ templ ChatInterface() {
 			</div>
 		</div>
 
-		<!-- Input Area - Sticky at Bottom -->
-		<div class="border-t border-glass glass-bg">
+		<!-- Input Area - Fixed at Bottom -->
+		<div class="absolute bottom-0 left-0 right-0 border-t border-glass glass-bg">
 			<form
 				id="chat-form"
 				class="p-4"
-				hx-post="/api/chat/message"
-				hx-target="#messages"
-				hx-swap="beforeend"
-				hx-on::before-request="if (!document.getElementById('user-input').value.trim()) { event.preventDefault(); return false; }"
-				hx-on::after-request="this.reset(); hideWelcomeScreen(); scrollToBottom();"
+				onsubmit="handleMockSubmit(event)"
 			>
 				<div class="flex items-center space-x-4">
 					<div class="flex-1 relative">
@@ -83,16 +79,17 @@ templ ChatInterface() {
 							id="user-input"
 							name="message"
 							placeholder="Ask about spells, monsters, rules..."
-							class="w-full glass-bg border border-glass rounded-lg px-4 py-3 text-base text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-transparent resize-none"
+							class="w-full glass-bg border border-glass rounded-lg px-4 py-3 text-base text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-crystal-500 focus:border-transparent resize-none overflow-hidden"
 							rows="1"
-							onkeydown="if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); if(this.value.trim()) this.form.requestSubmit(); }"
+							onkeydown="if(event.key==='Enter' && !event.shiftKey) { event.preventDefault(); if(this.value.trim()) handleMockSubmit(event); }"
 						></textarea>
 					</div>
 					<button
+						id="chat-submit-btn"
 						type="submit"
 						class="btn-glass-primary text-white rounded-lg px-6 py-3 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
 					>
-						<span class="material-icons">send</span>
+						<span id="submit-icon" class="material-icons">send</span>
 					</button>
 				</div>
 			</form>
