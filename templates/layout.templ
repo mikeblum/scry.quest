@@ -1,0 +1,29 @@
+package templates
+
+templ Layout(title string) {
+	<!DOCTYPE html>
+	<html lang="en" class="h-full">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>{title}</title>
+			<script src="/static/js/htmx.min.js"></script>
+			<script src="/static/js/index.js"></script>
+			<link rel="stylesheet" href="/static/css/tailwind.min.css"/>
+			<link rel="stylesheet" href="/static/css/material-icons.css"/>
+		</head>
+		<body class="h-full text-primary">
+			<div id="app-container" class="h-full min-h-screen flex relative">
+				@Sidebar()
+
+				<!-- Main Content Area -->
+				<div class="flex-1 flex flex-col min-h-0">
+					<!-- Chat Container -->
+					<div id="chat-container" class="flex-1 flex flex-col min-h-0 h-full" hx-get="/api/chat/new" hx-trigger="load" hx-swap="innerHTML">
+						{ children... }
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>
+}

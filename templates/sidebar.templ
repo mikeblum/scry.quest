@@ -1,0 +1,73 @@
+package templates
+
+templ Sidebar() {
+	<!-- Mobile Overlay -->
+	<div
+		id="mobile-overlay"
+		class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden hidden"
+		onclick="toggleSidebar()"
+	></div>
+
+
+	<div
+		id="sidebar"
+		class="w-80 glass-bg border-r border-glass flex flex-col fixed md:relative inset-y-0 left-0 z-40 transform md:translate-x-0 -translate-x-full transition-transform duration-300 ease-in-out"
+	>
+		@SidebarHeaderContent()
+		@ChatHistory()
+		@ThemeToggle()
+	</div>
+}
+
+templ SidebarHeaderContent() {
+	<div class="p-6 border-b border-glass">
+		<div class="flex items-center justify-between mb-4">
+			<div class="flex items-center space-x-3">
+				<span class="text-2xl">🔮</span>
+				<a href="/" class="text-xl font-semibold text-primary select-none hover:text-gray-400">Scry Quest</a>
+			</div>
+			<button
+				onclick="toggleSidebar()"
+				class="p-2 btn-glass-secondary rounded-lg transition-all duration-300 ease-in-out"
+				title="Close sidebar"
+			>
+				<span class="material-icons text-sm">close</span>
+			</button>
+		</div>
+		<button
+			class="w-full btn-glass-primary text-white rounded-lg px-4 py-3 flex items-center justify-center space-x-2 group"
+			hx-post="/api/chat/new"
+			hx-target="#chat-container"
+			hx-swap="innerHTML"
+		>
+			<span class="material-icons text-sm">add</span>
+			<span class="font-medium">New Session</span>
+		</button>
+	</div>
+}
+
+templ ChatHistory() {
+	<div class="flex-1 p-4">
+		<h2 class="text-sm font-medium text-muted mb-3 select-none">Sessions</h2>
+		<div id="chat-history" class="space-y-2">
+			<div class="text-xs text-muted opacity-75 p-3 bg-theme-panel rounded-lg select-none">
+				Click ➕ New Session to start a session
+			</div>
+		</div>
+	</div>
+}
+
+templ ThemeToggle() {
+	<div class="border-t border-glass p-5 bg-theme-panel">
+		<div class="flex items-center justify-between">
+			<span class="text-sm text-muted select-none">Theme</span>
+			<button
+				onclick="toggleTheme()"
+				class="p-2 btn-glass-secondary rounded-lg flex items-center group"
+				title="Toggle theme"
+			>
+				<span id="theme-icon" class="material-icons text-sm text-muted group-hover:text-crystal-600 transition-colors">light_mode</span>
+			</button>
+		</div>
+	</div>
+}

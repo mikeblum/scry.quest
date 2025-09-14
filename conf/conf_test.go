@@ -108,10 +108,12 @@ func ConfigMethodsTest(t *testing.T) {
 	assert.False(t, config.koanf.Bool("NONEXISTENT"))
 	assert.True(t, config.koanf.Exists("TEST_STRING"))
 	assert.False(t, config.koanf.Exists("NONEXISTENT"))
-	assert.Equal(t, "hello_world", config.MustString("TEST_STRING"))
-	assert.Panics(t, func() {
-		config.MustString("NONEXISTENT")
-	})
+	value, err := config.MustString("TEST_STRING")
+	require.NoError(t, err)
+	assert.Equal(t, "hello_world", value)
+	_, err = config.MustString("NONEXISTENT")
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "required configuration key \"NONEXISTENT\" not found")
 
 	// StringSlice requires array-like values, not comma-separated strings in .env
 	// Testing with a known non-existent key for coverage

@@ -35,6 +35,20 @@ go.work.sum
 .idea/
 .vscode/
 
+# Vendor assets (CSS/JS)
+cmd/web/static/css/tailwind.min.css
+cmd/web/static/css/material-icons.css
+cmd/web/static/js/htmx.min.js
+cmd/web/static/fonts/
+cmd/web/static/heroicons/
+
+# scry.quest builds
+scry.quest
+web
+
+# templ engine
+*_templ.go
+
 # Claude Code
 CLAUDE.local.md
 .claude/

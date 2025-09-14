@@ -5,7 +5,6 @@ package conf
 import (
 	"context"
 	"fmt"
-	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -36,18 +35,15 @@ type Config struct {
 }
 
 // New creates a new Config instance by loading configuration from .env file and environment variables
-func New(ctx context.Context, configPath *string) (*Config, error) {
+func New(_ context.Context, configPath *string) (*Config, error) {
 	k := koanf.New(".")
 
 	confFile := getConfigPath(configPath)
 
 	if _, err := os.Stat(confFile); err == nil {
-		slog.InfoContext(ctx, "loading configuration", "file", confFile)
 		if err := k.Load(file.Provider(confFile), dotenv.Parser()); err != nil {
 			return nil, fmt.Errorf("failed to load config file %s: %w", confFile, err)
 		}
-	} else {
-		slog.WarnContext(ctx, "configuration file not found, using environment variables only", "file", confFile)
 	}
 
 	if err := k.Load(env.Provider(EnvVarNamespace, EnvDelimiter, func(s string) string { return s }), nil); err != nil {
@@ -62,12 +58,12 @@ func (c *Config) String(key string) string {
 	return c.koanf.String(key)
 }
 
-// MustString returns the string value for the given key or panics if not found
-func (c *Config) MustString(key string) string {
+// MustString returns the string value for the given key or returns an error if not found
+func (c *Config) MustString(key string) (string, error) {
 	if !c.koanf.Exists(key) {
-		panic(fmt.Sprintf("required configuration key %q not found", key))
+		return "", fmt.Errorf("required configuration key %q not found", key)
 	}
-	return c.koanf.String(key)
+	return c.koanf.String(key), nil
 }
 
 func getConfigPath(configPath *string) string {
