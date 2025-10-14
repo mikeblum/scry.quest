@@ -6,6 +6,8 @@ BINARY_NAME=scry.quest
 TAILWIND_VERSION := 3.4.0
 HEROICONS_VERSION := 2.0.18
 ASSETS_DIR := cmd/web/static
+# podman or docker
+DOCKER := podman
 
 all: help
 
@@ -36,6 +38,10 @@ $(ASSETS_DIR)/heroicons/: $(ASSETS_DIR)
 	curl -fsSL https://github.com/tailwindlabs/heroicons/archive/refs/tags/v$(HEROICONS_VERSION).tar.gz | \
 		tar -xz --strip-components=3 -C $@/solid heroicons-$(HEROICONS_VERSION)/optimized/24/solid/
 
+.PHONY: install
+install: ## Install dependencies
+	go install github.com/a-h/templ/cmd/templ@latest
+
 .PHONY: build
 build: assets ## ⚒️ Build scry.quest
 	go build -ldflags="-s -w" -o $(BINARY_NAME) ./cmd/web
@@ -46,7 +52,7 @@ clean: ## 🧹 Cleanup build artifacts
 	rm -rf $(ASSETS_DIR)/css/tailwind.min.css $(ASSETS_DIR)/heroicons/
 
 .PHONY: dev
-dev: assets ## 🚀 Start development server
+dev: install assets ## 🚀 Start development server
 	go run ./cmd/web
 
 .PHONY: lint
@@ -94,18 +100,15 @@ sqlc-vet: ## 🐘 Vet SQL queries
 
 .PHONY: docker-up
 docker-up: ## 🐳 Start docker compose services
-	@alias docker='podman'
-	docker compose up -d
+	@$(DOCKER) compose up -d
 
 .PHONY: docker-down
 docker-down: ## 🐳 Teardown docker compose services
-	@alias docker='podman'
-	docker compose down
+	@$(DOCKER) compose down
 
 .PHONY: psql
 psql: ## 🐘 Connect to postgres dev
-	@alias docker='podman'
-	docker exec -it scry-quest-postgres psql -U scry_quest -d scry_quest_dev
+	@$(DOCKER) exec -it scry-quest-postgres psql -U scry_quest -d scry_quest_dev
 
 .PHONY: embeddings
 embeddings: ## 🔮 Run embeddings CLI
